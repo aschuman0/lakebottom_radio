@@ -1,0 +1,9 @@
+{% extends 'layouts/base.html' %}
+{% block title %}
+    {{ show.name }} - {{ block.super }}
+{% endblock %}
+{% block content %}
+    <h1>{{ show.name }}</h1>
+    <p>{{ show.about }}</p>
+    <a href="{% url 'edit_show' slug=show.slug %}">Edit this show</a>
+{% endblock %}

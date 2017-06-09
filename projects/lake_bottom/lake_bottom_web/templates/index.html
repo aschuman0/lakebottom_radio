@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Home - {{ block.super }}{% endblock %}
+{% block content %}
+    <h1>Welcome to The Lake Bottom</h1>
+    {% for show in shows %}
+    <hr />
+    <h2><a href="{% url 'show_detail' slug=show.slug %}">
+        {{ show.name }}
+        </a>
+    </h2>
+    <p>{{ show.about }}</p>
+    {% endfor %}
+{% endblock %}
