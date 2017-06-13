@@ -27,14 +27,14 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li>
+                        <a href="{% url 'create_show' %}">Create Show</a>
+                    </li>
+                    <li>
                         <a href="{% url 'auth_logout' %}">Logout</a>
                     </li>
                     {% else %}
                     <li>
                         <a href="{% url 'auth_login' %}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'registration_register' %}">Register</a>
                     </li>
                     {% endif %}
                 </ul>

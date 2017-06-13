@@ -1,0 +1,12 @@
+{% extends 'layouts/base.html' %}
+{% block title %}
+    Create Show - {{ block.super }}
+{% endblock %}
+{% block content %}
+    <h1>Add New Show</h1>
+<form role="form" action"" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

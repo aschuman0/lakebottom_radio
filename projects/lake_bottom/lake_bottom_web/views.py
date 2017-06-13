@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.template.defaultfilters import slugify
 
 from lake_bottom_web.models import Show
 from lake_bottom_web.forms import ShowForm
@@ -43,3 +44,25 @@ def edit_show(request, slug):
         'show': show,
         'form': form,
     })
+
+def create_show(request):
+    form_class = ShowForm
+
+    # if we are coming from a submitted form, do this
+    if request.method == 'POST':
+        form = form_class(request.POST)
+        if form.is_valid():
+            # create a show instance, but do not yet save
+            show = form.save(commit=False)
+            # create the slug
+            show.slug = slugify(show.name)
+            # now with the proper slug, we can save the new object
+            show.save()
+            # redirect to the new show page
+            return redirect('show_detail', slug=show.slug)
+
+    # if just a GET, create the form
+    else:
+        form = form_class()
+    
+    return render(request, 'shows/create_show.html', {'form': form})
