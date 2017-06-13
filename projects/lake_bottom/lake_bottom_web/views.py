@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 
@@ -50,12 +52,13 @@ def create_show(request):
 
     # if we are coming from a submitted form, do this
     if request.method == 'POST':
-        form = form_class(request.POST)
+        form = form_class(request.POST, request.FILES)
         if form.is_valid():
             # create a show instance, but do not yet save
             show = form.save(commit=False)
             # create the slug
             show.slug = slugify(show.name)
+            show.date_created = datetime.datetime.utcnow()
             # now with the proper slug, we can save the new object
             show.save()
             # redirect to the new show page
