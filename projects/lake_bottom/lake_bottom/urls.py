@@ -29,6 +29,7 @@ from lake_bottom_web import views
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),
+    url(r'^shows/$', views.list_shows, name='list_shows'),
     url(r'^shows/create/$', views.create_show, name='create_show'),
     url(r'^shows/(?P<slug>[-\w]+)/$', views.show_detail,
         name='show_detail'),

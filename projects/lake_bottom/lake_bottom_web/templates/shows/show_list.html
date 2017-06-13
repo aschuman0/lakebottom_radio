@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
-{% block title %}Home - {{ block.super }}{% endblock %}
+{% block title %}Show Archive - {{ block.super }}{% endblock %}
 {% block content %}
-    <h1>Welcome to The Lake Bottom</h1>
+    <h1>Show Archive</h1>
     {% for show in shows %}
     <hr />
     <h2><a href="{% url 'show_detail' slug=show.slug %}">
@@ -12,5 +12,6 @@
         <p>Unpublished</p>
     {% endif %}
     <p>{{ show.about }}</p>
+    <p>{{ show.date_created|date:"F d, Y - P e" }}</p>
     {% endfor %}
 {% endblock %}

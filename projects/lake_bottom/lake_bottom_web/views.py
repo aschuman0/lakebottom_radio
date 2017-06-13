@@ -10,11 +10,27 @@ from lake_bottom_web.forms import ShowForm
 # Create your views here.
 def index(request):
     # this is the main view
-    shows = Show.objects.all()
+    if request.user.is_authenticated():
+        # If loggged in show most recent 10 shows
+        shows = Show.objects.all().order_by('date_created').reverse()[:10]
+    else:
+        # if not logged in show 5 most recent published shows
+        shows = Show.objects.filter(published=True).order_by('date_created').reverse()[:5]
+
     return render(request, 'index.html', {
         'shows': shows,
     })
+def list_shows(request):
+    if request.user.is_authenticated():
+        # If loggged in show most recent 10 shows
+        shows = Show.objects.all().order_by('date_created').reverse()
+    else:
+        # if not logged in show 5 most recent published shows
+        shows = Show.objects.filter(published=True).order_by('date_created').reverse()
 
+    return render(request, 'shows/show_list.html', {
+        'shows': shows,
+    })
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
     playlist = None
