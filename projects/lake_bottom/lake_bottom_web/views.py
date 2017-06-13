@@ -1,4 +1,5 @@
 import datetime
+import csv
 
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
@@ -16,10 +17,14 @@ def index(request):
 
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
-    # TODO handle empty show with 404 response here
-    
+    playlist = None
+
+    if show.playlist_file:
+        with open(show.playlist_file.path, 'rU') as f:
+            playlist = list(csv.DictReader(f,delimiter="\t",dialect=csv.excel_tab))
+
     return render(request, 'shows/show_detail.html', {
-        'show': show,
+        'show': show, 'playlist': playlist,
     })
 
 def edit_show(request, slug):

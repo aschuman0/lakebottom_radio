@@ -5,6 +5,28 @@
 {% block content %}
     <h1>{{ show.name }}</h1>
     <p>About:<br />{{ show.about }}</p>
+    <p>Playlist:<br />
+    <p>Number of items: {{ playlist|length }}
+    {% if playlist %}
+    <table>
+        <tr>
+            <th>Artist</th>
+            <th>Title</th>
+            <th>Album</th>
+            <th>Year</th>
+        </tr>
+        {% for item in playlist %}
+        <tr>
+            <th>{{ item.Artist }}</th>
+            <th>{{ item.Name }}</th>
+            <th>{{ item.Album }}</th>
+            <th>{{ item.Year }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No Playlist</p>
+    {% endif %}
     <p>Date Created:<br />{{ show.date_created|date:"F d, Y - P e" }}</p>
     {% if user.is_authenticated %}
         <hr /><a href="{% url 'edit_show' slug=show.slug %}">Edit this show</a>
