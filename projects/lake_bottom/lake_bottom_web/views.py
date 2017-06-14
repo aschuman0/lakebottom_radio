@@ -20,6 +20,7 @@ def index(request):
     return render(request, 'index.html', {
         'shows': shows,
     })
+
 def list_shows(request):
     if request.user.is_authenticated():
         # If loggged in show most recent 10 shows
@@ -31,6 +32,7 @@ def list_shows(request):
     return render(request, 'shows/show_list.html', {
         'shows': shows,
     })
+
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
     playlist = None
