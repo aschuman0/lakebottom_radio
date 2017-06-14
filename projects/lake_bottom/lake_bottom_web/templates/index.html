@@ -2,6 +2,7 @@
 {% block title %}Home - {{ block.super }}{% endblock %}
 {% block content %}
     <h1>Welcome to The Lake Bottom</h1>
+    {% block live %}{% endblock %}
     {% for show in shows %}
     <hr />
     <h2><a href="{% url 'show_detail' slug=show.slug %}">

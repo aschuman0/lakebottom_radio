@@ -1,6 +1,7 @@
 import datetime
 import csv
 
+import requests
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 
@@ -17,9 +18,23 @@ def index(request):
         # if not logged in show 5 most recent published shows
         shows = Show.objects.filter(published=True).order_by('date_created').reverse()[:5]
 
-    return render(request, 'index.html', {
-        'shows': shows,
-    })
+    media_url = 'http://lakebottom48.hopto.org/listen.m3u'
+
+    try:
+        r = requests.get(media_url)
+        is_live = True
+    except:
+        is_live = False
+
+    if is_live:
+        return render(request, 'live_index.html', {
+            'shows': shows,
+            'media_url': media_url,
+        })
+    else:
+        return render(request, 'index.html', {
+            'shows': shows,
+        })
 
 def list_shows(request):
     if request.user.is_authenticated():
