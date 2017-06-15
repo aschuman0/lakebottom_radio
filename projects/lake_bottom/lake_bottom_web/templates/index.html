@@ -1,8 +1,16 @@
 {% extends 'layouts/base.html' %}
 {% block title %}Home - {{ block.super }}{% endblock %}
-{% block content %}
+{% block top_content %}
+<div class="jumbotron">
+    <div class="container">
     <h1>Welcome to The Lake Bottom</h1>
+    <p>THE BEST INSTRUMENTAL SURF MUSIC FROM THE 1960'S AND BEYOND</p>
     {% block live %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    <h2>Recent Shows</h2>
     {% for show in shows %}
     <hr />
     <h2><a href="{% url 'show_detail' slug=show.slug %}">
