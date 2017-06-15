@@ -27,6 +27,7 @@ def index(request):
     except: # TODO - I'm uneasy about using naked except here.
         is_live = False
 
+    # is_live = True # for testing
     if is_live:
         return render(request, 'live_index.html', {
             'shows': shows,

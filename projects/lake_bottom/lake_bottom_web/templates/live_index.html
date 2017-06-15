@@ -1,5 +1,10 @@
 {% extends 'index.html' %}
 {% block live %}
 <hr />
-<h1>WE ARE LIVE AW YIS</h1>
+<h3>Listen Live Now!</h3>
+<div>
+<audio controls>
+    <source src="http://lakebottom48.hopto.org:8002/listen.m3u" type="audio/mpeg">
+    Your browser does not support the audio element. Please update.
+</audio></div>
 {% endblock %}

@@ -12,3 +12,9 @@ p {
 .container-content, .jumbotron {
     background-color: rgba(242, 242, 242, .85);
 }
+.jumbotron {
+    margin-bottom: 20px;
+}
+.container-content {
+    margin-bottom: 15px;
+}
