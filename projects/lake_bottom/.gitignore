@@ -21,3 +21,4 @@ venv/
 files/
 *.sqlite3
 TODO.md
+.DS_Store
