@@ -15,17 +15,16 @@
         {% block header %}{% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
           </button>
-          <a class="navbar-brand" href="#">Lake Bottom Radio</a>
+          <a class="navbar-brand" href="{% url 'home' %}">Lake Bottom Radio</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'list_shows' %}">Archive</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
@@ -42,7 +41,7 @@
       </div>
     </nav>
     {% block top_content %}{% endblock %}
-    <div class="container">
+    <div class="container container-content">
         {% block content %}{% endblock %}
         {% block footer %}{% endblock %}
     </div>

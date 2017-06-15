@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Media file settings
-MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'lake_bottom_web/files/')
 MEDIA_URL = '/files/'
 
 # email settings
