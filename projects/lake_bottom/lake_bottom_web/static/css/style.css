@@ -9,6 +9,9 @@ h1, h2, h3 {
 p {
     font-family: 'Asul', sans-serif;
 }
+.container {
+    height: auto;
+}
 .container-content, .jumbotron {
     background-color: rgba(242, 242, 242, .85);
 }
@@ -17,4 +20,14 @@ p {
 }
 .container-content {
     margin-bottom: 15px;
+    min-height: 80vh !important;
+    border-radius: 15px;
 }
+.navbar {
+   background-color: rgba(242, 242, 242, .85);
+   background: rgba(242, 242, 242, .85);
+   border-color: rgba(242, 242, 242, .85);
+}
+.navbar li { 
+    color: #000 
+} 
