@@ -1,14 +1,13 @@
 {% extends 'layouts/base.html' %}
+{% load bootstrap %}
 {% block title %}Login - {{ block.super }}{% endblock %}
 {% block content %}
     <h1>Login</h1>
     <form role="form" action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Login" />
+        {{ form|bootstrap }}
+        <input type="submit" value="Login" class="btn btn-primary"/>
     </form>
-    <p>
-        <a href="{% url 'password_reset' %}">
-            Reset your password</a>
-    </p>
+    <br />
+    <p><a href="{% url 'password_reset' %}">Reset your password</a></p>
 {% endblock %}
