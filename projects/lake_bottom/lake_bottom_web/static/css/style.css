@@ -13,7 +13,7 @@ p {
     height: auto;
 }
 .container-content, .jumbotron {
-    background-color: rgba(242, 242, 242, .85);
+    background-color: rgba(242, 242, 242, .90);
 }
 .jumbotron {
     margin-bottom: 20px;
@@ -24,9 +24,9 @@ p {
     border-radius: 15px;
 }
 .navbar {
-   background-color: rgba(242, 242, 242, .85);
-   background: rgba(242, 242, 242, .85);
-   border-color: rgba(242, 242, 242, .85);
+   background-color: rgba(242, 242, 242, .90);
+   background: rgba(242, 242, 242, .90);
+   border-color: rgba(242, 242, 242, .90);
 }
 .navbar li { 
     color: #000 

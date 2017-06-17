@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
     <h1>{{ show.name }}</h1>
+    {% include 'includes/unpublished.html' %}
     <p>About:<br />{{ show.about }}</p>
     <p>Playlist:<br />
     <p>Number of items: {{ playlist|length }}

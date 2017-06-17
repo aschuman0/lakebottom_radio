@@ -8,9 +8,7 @@
         {{ show.name }}
         </a>
     </h2>
-    {% if not show.published %}
-        <p>Unpublished</p>
-    {% endif %}
+    {% include 'includes/unpublished.html' %}
     <p>{{ show.about }}</p>
     <p>{{ show.date_created|date:"F d, Y - P e" }}</p>
     {% endfor %}

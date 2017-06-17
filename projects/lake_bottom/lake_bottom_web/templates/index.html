@@ -13,13 +13,8 @@
     <h2>Recent Shows</h2>
     {% for show in shows %}
     <hr />
-    <h2><a href="{% url 'show_detail' slug=show.slug %}">
-        {{ show.name }}
-        </a>
-    </h2>
-    {% if not show.published %}
-        <span class="label label-danger">Unpublished!</span>
-    {% endif %}
+    <h2><a href="{% url 'show_detail' slug=show.slug %}">{{ show.name }}</a></h2>
+    {% include 'includes/unpublished.html' %}
     <p>{{ show.about }}</p>
     {% endfor %}
 {% endblock %}
