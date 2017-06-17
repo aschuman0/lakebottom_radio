@@ -4,32 +4,33 @@
 {% endblock %}
 {% block content %}
     <h1>{{ show.name }}</h1>
-    {% include 'includes/unpublished.html' %}
-    <p>About:<br />{{ show.about }}</p>
-    <p>Playlist:<br />
-    <p>Number of items: {{ playlist|length }}
+    {% include 'includes/show_controls.html' %}
+    <h2>About:</h2><p>{{ show.about }}</p><hr />
+    <h2>Playlist:</h2>
     {% if playlist %}
-    <table>
-        <tr>
-            <th>Artist</th>
-            <th>Title</th>
-            <th>Album</th>
-            <th>Year</th>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Artist</th>
+                <th>Title</th>
+                <th>Album</th>
+                <th>Year</th>
+            </tr>
+        </thead>
         {% for item in playlist %}
-        <tr>
-            <th>{{ item.Artist }}</th>
-            <th>{{ item.Name }}</th>
-            <th>{{ item.Album }}</th>
-            <th>{{ item.Year }}</th>
-        </tr>
+        <tbody>
+            <tr>
+                <th scope="row">{{ item.Artist }}</td>
+                <td>{{ item.Name }}</td>
+                <td>{{ item.Album }}</td>
+                <td>{{ item.Year }}</td>
+            </tr>
+        </tbody>
         {% endfor %}
     </table>
+    <p>Number of items: {{ playlist|length }}</p>
     {% else %}
         <p>No Playlist</p>
     {% endif %}
-    <p>Date Created:<br />{{ show.date_created|date:"F d, Y - P e" }}</p>
-    {% if user.is_authenticated %}
-        <hr /><a href="{% url 'edit_show' slug=show.slug %}">Edit this show</a>
-    {% endif %}
+    <h3>Date Created:</h3><p>{{ show.date_created|date:"F d, Y - P e" }}</p>
 {% endblock %}

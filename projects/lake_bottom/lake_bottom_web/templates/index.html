@@ -14,7 +14,7 @@
     {% for show in shows %}
     <hr />
     <h2><a href="{% url 'show_detail' slug=show.slug %}">{{ show.name }}</a></h2>
-    {% include 'includes/unpublished.html' %}
+    {% include 'includes/show_controls.html' %}
     <p>{{ show.about }}</p>
     {% endfor %}
 {% endblock %}

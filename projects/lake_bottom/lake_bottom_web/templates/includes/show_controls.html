@@ -1,0 +1,6 @@
+{% if not show.published %}
+    <span class="label label-danger">Unpublished!</span>
+{% endif %}
+{% if user.is_authenticated %}
+    <a href="{% url 'edit_show' slug=show.slug %}">Edit this show</a>
+{% endif %}

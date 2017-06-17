@@ -8,7 +8,7 @@
         {{ show.name }}
         </a>
     </h2>
-    {% include 'includes/unpublished.html' %}
+    {% include 'includes/show_controls.html' %}
     <p>{{ show.about }}</p>
     <p>{{ show.date_created|date:"F d, Y - P e" }}</p>
     {% endfor %}
