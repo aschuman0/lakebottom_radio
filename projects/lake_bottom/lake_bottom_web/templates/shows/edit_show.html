@@ -1,12 +1,13 @@
 {% extends 'layouts/base.html' %}
+{% load bootstrap %}
 {% block title %}
     Edit {{ show.name }} - {{ block.super }}
 {% endblock %}
 {% block content %}
-    <h1>Edit {{ thing.name }}</h1>
+    <h1>Edit - {{ show.name }}</h1>
 <form role="form" action"" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
+    {{ form|bootstrap }}
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}
