@@ -4,6 +4,7 @@ import csv
 import requests
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
+from django.contrib.auth.decorators import login_required
 
 from lake_bottom_web.models import Show
 from lake_bottom_web.forms import ShowForm
@@ -62,6 +63,7 @@ def show_detail(request, slug):
         'show': show, 'playlist': playlist,
     })
 
+@login_required
 def edit_show(request, slug):
     # get the object realted to the passed in slug
     show = Show.objects.get(slug=slug)
@@ -87,6 +89,7 @@ def edit_show(request, slug):
         'form': form,
     })
 
+@login_required
 def create_show(request):
     form_class = ShowForm
 

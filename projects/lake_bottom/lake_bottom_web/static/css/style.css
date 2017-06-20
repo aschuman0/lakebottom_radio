@@ -3,7 +3,7 @@ body {
     background-image: url('/static/images/bgs/bg2.jpg');
     background-color: #c2f0f0;
 }
-h1, h2, h3, table {
+h1, h2, h3 {
     font-family: 'Tillana', cursive;
 }
 p {
