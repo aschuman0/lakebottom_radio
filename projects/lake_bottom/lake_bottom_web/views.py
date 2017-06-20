@@ -22,11 +22,14 @@ def index(request):
     media_url = 'http://lakebottom48.hopto.org/listen.m3u'
 
     # Check to see if the media_url can be hit if so render page with playbar.
+    is_live = False
+    
     try:
         r = requests.get(media_url)
         is_live = True
-    except: # TODO - I'm uneasy about using naked except here.
-        is_live = False
+    except Exception as e: # TODO - I'm uneasy about using naked except here.
+        print('could not connect: %s' % e)
+        pass
 
     # is_live = True # for testing
     if is_live:
