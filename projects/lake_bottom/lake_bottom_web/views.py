@@ -23,11 +23,11 @@ def index(request):
 
     # Check to see if the media_url can be hit if so render page with playbar.
     is_live = False
-    
+
     try:
         r = requests.get(media_url)
         is_live = True
-    except Exception as e: # TODO - I'm uneasy about using naked except here.
+    except Exception as e:
         print('could not connect: %s' % e)
         pass
 

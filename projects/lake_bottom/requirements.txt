@@ -4,3 +4,4 @@ django-registration-redux==1.6
 gunicorn==19.6.0
 requests==2.17.3
 whitenoise==3.3.0
+psycopg2
