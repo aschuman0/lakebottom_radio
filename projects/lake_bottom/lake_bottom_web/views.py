@@ -59,6 +59,14 @@ def show_detail(request, slug):
         'show': show, 'playlist': playlist,
     })
 
+def page_detail(request, slug):
+    try:
+        page = Page.objects.get(page_name=slug)
+    except Exception as e:
+        raise Http404(e.message)
+
+    return render(request, 'pages/page.html', {'page': page})
+    
 @login_required
 def edit_show(request, slug):
     # get the object realted to the passed in slug
@@ -113,13 +121,7 @@ def create_show(request):
 
 
 
-def page_detail(request, slug):
-    try:
-        page = Page.objects.get(page_name=slug)
-    except Exception as e:
-        raise Http404(e.message)
 
-    return render(request, 'pages/page.html', {'page': page})
 
 @login_required
 def edit_page(request, slug):
