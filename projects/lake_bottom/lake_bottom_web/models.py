@@ -19,4 +19,5 @@ class Page(models.Model):
     last_updated = models.DateTimeField()
 
 class Live(models.Model):
+    name = models.CharField(max_length=255)
     is_live = models.BooleanField(default=False)
