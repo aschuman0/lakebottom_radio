@@ -33,6 +33,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'create_show' %}">Create Show</a></li>
+                <li><a href="{% url 'site_admin' %}">Site Admin</a></li>
                 <li><a href="{% url 'auth_logout' %}">Logout</a></li>
                 {% else %}
                 <li><a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>

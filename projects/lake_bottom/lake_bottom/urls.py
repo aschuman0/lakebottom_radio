@@ -35,6 +35,7 @@ urlpatterns = [
         name='show_detail'),
     url(r'^shows/(?P<slug>[-\w]+)/edit/$', views.edit_show,
         name='edit_show'),
+    url(r'^site_admin/$', views.site_admin, name='site_admin'),
     url(r'^about/$', TemplateView.as_view(template_name='about.html'),
         name='about'),
     url(r'^contact/$', TemplateView.as_view(template_name='contact.html'),

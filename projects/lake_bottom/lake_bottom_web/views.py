@@ -115,3 +115,12 @@ def create_show(request):
         form = form_class()
     
     return render(request, 'shows/create_show.html', {'form': form})
+
+@login_required
+def site_admin(request):
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+
+    return render(request, 'site_admin.html')
