@@ -5,9 +5,10 @@ import requests
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
-from lake_bottom_web.models import Show
-from lake_bottom_web.forms import ShowForm
+from lake_bottom_web.models import Show, Page, Live
+from lake_bottom_web.forms import ShowForm, PageForm, LiveForm
 
 # Create your views here.
 def index(request):
@@ -19,23 +20,15 @@ def index(request):
         # if not logged in show 5 most recent published shows
         shows = Show.objects.filter(published=True).order_by('date_created').reverse()[:5]
 
-    media_url = 'http://lakebottom48.hopto.org/listen.m3u'
-
-    # Check to see if the media_url can be hit if so render page with playbar.
-    is_live = False
-
     try:
-        r = requests.get(media_url)
-        is_live = True
+        stream_info = Live.objects.get(name='main')
     except Exception as e:
-        print('could not connect: %s' % e)
-        pass
+        print('error getting live obj: %s' % e)
 
-    # is_live = True # for testing
-    if is_live:
+    if stream_info.is_live:
         return render(request, 'live_index.html', {
             'shows': shows,
-            'media_url': media_url,
+            'media_url': stream_info.stream_url,
         })
     else:
         return render(request, 'index.html', {
@@ -66,6 +59,14 @@ def show_detail(request, slug):
         'show': show, 'playlist': playlist,
     })
 
+def page_detail(request, slug):
+    try:
+        page = Page.objects.get(page_name=slug)
+    except Exception as e:
+        raise Http404(e.message)
+
+    return render(request, 'pages/page.html', {'page': page})
+    
 @login_required
 def edit_show(request, slug):
     # get the object realted to the passed in slug
@@ -88,12 +89,14 @@ def edit_show(request, slug):
 
     # then render the template
     return render(request, 'shows/edit_show.html', {
-        'show': show,
-        'form': form,
+        'show': show, 'form': form,
     })
 
 @login_required
 def create_show(request):
+
+
+
     form_class = ShowForm
 
     # if we are coming from a submitted form, do this
@@ -115,3 +118,50 @@ def create_show(request):
         form = form_class()
     
     return render(request, 'shows/create_show.html', {'form': form})
+
+
+
+
+
+@login_required
+def edit_page(request, slug):
+    try:
+        page = Page.objects.get(page_name=slug)
+    except Exception as e:
+        print('error on edit_page: %s' % e)
+        raise Http404()
+
+    form_class = PageForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST, instance=page)
+        if form.is_valid():
+            form.save()
+            return redirect('page_detail', slug=page.page_name)
+    else:
+        form = form_class(instance=page)
+
+    return render(request, 'pages/edit_page.html', {
+        'page': page, 'form': form
+    })
+
+@login_required
+def edit_live(request):
+    try:
+        live_info = Live.objects.get(name='main')
+    except Exception as e:
+        print('could not load live_info to edit: %s' % e)
+
+    form_class = LiveForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST, instance=live_info)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = form_class(instance=live_info)
+
+    return render(request, 'edit_live.html', {
+        'form': form
+    })

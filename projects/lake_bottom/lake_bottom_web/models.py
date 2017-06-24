@@ -11,3 +11,14 @@ class Show(models.Model):
     date_created = models.DateTimeField()
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
+
+class Page(models.Model):
+    title = models.CharField(max_length=255)
+    page_body = models.TextField()
+    last_updated = models.DateTimeField()
+    page_name = models.SlugField(unique=True)
+
+class Live(models.Model):
+    name = models.CharField(max_length=255)
+    stream_url = models.CharField(max_length=1027)
+    is_live = models.BooleanField(default=False)
