@@ -20,21 +20,15 @@ def index(request):
         # if not logged in show 5 most recent published shows
         shows = Show.objects.filter(published=True).order_by('date_created').reverse()[:5]
 
-    media_url = 'http://lakebottom48.hopto.org/listen.m3u'
-
-    # Check to see if the media_url can be hit if so render page with playbar.
-    is_live = False
     try:
-        r = requests.get(media_url)
-        is_live = True
+        stream_info = Live.objects.get(name='main')
     except Exception as e:
-        print('could not connect: %s' % e)
-        pass
+        print('error getting live obj: %s' % e)
 
-    if is_live:
+    if stream_info.is_live:
         return render(request, 'live_index.html', {
             'shows': shows,
-            'media_url': media_url,
+            'media_url': stream_info.stream_url,
         })
     else:
         return render(request, 'index.html', {

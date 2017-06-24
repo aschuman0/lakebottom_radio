@@ -20,4 +20,5 @@ class Page(models.Model):
 
 class Live(models.Model):
     name = models.CharField(max_length=255)
+    stream_url = models.CharField(max_length=1027)
     is_live = models.BooleanField(default=False)
