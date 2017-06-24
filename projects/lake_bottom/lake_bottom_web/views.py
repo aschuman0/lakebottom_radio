@@ -142,3 +142,24 @@ def edit_page(request, slug):
     return render(request, 'pages/edit_page.html', {
         'page': page, 'form': form
     })
+
+@login_required
+def edit_live(request):
+    try:
+        live_info = Live.objects.get(name='main')
+    except Exception as e:
+        print('could not load live_info to edit: %s' % e)
+
+    form_class = LiveForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST, instance=live_info)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = form_class(instance=live_info)
+
+    return render(request, 'edit_live.html', {
+        'form': form
+    })

@@ -15,4 +15,4 @@ class PageForm(ModelForm):
 class LiveForm(ModelForm):
     class Meta:
         model = Live
-        fields = ('is_live',)
+        fields = ('is_live', 'stream_url')

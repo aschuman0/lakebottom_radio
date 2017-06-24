@@ -39,6 +39,7 @@ urlpatterns = [
         name='page_detail'),
     url(r'^p/(?P<slug>[-\w]+)/edit/$', views.edit_page, 
         name='edit_page'),
+    url(r'^live/$', views.edit_live, name='edit_live'),
     url(r'^accounts/password/reset/$', password_reset, 
         {'template_name': 'registration/password_reset_Form.html'},
         name="password_reset"),
