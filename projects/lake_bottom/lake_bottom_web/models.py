@@ -11,3 +11,12 @@ class Show(models.Model):
     date_created = models.DateTimeField()
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
+
+class Page(models.Model):
+    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    page_body = models.TextField()
+    last_updated = models.DateTimeField()
+
+class Live(models.Model):
+    is_live = models.BooleanField(default=False)
