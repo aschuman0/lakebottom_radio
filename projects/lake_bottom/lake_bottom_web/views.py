@@ -5,9 +5,10 @@ import requests
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 from lake_bottom_web.models import Show, Page, Live
-from lake_bottom_web.forms import ShowForm
+from lake_bottom_web.forms import ShowForm, PageForm, LiveForm
 
 # Create your views here.
 def index(request):
@@ -23,7 +24,6 @@ def index(request):
 
     # Check to see if the media_url can be hit if so render page with playbar.
     is_live = False
-
     try:
         r = requests.get(media_url)
         is_live = True
@@ -31,7 +31,6 @@ def index(request):
         print('could not connect: %s' % e)
         pass
 
-    # is_live = True # for testing
     if is_live:
         return render(request, 'live_index.html', {
             'shows': shows,
@@ -88,12 +87,14 @@ def edit_show(request, slug):
 
     # then render the template
     return render(request, 'shows/edit_show.html', {
-        'show': show,
-        'form': form,
+        'show': show, 'form': form,
     })
 
 @login_required
 def create_show(request):
+
+
+
     form_class = ShowForm
 
     # if we are coming from a submitted form, do this
@@ -116,11 +117,34 @@ def create_show(request):
     
     return render(request, 'shows/create_show.html', {'form': form})
 
-@login_required
-def site_admin(request):
-    if request.method == 'POST':
-        pass
-    else:
-        pass
 
-    return render(request, 'site_admin.html')
+
+def page_detail(request, slug):
+    try:
+        page = Page.objects.get(page_name=slug)
+    except Exception as e:
+        raise Http404(e.message)
+
+    return render(request, 'pages/page.html', {'page': page})
+
+@login_required
+def edit_page(request, slug):
+    try:
+        page = Page.objects.get(page_name=slug)
+    except Exception as e:
+        print('error on edit_page: %s' % e)
+        raise Http404()
+
+    form_class = PageForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST, instance=page)
+        if form.is_valid():
+            form.save()
+            return redirect('page_detail', slug=page.page_name)
+    else:
+        form = form_class(instance=page)
+
+    return render(request, 'pages/edit_page.html', {
+        'page': page, 'form': form
+    })

@@ -26,14 +26,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'about' %}">Schedule</a></li>
+                <li><a href="/p/schedule/">Schedule</a></li>
                 <li><a href="{% url 'list_shows' %}">Archive</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="/p/contact/">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'create_show' %}">Create Show</a></li>
-                <li><a href="{% url 'site_admin' %}">Site Admin</a></li>
                 <li><a href="{% url 'auth_logout' %}">Logout</a></li>
                 {% else %}
                 <li><a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
