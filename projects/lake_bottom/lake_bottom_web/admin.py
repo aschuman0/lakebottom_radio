@@ -10,7 +10,7 @@ class ShowAdmin(admin.ModelAdmin):
 
 class PageAdmin(admin.ModelAdmin):
     model = Page
-    list_display = ('name', 'title', 'page_body', 'last_updated')
+    list_display = ('page_name', 'title', 'page_body', 'last_updated')
 
 class LiveAdmin(admin.ModelAdmin):
     model = Live

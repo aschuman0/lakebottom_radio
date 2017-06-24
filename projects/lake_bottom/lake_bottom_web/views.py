@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 
-from lake_bottom_web.models import Show
+from lake_bottom_web.models import Show, Page, Live
 from lake_bottom_web.forms import ShowForm
 
 # Create your views here.
