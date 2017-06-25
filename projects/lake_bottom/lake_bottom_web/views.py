@@ -1,7 +1,6 @@
 import datetime
 import csv
 
-import requests
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required

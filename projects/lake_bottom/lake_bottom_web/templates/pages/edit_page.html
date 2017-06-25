@@ -4,7 +4,7 @@
     Edit {{ page.page_name }} - {{ block.super }}
 {% endblock %}
 {% block content %}
-    <h1>Edit - {{ page.page_name }}</h1>
+    <h1>Edit - {{ page.page_name|capfirst }}</h1>
 <form role="form" action"" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|bootstrap }}

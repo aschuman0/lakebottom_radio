@@ -6,7 +6,7 @@
 {% block content %}
     <h1>{{ show.name }}</h1>
     {% include 'includes/show_controls.html' %}
-    <h2>About:</h2><p>{{ show.about }}</p><hr />
+    <h2>About:</h2><p>{{ show.about|linebreaks }}</p><hr />
     <h2>Playlist:</h2>
     {% if playlist %}
     <table class="table">
