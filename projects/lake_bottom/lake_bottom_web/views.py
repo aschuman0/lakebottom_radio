@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.contrib import messages
 
 from lake_bottom_web.models import Show, Page, Live
 from lake_bottom_web.forms import ShowForm, PageForm, LiveForm
@@ -29,10 +30,10 @@ def index(request):
             'shows': shows,
             'media_url': stream_info.stream_url,
         })
-    else:
-        return render(request, 'index.html', {
-            'shows': shows,
-        })
+    
+    return render(request, 'index.html', {
+        'shows': shows,
+    })
 
 def list_shows(request):
     if request.user.is_authenticated():
@@ -81,6 +82,7 @@ def edit_show(request, slug):
         if form.is_valid():
             #save new data
             form.save()
+            messages.success(request, 'Show Changes Saved.')
             return redirect('show_detail', slug=show.slug)
     # otherwise, just create the form
     else:
@@ -93,8 +95,6 @@ def edit_show(request, slug):
 
 @login_required
 def create_show(request):
-
-
 
     form_class = ShowForm
 
@@ -110,6 +110,7 @@ def create_show(request):
             # now with the proper slug, we can save the new object
             show.save()
             # redirect to the new show page
+            messages.success(request, 'New Show Added.')
             return redirect('show_detail', slug=show.slug)
 
     # if just a GET, create the form
@@ -117,10 +118,6 @@ def create_show(request):
         form = form_class()
     
     return render(request, 'shows/create_show.html', {'form': form})
-
-
-
-
 
 @login_required
 def edit_page(request, slug):
@@ -136,6 +133,7 @@ def edit_page(request, slug):
         form = form_class(data=request.POST, instance=page)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Page Chages Saved.')
             return redirect('page_detail', slug=page.page_name)
     else:
         form = form_class(instance=page)
@@ -157,6 +155,10 @@ def edit_live(request):
         form = form_class(data=request.POST, instance=live_info)
         if form.is_valid():
             form.save()
+            if form.cleaned_data['is_live']:
+                messages.info(request, 'Playbar is now live on site.')
+            else:
+                messages.info(request, 'Playbar has been removed from site.')
             return redirect('home')
     else:
         form = form_class(instance=live_info)

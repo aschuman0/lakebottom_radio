@@ -39,10 +39,16 @@
                 <li><a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
                 {% endif %}
             </ul>
+            {% if messages %}
+            {% endif %}
         </div>
       </div>
     </nav>
-    {% block top_content %}{% endblock %}
+    {% block top_content %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endblock %}
     <div class="container container-content">
         {% block content %}{% endblock %}
         {% block footer %}{% endblock %}
