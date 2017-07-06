@@ -20,13 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# TODO - Load from gcp metadata server / env var
 SECRET_KEY = 's5!dn4(c11*y9mbfvp+ubpaqu1u^=e*jx387rb4iphij!c$$q%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
+# TODO - sane values for actual domain
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -130,6 +131,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'lake_bottom_web/files/')
 MEDIA_URL = '/files/'
 
 # email settings
+# TODO - Actually Send Emails
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'fromthelakebottom@donotreply.xyz'
 EMAIL_HOST_USER = ''
@@ -139,3 +141,7 @@ EMAIL_PORT = 1025
 
 # Login redirect
 LOGIN_REDIRECT_URL = "home"
+
+# Load/override settings if Dev env var is true
+if os.environ.get('DJANGO_DEV') is not None:
+    from settings_dev import *
