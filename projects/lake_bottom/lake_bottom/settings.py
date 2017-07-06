@@ -15,14 +15,16 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Get environment vars
+secret = os.environ.get('DJANGO_SECRET')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO - Load from gcp metadata server / env var
-if os.environ.get('DJANGO_SECRET_KEY') is not None:
-    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if secret is not None:
+    SECRET_KEY = secret
 else:
     print('No Secret Key Provided')
 
@@ -85,7 +87,7 @@ WSGI_APPLICATION = 'lake_bottom.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
