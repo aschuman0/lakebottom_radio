@@ -21,7 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO - Load from gcp metadata server / env var
-SECRET_KEY = 's5!dn4(c11*y9mbfvp+ubpaqu1u^=e*jx387rb4iphij!c$$q%'
+if os.environ.get('DJANGO_SECRET_KEY') is not None:
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+else:
+    print('No Secret Key Provided')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
