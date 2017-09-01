@@ -32,7 +32,7 @@ else:
 DEBUG = False
 
 # TODO - sane values for actual domain
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['http://35.197.15.122/','http://www.lakebottomradio.com/','http://lakebottomradio.com/']
 
 # Application definition
 

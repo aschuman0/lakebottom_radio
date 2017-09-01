@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # env vars from metadata
-SQL_IP=$(curl "http://metadata/computeMetadata/v1/project/attributes/sql-ip" -H "Metadata-Flavor: Google")
-SQL_PW=$(curl "http://metadata/computeMetadata/v1/project/attributes/sql-password" -H "Metadata-Flavor: Google")
+# SQL_IP=$(curl "http://metadata/computeMetadata/v1/project/attributes/sql-ip" -H "Metadata-Flavor: Google")
+# SQL_PW=$(curl "http://metadata/computeMetadata/v1/project/attributes/sql-password" -H "Metadata-Flavor: Google")
 DJANGO_SECRET=$(curl "http://metadata/computeMetadata/v1/project/attributes/django-secret" -H "Metadata-Flavor: Google")
 
 
@@ -23,4 +23,4 @@ python manage.py makemigrations
 python manage.py migrate
 
 # stand up server
-gunicorn lake_bottom/wsgi.py --bind=0.0.0.0:80
+sudo gunicorn lake_bottom.lake_bottom.wsgi --bind=0.0.0.0:80
