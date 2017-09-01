@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = True
 
-SECRET_KEY = 's5!dn4(c11*y9mbfvp+ubpaqu1u^=e*jx387rb4iphij!c$$q%'
+SECRET_KEY = 'LG#TgPMUXqrqD3JzfpPiyo4eJwFAUgqWYvcP7XiFq'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

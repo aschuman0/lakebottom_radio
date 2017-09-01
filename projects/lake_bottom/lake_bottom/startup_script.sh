@@ -5,9 +5,6 @@ SQL_IP=$(curl "http://metadata/computeMetadata/v1/project/attributes/sql-ip" -H 
 SQL_PW=$(curl "http://metadata/computeMetadata/v1/project/attributes/sql-password" -H "Metadata-Flavor: Google")
 DJANGO_SECRET=$(curl "http://metadata/computeMetadata/v1/project/attributes/django-secret" -H "Metadata-Flavor: Google")
 
-export SQL_IP
-export SQL_PW
-export DJANGO_SECRET
 
 # update, install things as needed
 sudo apt-get update
@@ -26,4 +23,4 @@ python manage.py makemigrations
 python manage.py migrate
 
 # stand up server
-sudo python manage.py runserver 0.0.0.0:80
+gunicorn lake_bottom/wsgi.py --bind=0.0.0.0:80

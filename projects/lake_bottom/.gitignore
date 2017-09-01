@@ -23,3 +23,4 @@ files/
 TODO.md
 .DS_Store
 settings_dev.py
+.vscode/
