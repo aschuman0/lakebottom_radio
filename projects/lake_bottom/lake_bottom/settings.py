@@ -16,23 +16,23 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Get environment vars
-secret = os.environ.get('DJANGO_SECRET')
+SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# TODO - Load from gcp metadata server / env var
-if secret is not None:
-    SECRET_KEY = secret
-else:
-    print('No Secret Key Provided')
+# # TODO - Load from gcp metadata server / env var
+# if secret is not None:
+#     SECRET_KEY = secret
+# else:
+#     print('No Secret Key Provided')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 # TODO - sane values for actual domain
-ALLOWED_HOSTS = ['http://35.197.15.122/','http://www.lakebottomradio.com/','http://lakebottomradio.com/']
+ALLOWED_HOSTS = ['35.197.15.122','www.lakebottomradio.com','lakebottomradio.com', '127.0.0.1']
 
 # Application definition
 
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'lake_bottom.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
