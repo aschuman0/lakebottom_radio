@@ -66,7 +66,7 @@ def page_detail(request, slug):
         raise Http404(e.message)
 
     return render(request, 'pages/page.html', {'page': page})
-    
+
 @login_required
 def edit_show(request, slug):
     # get the object realted to the passed in slug

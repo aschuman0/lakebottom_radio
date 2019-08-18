@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Get environment vars
-SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h'
+SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h' # TODO - pull from env var
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -29,10 +29,14 @@ SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h'
 #     print('No Secret Key Provided')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False  # TODO - add check for dev environemtn var, load in debug
 
 # TODO - sane values for actual domain
-ALLOWED_HOSTS = ['35.197.15.122','www.lakebottomradio.com','lakebottomradio.com', '127.0.0.1']
+ALLOWED_HOSTS = ['35.197.15.122',
+                 'www.lakebottomradio.com',
+                 'lakebottomradio.com',
+                 '127.0.0.1',
+                 'lake-bottom-radio.appspot.com']
 
 # Application definition
 
@@ -82,15 +86,47 @@ TEMPLATES = [
 WSGI_APPLICATION = 'lake_bottom.wsgi.application'
 
 
-# Database
+if os.getenv('GAE_APPLICATION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/lake-bottom-radio:us-east1:lakebottom-radio',
+            'USER': 'lakebottom_dev',
+            'PASSWORD': '+kPjzZzcZZNt6pteWnxTjkG72GnmvW',
+            'NAME': 'lakebottom_dev',
+        }
+    }
+else:
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'NAME': 'lakebottom_dev',
+            'USER': 'lakebottom_dev',
+            'PASSWORD': '+kPjzZzcZZNt6pteWnxTjkG72GnmvW',
+        }
+    }
+
+
+
+# OLD LOCAL Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -146,7 +182,3 @@ EMAIL_PORT = 1025
 
 # Login redirect
 LOGIN_REDIRECT_URL = "home"
-
-# Load/override settings if Dev env var is true
-if os.environ.get('DJANGO_DEV') is not None:
-    from settings_dev import *
