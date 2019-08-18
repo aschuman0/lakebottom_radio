@@ -14,8 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
     password_reset,
@@ -34,15 +32,15 @@ urlpatterns = [
         name='show_detail'),
     url(r'^shows/(?P<slug>[-\w]+)/edit/$', views.edit_show,
         name='edit_show'),
-    url(r'^p/(?P<slug>[-\w]+)/$', views.page_detail, 
+    url(r'^p/(?P<slug>[-\w]+)/$', views.page_detail,
         name='page_detail'),
-    url(r'^p/(?P<slug>[-\w]+)/edit/$', views.edit_page, 
+    url(r'^p/(?P<slug>[-\w]+)/edit/$', views.edit_page,
         name='edit_page'),
     url(r'^live/$', views.edit_live, name='edit_live'),
-    url(r'^accounts/password/reset/$', password_reset, 
+    url(r'^accounts/password/reset/$', password_reset,
         {'template_name': 'registration/password_reset_Form.html'},
         name="password_reset"),
-    url(r'^accounts/password/reset/done/$', password_reset_done, 
+    url(r'^accounts/password/reset/done/$', password_reset_done,
         {'template_name': 'registration/password_reset_done.html'},
         name="password_reset_done"),
     url(r'^accounts/password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',password_reset_confirm, 
@@ -54,7 +52,3 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^admin/', admin.site.urls),
 ]
-
-# Show uploaded files in debug ONLY
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
