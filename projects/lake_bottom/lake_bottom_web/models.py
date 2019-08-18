@@ -14,7 +14,8 @@ class Song(models.Model):
 class Show(models.Model):
     name = models.CharField(max_length=255)
     about = models.TextField()
-    playlist_file = models.FileField(upload_to='playlists', null=True)
+    playlist_file = models.FileField(null=True)
+    playlist_field = models.TextField()
     songs = models.ManyToManyField(Song)
     date_created = models.DateTimeField()
     published = models.BooleanField(default=True)
