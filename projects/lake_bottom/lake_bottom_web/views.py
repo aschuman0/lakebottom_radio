@@ -119,24 +119,27 @@ def create_show(request):
             file = request.FILES['playlist_file']
             tmp_list = []
 
-            for chunk in file.chunks():
-                tmp_list.append(chunk.decode('utf-8'))
+            try: 
+                for chunk in file.chunks():
+                    tmp_list.append(chunk.decode('utf-8'))
 
-            encoded_file = '\r'.join(tmp_list).split('\r')
+                encoded_file = '\r'.join(tmp_list).split('\r')
 
-            reader = csv.DictReader(encoded_file, delimiter='\t')
-            for song in reader:
-                new_song = Song(title=song['Name'],
-                                artist=song['Artist'],
-                                album=song['Album'],
-                                year=song['Year'])
-                new_song.save()
-                show.songs.add(new_song)
+                reader = csv.DictReader(encoded_file, delimiter='\t')
+                for song in reader:
+                    new_song = Song(title=song['Name'],
+                                    artist=song['Artist'],
+                                    album=song['Album'],
+                                    year=song['Year'])
+                    new_song.save()
+                    show.songs.add(new_song)
 
-            show.save()
+                show.save()
 
-            # redirect to the new show page
-            messages.success(request, 'New Show Added.')
+                messages.success(request, 'New Show Added.')
+            except Exception as e:
+                print(e)
+                
             return redirect('show_detail', slug=show.slug)
 
     # if just a GET, create the form
