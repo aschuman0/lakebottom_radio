@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib import messages
 
-from lake_bottom_web.models import Show, Page, Live
+from lake_bottom_web.models import Show, Page, Live, Song
 from lake_bottom_web.forms import ShowForm, PageForm, LiveForm
+
 
 # Create your views here.
 def index(request):
@@ -35,6 +36,7 @@ def index(request):
         'shows': shows,
     })
 
+
 def list_shows(request):
     if request.user.is_authenticated():
         # If loggged in show most recent 10 shows
@@ -46,6 +48,7 @@ def list_shows(request):
     return render(request, 'shows/show_list.html', {
         'shows': shows,
     })
+
 
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
@@ -59,6 +62,7 @@ def show_detail(request, slug):
         'show': show, 'playlist': playlist,
     })
 
+
 def page_detail(request, slug):
     try:
         page = Page.objects.get(page_name=slug)
@@ -66,6 +70,7 @@ def page_detail(request, slug):
         raise Http404(e.message)
 
     return render(request, 'pages/page.html', {'page': page})
+
 
 @login_required
 def edit_show(request, slug):
@@ -109,6 +114,27 @@ def create_show(request):
             show.date_created = datetime.datetime.utcnow()
             # now with the proper slug, we can save the new object
             show.save()
+
+            # load the show's newly saved file to get songs
+            file = request.FILES['playlist_file']
+            tmp_list = []
+
+            for chunk in file.chunks():
+                tmp_list.append(chunk.decode('utf-8'))
+
+            encoded_file = '\r'.join(tmp_list).split('\r')
+
+            reader = csv.DictReader(encoded_file, delimiter='\t')
+            for song in reader:
+                new_song = Song(title=song['Name'],
+                                artist=song['Artist'],
+                                album=song['Album'],
+                                year=song['Year'])
+                new_song.save()
+                show.songs.add(new_song)
+
+            show.save()
+
             # redirect to the new show page
             messages.success(request, 'New Show Added.')
             return redirect('show_detail', slug=show.slug)
@@ -116,7 +142,7 @@ def create_show(request):
     # if just a GET, create the form
     else:
         form = form_class()
-    
+
     return render(request, 'shows/create_show.html', {'form': form})
 
 @login_required
