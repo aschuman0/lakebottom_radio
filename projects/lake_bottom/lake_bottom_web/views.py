@@ -52,11 +52,7 @@ def list_shows(request):
 
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
-    playlist = None
-
-    if show.playlist_file:
-        with open(show.playlist_file.path, 'rU') as f:
-            playlist = list(csv.DictReader(f,delimiter="\t",dialect=csv.excel_tab))
+    playlist = show.songs.all()
 
     return render(request, 'shows/show_detail.html', {
         'show': show, 'playlist': playlist,
@@ -98,6 +94,7 @@ def edit_show(request, slug):
         'show': show, 'form': form,
     })
 
+
 @login_required
 def create_show(request):
 
@@ -127,6 +124,7 @@ def create_show(request):
 
                 reader = csv.DictReader(encoded_file, delimiter='\t')
                 for song in reader:
+                    # TODO - Check if Show exists, add that record else, make new
                     new_song = Song(title=song['Name'],
                                     artist=song['Artist'],
                                     album=song['Album'],
@@ -147,6 +145,7 @@ def create_show(request):
         form = form_class()
 
     return render(request, 'shows/create_show.html', {'form': form})
+
 
 @login_required
 def edit_page(request, slug):
@@ -170,6 +169,7 @@ def edit_page(request, slug):
     return render(request, 'pages/edit_page.html', {
         'page': page, 'form': form
     })
+
 
 @login_required
 def edit_live(request):
