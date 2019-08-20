@@ -3,6 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+SHOW_TYPES = [
+    ('SURF', 'Surfbear Sez'),
+    ('BOOGIE', 'Blacktail Boogie'),
+]
+
+
 # Create your models here.
 class Song(models.Model):
     title = models.CharField(max_length=1027)
@@ -24,6 +30,9 @@ class Show(models.Model): # TODO - Add show type with popup
     date_created = models.DateTimeField()
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
+    show_type = models.CharField(choices=SHOW_TYPES,
+                                 max_length=15,
+                                 default='SURF')
 
     def __str__(self):
         return self.name

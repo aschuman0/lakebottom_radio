@@ -131,7 +131,8 @@ def create_show(request):
                         new_song = Song.objects.filter(title=song['Name'],
                                                        artist=song['Artist'],
                                                        album=song['Album'],
-                                                       year=song['Year']).first()
+                                                       year=song['Year']
+                                                       ).first()
                     else:
                         new_song = Song(title=song['Name'],
                                         artist=song['Artist'],
