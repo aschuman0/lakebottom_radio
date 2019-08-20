@@ -17,12 +17,12 @@ class PageAdmin(admin.ModelAdmin):
 
 class LiveAdmin(admin.ModelAdmin):
     model = Live
-    list_display = ('name','is_live')
+    list_display = ('name', 'is_live')
 
 
 class SongAdmin(admin.ModelAdmin):
     model = Song
-    list_display = ('title', 'artist, album','year')
+    list_display = ('title', 'artist, album', 'year', 'slug')
 
 
 # Register your models here.
