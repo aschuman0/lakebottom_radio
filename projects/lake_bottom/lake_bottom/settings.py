@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['35.197.15.122',
                  'www.lakebottomradio.com',
                  'lakebottomradio.com',
                  '127.0.0.1',
+                 '0.0.0.0',
                  'lake-bottom-radio.appspot.com']
 
 # Application definition
@@ -168,7 +169,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'lake_bottom_web/static/')
 STATIC_URL = '/static/'
 
 # Media file settings
-MEDIA_ROOT = os.path.join(BASE_DIR, 'lake_bottom_web/files/')
+MEDIA_ROOT = '/tmp/'
 MEDIA_URL = '/files/'
 
 # email settings
