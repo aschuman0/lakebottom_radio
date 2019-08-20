@@ -1,5 +1,6 @@
 import datetime
 import csv
+import uuid
 
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
@@ -107,7 +108,7 @@ def create_show(request):
             # create a show instance, but do not yet save
             show = form.save(commit=False)
             # create the slug
-            show.slug = slugify(show.name)
+            show.slug = str(uuid.uuid4())
             show.date_created = datetime.datetime.utcnow()
             # now with the proper slug, we can save the new object
             show.save()
@@ -121,15 +122,24 @@ def create_show(request):
                     tmp_list.append(chunk.decode('utf-8'))
 
                 encoded_file = '\r'.join(tmp_list).split('\r')
-
                 reader = csv.DictReader(encoded_file, delimiter='\t')
                 for song in reader:
-                    # TODO - Check if Show exists, add that record else, make new
-                    new_song = Song(title=song['Name'],
-                                    artist=song['Artist'],
-                                    album=song['Album'],
-                                    year=song['Year'])
-                    new_song.save()
+                    if Song.objects.filter(title=song['Name'],
+                                           artist=song['Artist'],
+                                           album=song['Album'],
+                                           year=song['Year']).exists():
+                        new_song = Song.objects.filter(title=song['Name'],
+                                                       artist=song['Artist'],
+                                                       album=song['Album'],
+                                                       year=song['Year']).first()
+                    else:
+                        new_song = Song(title=song['Name'],
+                                        artist=song['Artist'],
+                                        album=song['Album'],
+                                        year=song['Year'],
+                                        slug=str(uuid.uuid4()))
+                        new_song.save()
+                    
                     show.songs.add(new_song)
 
                 show.save()
