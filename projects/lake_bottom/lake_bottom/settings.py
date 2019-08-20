@@ -32,8 +32,7 @@ SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h' # TODO - pull from env var
 DEBUG = False  # TODO - add check for dev environemtn var, load in debug
 
 # TODO - sane values for actual domain
-ALLOWED_HOSTS = ['35.197.15.122',
-                 'www.lakebottomradio.com',
+ALLOWED_HOSTS = ['www.lakebottomradio.com',
                  'lakebottomradio.com',
                  '127.0.0.1',
                  '0.0.0.0',
