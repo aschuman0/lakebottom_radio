@@ -22,5 +22,6 @@ files/
 *.sqlite3
 TODO.md
 .DS_Store
-settings_dev.py
 .vscode/
+secrets.yaml
+.gcloudignore

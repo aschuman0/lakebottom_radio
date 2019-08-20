@@ -16,23 +16,24 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Get environment vars
-SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h'
+if os.getenv('DJANGO_SECRET', None):
+    SECRET_KEY = os.getenv('DJANGO_SECRET')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# # TODO - Load from gcp metadata server / env var
-# if secret is not None:
-#     SECRET_KEY = secret
-# else:
-#     print('No Secret Key Provided')
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if os.getenv('GAE_APPLICATION', None):
+    DEBUG = False
+else:
+    DEBUG = True
 
 # TODO - sane values for actual domain
-ALLOWED_HOSTS = ['35.197.15.122','www.lakebottomradio.com','lakebottomradio.com', '127.0.0.1']
+ALLOWED_HOSTS = ['www.lakebottomradio.com',
+                 'lakebottomradio.com',
+                 '127.0.0.1',
+                 '0.0.0.0',
+                 'lake-bottom-radio.appspot.com']
 
 # Application definition
 
@@ -82,15 +83,35 @@ TEMPLATES = [
 WSGI_APPLICATION = 'lake_bottom.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if os.getenv('GAE_APPLICATION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': os.getenv('DB_CONN_STR'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASS'),
+            'NAME': os.getenv('DB_NAME'),
+        }
     }
-}
+else:
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '127.0.0.1',
+            'PORT': os.getenv('DB_PORT'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASS'),
+        }
+    }
 
 
 # Password validation
@@ -132,7 +153,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'lake_bottom_web/static/')
 STATIC_URL = '/static/'
 
 # Media file settings
-MEDIA_ROOT = os.path.join(BASE_DIR, 'lake_bottom_web/files/')
+MEDIA_ROOT = '/tmp/'
 MEDIA_URL = '/files/'
 
 # email settings
@@ -146,7 +167,3 @@ EMAIL_PORT = 1025
 
 # Login redirect
 LOGIN_REDIRECT_URL = "home"
-
-# Load/override settings if Dev env var is true
-if os.environ.get('DJANGO_DEV') is not None:
-    from settings_dev import *

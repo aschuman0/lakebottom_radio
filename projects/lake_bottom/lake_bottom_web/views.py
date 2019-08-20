@@ -1,5 +1,6 @@
 import datetime
 import csv
+import uuid
 
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
@@ -7,8 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib import messages
 
-from lake_bottom_web.models import Show, Page, Live
+from lake_bottom_web.models import Show, Page, Live, Song
 from lake_bottom_web.forms import ShowForm, PageForm, LiveForm
+
 
 # Create your views here.
 def index(request):
@@ -35,6 +37,7 @@ def index(request):
         'shows': shows,
     })
 
+
 def list_shows(request):
     if request.user.is_authenticated():
         # If loggged in show most recent 10 shows
@@ -47,17 +50,15 @@ def list_shows(request):
         'shows': shows,
     })
 
+
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
-    playlist = None
-
-    if show.playlist_file:
-        with open(show.playlist_file.path, 'rU') as f:
-            playlist = list(csv.DictReader(f,delimiter="\t",dialect=csv.excel_tab))
+    playlist = show.songs.all()
 
     return render(request, 'shows/show_detail.html', {
         'show': show, 'playlist': playlist,
     })
+
 
 def page_detail(request, slug):
     try:
@@ -66,7 +67,8 @@ def page_detail(request, slug):
         raise Http404(e.message)
 
     return render(request, 'pages/page.html', {'page': page})
-    
+
+
 @login_required
 def edit_show(request, slug):
     # get the object realted to the passed in slug
@@ -93,6 +95,7 @@ def edit_show(request, slug):
         'show': show, 'form': form,
     })
 
+
 @login_required
 def create_show(request):
 
@@ -105,19 +108,54 @@ def create_show(request):
             # create a show instance, but do not yet save
             show = form.save(commit=False)
             # create the slug
-            show.slug = slugify(show.name)
+            show.slug = str(uuid.uuid4())
             show.date_created = datetime.datetime.utcnow()
             # now with the proper slug, we can save the new object
             show.save()
-            # redirect to the new show page
-            messages.success(request, 'New Show Added.')
+
+            # load the show's newly saved file to get songs
+            file = request.FILES['playlist_file']
+            tmp_list = []
+
+            try: 
+                for chunk in file.chunks():
+                    tmp_list.append(chunk.decode('utf-8'))
+
+                encoded_file = '\r'.join(tmp_list).split('\r')
+                reader = csv.DictReader(encoded_file, delimiter='\t')
+                for song in reader:
+                    if Song.objects.filter(title=song['Name'],
+                                           artist=song['Artist'],
+                                           album=song['Album'],
+                                           year=song['Year']).exists():
+                        new_song = Song.objects.filter(title=song['Name'],
+                                                       artist=song['Artist'],
+                                                       album=song['Album'],
+                                                       year=song['Year']).first()
+                    else:
+                        new_song = Song(title=song['Name'],
+                                        artist=song['Artist'],
+                                        album=song['Album'],
+                                        year=song['Year'],
+                                        slug=str(uuid.uuid4()))
+                        new_song.save()
+                    
+                    show.songs.add(new_song)
+
+                show.save()
+
+                messages.success(request, 'New Show Added.')
+            except Exception as e:
+                print(e)
+                
             return redirect('show_detail', slug=show.slug)
 
     # if just a GET, create the form
     else:
         form = form_class()
-    
+
     return render(request, 'shows/create_show.html', {'form': form})
+
 
 @login_required
 def edit_page(request, slug):
@@ -141,6 +179,7 @@ def edit_page(request, slug):
     return render(request, 'pages/edit_page.html', {
         'page': page, 'form': form
     })
+
 
 @login_required
 def edit_live(request):
