@@ -22,7 +22,10 @@ SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h' # TODO - pull from env var
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # TODO - add check for dev environemtn var, load in debug
+if os.getenv('GAE_APPLICATION', None):
+    DEBUG = False
+else:
+    DEBUG = True
 
 # TODO - sane values for actual domain
 ALLOWED_HOSTS = ['www.lakebottomradio.com',
