@@ -11,10 +11,10 @@ class Song(models.Model):
     year = models.CharField(max_length=1027)
 
 
-class Show(models.Model):
+class Show(models.Model): # TODO - Add show type with popup
     name = models.CharField(max_length=255)
     about = models.TextField()
-    playlist_file = models.FileField(null=True)
+    playlist_file = models.FileField(upload_to='/tmp', null=True)
     playlist_field = models.TextField()
     songs = models.ManyToManyField(Song)
     date_created = models.DateTimeField()
