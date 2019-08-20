@@ -6,3 +6,6 @@ handlers:
 
 - url: /.*
   script: auto
+
+includes:
+- secrets.yaml
