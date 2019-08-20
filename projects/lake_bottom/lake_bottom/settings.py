@@ -21,15 +21,8 @@ SECRET_KEY = 'WcmABfKABkBwrufd2Zg3QKUvr4h' # TODO - pull from env var
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# # TODO - Load from gcp metadata server / env var
-# if secret is not None:
-#     SECRET_KEY = secret
-# else:
-#     print('No Secret Key Provided')
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # TODO - add check for dev environemtn var, load in debug
+DEBUG = True  # TODO - add check for dev environemtn var, load in debug
 
 # TODO - sane values for actual domain
 ALLOWED_HOSTS = ['www.lakebottomradio.com',
@@ -115,18 +108,6 @@ else:
             'PASSWORD': '+kPjzZzcZZNt6pteWnxTjkG72GnmvW',
         }
     }
-
-
-
-# OLD LOCAL Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 
 # Password validation
