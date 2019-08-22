@@ -15,10 +15,13 @@ class Song(models.Model):
     artist = models.CharField(max_length=1027)
     album = models.CharField(max_length=1027)
     year = models.CharField(max_length=1027)
-    slug = models.SlugField()
+    genre = models.CharField(max_length=1027, default=None
+    )
+    notes = models.TextField(default=None)
+    slug = models.SlugField(default=None)
 
     def __str__(self):
-        return self.title
+        return '{} - {}'.format(self.title, self.artist)
 
 
 class Show(models.Model): # TODO - Add show type with popup
