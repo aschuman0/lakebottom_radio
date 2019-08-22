@@ -17,7 +17,7 @@ class PageAdmin(admin.ModelAdmin):
 
 class LiveAdmin(admin.ModelAdmin):
     model = Live
-    list_display = ('name', 'is_live')
+    list_display = ('name', 'heading', 'subheading',  'stream_url', 'is_live')
 
 
 class SongAdmin(admin.ModelAdmin):
