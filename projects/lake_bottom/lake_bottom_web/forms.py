@@ -18,7 +18,7 @@ class PageForm(ModelForm):
 class LiveForm(ModelForm):
     class Meta:
         model = Live
-        fields = ('is_live', 'stream_url')
+        fields = ('heading', 'subheading', 'is_live')
 
 
 class SongForm(ModelForm):

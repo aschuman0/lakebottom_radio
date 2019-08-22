@@ -15,8 +15,7 @@ class Song(models.Model):
     artist = models.CharField(max_length=1027)
     album = models.CharField(max_length=1027)
     year = models.CharField(max_length=1027)
-    genre = models.CharField(max_length=1027, default=None
-    )
+    genre = models.CharField(max_length=1027, default=None)
     notes = models.TextField(default=None)
     slug = models.SlugField(default=None)
 
@@ -55,6 +54,8 @@ class Live(models.Model):
     name = models.CharField(max_length=255)
     stream_url = models.CharField(max_length=1027)
     is_live = models.BooleanField(default=False)
+    heading = models.CharField(max_length=255, default='')
+    subheading = models.CharField(max_length=255, default='')
 
     def __str__(self):
         return self.name

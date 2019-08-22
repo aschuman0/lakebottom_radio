@@ -30,10 +30,14 @@ def index(request):
         return render(request, 'live_index.html', {
             'shows': shows,
             'media_url': stream_info.stream_url,
+            'heading': stream_info.heading,
+            'subheading': stream_info.subheading
         })
-    
+
     return render(request, 'index.html', {
         'shows': shows,
+        'heading': stream_info.heading,
+        'subheading': stream_info.subheading
     })
 
 
@@ -203,10 +207,7 @@ def edit_live(request):
         form = form_class(data=request.POST, instance=live_info)
         if form.is_valid():
             form.save()
-            if form.cleaned_data['is_live']:
-                messages.info(request, 'Playbar is now live on site.')
-            else:
-                messages.info(request, 'Playbar has been removed from site.')
+            
             return redirect('home')
     else:
         form = form_class(instance=live_info)
