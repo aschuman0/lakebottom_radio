@@ -22,7 +22,7 @@ class LiveAdmin(admin.ModelAdmin):
 
 class SongAdmin(admin.ModelAdmin):
     model = Song
-    list_display = ('title', 'artist, album', 'year', 'slug')
+    list_display = ('title', 'artist, album', 'year', 'genre', 'notes', 'slug')
 
 
 # Register your models here.

@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %}
+{% load tz %}
+{% block title %}
+    {{ song.name }} - {{ block.super }}
+{% endblock %}
+{% block content %}
+    <h1>{{ song.title }}</h1>
+    {% if song %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Genre</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"><a href="{% url 'show_detail' slug=song.slug %}">{{ song.artist }}</a></td>
+                <td>{{ song.album }}</td>
+                <td>{{ song.genre }}</td>
+                <td>{{ item.year }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if song.notes %}
+    <h3>Notes</h3>
+    <p>{{ song.notes }}</p>
+    {% endif %}
+    <h2>Appears in these shows:</h2>
+    {% for show in shows %}
+    <p>• <a href="{% url 'show_detail' slug=show.slug %}">{{ show.name }}</a></p>
+    {% endfor %}
+    {% else %}
+        <p>No Information for this Song.</p>
+    {% endif %}
+    {% include 'includes/song_controls.html' %}
+{% endblock %}

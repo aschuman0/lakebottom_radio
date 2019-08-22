@@ -1,15 +1,14 @@
 import datetime
-import csv
 import uuid
 
 from django.shortcuts import render, redirect
-from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib import messages
 
 from lake_bottom_web.models import Show, Page, Live, Song
-from lake_bottom_web.forms import ShowForm, PageForm, LiveForm
+from lake_bottom_web.forms import ShowForm, PageForm, LiveForm, SongForm
+from lake_bottom_web.utils import parse_show_songs
 
 
 # Create your views here.
@@ -60,6 +59,15 @@ def show_detail(request, slug):
     })
 
 
+def song_detail(request, slug):
+    song = Song.objects.get(slug=slug)
+    shows = song.show_set.all()
+
+    return render(request, 'shows/song_detail.html', {
+        'song': song, 'shows': shows
+    })
+
+
 def page_detail(request, slug):
     try:
         page = Page.objects.get(page_name=slug)
@@ -68,6 +76,25 @@ def page_detail(request, slug):
 
     return render(request, 'pages/page.html', {'page': page})
 
+@login_required
+def edit_song(request, slug):
+    song = Song.objects.get(slug=slug)
+
+    form_class = SongForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST, instance=song)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Show changes saved.')
+
+            return redirect('song_detail', slug=song.slug)
+    else:
+        form = form_class(instance=song)
+
+    return render(request, 'shows/edit_song.html', {
+        'song': song, 'form': form
+    })
 
 @login_required
 def edit_show(request, slug):
@@ -82,9 +109,18 @@ def edit_show(request, slug):
         # get the data from the submitted for and apply to the form
         form = form_class(data=request.POST, instance=show)
         if form.is_valid():
-            #save new data
-            form.save()
-            messages.success(request, 'Show Changes Saved.')
+            show = form.save(commit=False)
+            
+            show.save()
+
+            # load the show's newly saved file to get songs
+            file = request.FILES['playlist_file']
+            
+            if parse_show_songs(show=show, file_data=file, remove=True):
+                messages.success(request, 'Show Changes Saved.')
+            else:
+                messages.success(request, 'Problem changing songs. Please try again or edit show.')
+
             return redirect('show_detail', slug=show.slug)
     # otherwise, just create the form
     else:
@@ -115,40 +151,12 @@ def create_show(request):
 
             # load the show's newly saved file to get songs
             file = request.FILES['playlist_file']
-            tmp_list = []
-
-            try: 
-                for chunk in file.chunks():
-                    tmp_list.append(chunk.decode('utf-8'))
-
-                encoded_file = '\r'.join(tmp_list).split('\r')
-                reader = csv.DictReader(encoded_file, delimiter='\t')
-                for song in reader:
-                    if Song.objects.filter(title=song['Name'],
-                                           artist=song['Artist'],
-                                           album=song['Album'],
-                                           year=song['Year']).exists():
-                        new_song = Song.objects.filter(title=song['Name'],
-                                                       artist=song['Artist'],
-                                                       album=song['Album'],
-                                                       year=song['Year']
-                                                       ).first()
-                    else:
-                        new_song = Song(title=song['Name'],
-                                        artist=song['Artist'],
-                                        album=song['Album'],
-                                        year=song['Year'],
-                                        slug=str(uuid.uuid4()))
-                        new_song.save()
-                    
-                    show.songs.add(new_song)
-
-                show.save()
-
+            
+            if parse_show_songs(show=show, file_data=file):
                 messages.success(request, 'New Show Added.')
-            except Exception as e:
-                print(e)
-                
+            else:
+                messages.success(request, 'Problem adding songs to show. Please try again or edit show.')
+            
             return redirect('show_detail', slug=show.slug)
 
     # if just a GET, create the form
