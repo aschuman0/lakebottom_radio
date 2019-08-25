@@ -12,8 +12,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Artist</th>
                 <th>Title</th>
+                <th>Artist</th>
                 <th>Album</th>
                 <th>Year</th>
             </tr>
@@ -21,8 +21,8 @@
         {% for item in playlist %}
         <tbody>
             <tr>
-                <th scope="row"><a href="{% url 'song_detail' slug=item.slug %}">{{ item.artist }}</a></td>
-                <td>{{ item.title }}</td>
+                <th scope="row"><a href="{% url 'song_detail' slug=item.slug %}">{{ item.title }}</a></td>
+                <td>{{ item.artist }}</td>
                 <td>{{ item.album }}</td>
                 <td>{{ item.year }}</td>
             </tr>
