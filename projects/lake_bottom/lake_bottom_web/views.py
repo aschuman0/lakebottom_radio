@@ -56,7 +56,15 @@ def list_shows(request):
 
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
+    stream_info = Live.objects.get(name='main')
     playlist = show.songs.all()
+
+    if stream_info.is_live:
+        return render(request, 'shows/live_show.html', {
+            'show': show,
+            'playlist': playlist,
+            'media_url': stream_info.stream_url
+        })
 
     return render(request, 'shows/show_detail.html', {
         'show': show, 'playlist': playlist,
@@ -80,6 +88,7 @@ def page_detail(request, slug):
 
     return render(request, 'pages/page.html', {'page': page})
 
+
 @login_required
 def edit_song(request, slug):
     song = Song.objects.get(slug=slug)
@@ -99,6 +108,7 @@ def edit_song(request, slug):
     return render(request, 'shows/edit_song.html', {
         'song': song, 'form': form
     })
+
 
 @login_required
 def edit_show(request, slug):

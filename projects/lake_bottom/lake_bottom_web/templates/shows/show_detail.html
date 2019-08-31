@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
     <h1>{{ show.name }}</h1>
+    {% block live %}{% endblock %}
     {% include 'includes/show_controls.html' %}
     <h2>About:</h2><p>{{ show.about|linebreaks }}</p><hr />
     <h2>Playlist:</h2>

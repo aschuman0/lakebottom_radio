@@ -1,0 +1,9 @@
+{% extends 'shows/show_detail.html' %}
+{% block live %}
+<hr />
+<h3>Listen Live Now!</h3>
+<div>
+<audio controls preload="none" style="width:16em;padding:0;"><source src="{{ media_url }}"></source></audio>
+</audio></div>
+<br />
+{% endblock %}
