@@ -128,14 +128,20 @@ def edit_show(request, slug):
             show.save()
 
             # load the show's newly saved file to get songs
-            file = request.FILES['playlist_file']
-            
-            if parse_show_songs(show=show, file_data=file, remove=True):
-                messages.success(request, 'Show Changes Saved.')
+            if len(request.FILES) > 0:
+                file = request.FILES['playlist_file']
             else:
-                messages.success(request, 'Problem changing songs. Please try again or edit show.')
+                file = None
+            
+            if file:
+                if parse_show_songs(show=show, file_data=file, remove=True):
+                    messages.success(request, 'Show Changes Saved.')
+                else:
+                    messages.success(request,
+                                     'Problem changing songs. Please try again or edit show.')
 
             return redirect('show_detail', slug=show.slug)
+    
     # otherwise, just create the form
     else:
         form = form_class(instance=show)
