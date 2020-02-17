@@ -3,11 +3,12 @@ import uuid
 
 import spotipy
 
-from lake_bottom_web.models import Song
+from lake_bottom_web.models import Song, ShowSongs
 
 
 def show_from_file(show, file_data, remove=False):
     tmp_list = []
+    song_order = 0
 
     if remove:  # clears all songs on show
         show.songs.clear()
@@ -18,6 +19,7 @@ def show_from_file(show, file_data, remove=False):
         encoded_file = '\r'.join(tmp_list).split('\r')
         reader = csv.DictReader(encoded_file, delimiter='\t')
         for song in reader:
+            # if the song exists, create object from db record
             if Song.objects.filter(title=song['Name'],
                                    artist=song['Artist'],
                                    album=song['Album'],
@@ -26,6 +28,7 @@ def show_from_file(show, file_data, remove=False):
                                                artist=song['Artist'],
                                                album=song['Album'],
                                                year=song['Year']).first()
+            # if the song does not exist, create new song and commit
             else:
                 new_song = Song(title=song['Name'],
                                 artist=song['Artist'],
@@ -36,7 +39,13 @@ def show_from_file(show, file_data, remove=False):
                                 slug=str(uuid.uuid4()))
                 new_song.save()
 
-            show.songs.add(new_song)
+            association = ShowSongs(
+                song=new_song,
+                show=show,
+                order=song_order
+            )
+            association.save()
+            song_order += 1
 
         show.save()
 
