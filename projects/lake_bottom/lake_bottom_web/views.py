@@ -8,7 +8,7 @@ from django.contrib import messages
 
 from lake_bottom_web.models import Show, Page, Live, Song
 from lake_bottom_web.forms import ShowForm, PageForm, LiveForm, SongForm
-from lake_bottom_web.utils import parse_show_songs
+from lake_bottom_web.utils import show_from_file
 
 
 # Create your views here.
@@ -134,7 +134,7 @@ def edit_show(request, slug):
                 file = None
             
             if file:
-                if parse_show_songs(show=show, file_data=file, remove=True):
+                if show_from_file(show=show, file_data=file, remove=True):
                     messages.success(request, 'Show Changes Saved.')
                 else:
                     messages.success(request,
@@ -172,7 +172,7 @@ def create_show(request):
             # load the show's newly saved file to get songs
             file = request.FILES['playlist_file']
             
-            if parse_show_songs(show=show, file_data=file):
+            if show_from_file(show=show, file_data=file):
                 messages.success(request, 'New Show Added.')
             else:
                 messages.success(request, 'Problem adding songs to show. Please try again or edit show.')

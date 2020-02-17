@@ -1,10 +1,12 @@
 import csv
 import uuid
 
+import spotipy
+
 from lake_bottom_web.models import Song
 
 
-def parse_show_songs(show, file_data, remove=False):
+def show_from_file(show, file_data, remove=False):
     tmp_list = []
 
     if remove:  # clears all songs on show
