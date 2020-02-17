@@ -57,7 +57,7 @@ def list_shows(request):
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
     stream_info = Live.objects.get(name='main')
-    playlist = show.songs.all()
+    playlist = show.song_list()
 
     if stream_info.is_live:
         return render(request, 'shows/live_show.html', {
