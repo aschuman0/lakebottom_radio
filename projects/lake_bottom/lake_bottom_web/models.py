@@ -23,12 +23,15 @@ class Song(models.Model):
         return '{} - {}'.format(self.title, self.artist)
 
 
-class Show(models.Model): # TODO - Add show type with popup
+class Show(models.Model):
     name = models.CharField(max_length=255)
     about = models.TextField()
     playlist_file = models.FileField(upload_to='/tmp', null=True)
     playlist_field = models.TextField()
-    songs = models.ManyToManyField(Song)
+    songs = models.ManyToManyField(
+        Song,
+        through='ShowSongs'
+    )
     date_created = models.DateTimeField()
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
@@ -36,8 +39,34 @@ class Show(models.Model): # TODO - Add show type with popup
                                  max_length=15,
                                  default='SURF')
 
+    class Meta:
+        verbose_name = u'Show'
+
+    def song_list(self):
+        return [
+            songs.song for songs in
+            ShowSongs.objects.filter(show=self).order_by('order')
+        ]
+
     def __str__(self):
         return self.name
+
+
+class ShowSongs(models.Model):
+    song = models.ForeignKey(Song)
+    show = models.ForeignKey(Show)
+    order = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Songs for Show"
+        ordering = ['order', ]
+
+    def __str__(self):
+        return  '{} - {} - {}'.format(
+            self.show.name,
+            self.song.title,
+            self.song.artist
+        )
 
 
 class Page(models.Model):
