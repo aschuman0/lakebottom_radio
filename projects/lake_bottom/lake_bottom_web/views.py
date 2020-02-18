@@ -8,7 +8,7 @@ from django.contrib import messages
 
 from lake_bottom_web.models import Show, Page, Live, Song
 from lake_bottom_web.forms import ShowForm, PageForm, LiveForm, SongForm
-from lake_bottom_web.utils import show_from_file
+from lake_bottom_web.utils import show_from_file, show_from_spotify_uri
 
 
 # Create your views here.
@@ -124,24 +124,25 @@ def edit_show(request, slug):
         form = form_class(data=request.POST, instance=show)
         if form.is_valid():
             show = form.save(commit=False)
-            
             show.save()
 
             # load the show's newly saved file to get songs
             if len(request.FILES) > 0:
-                file = request.FILES['playlist_file']
+                show.songs.clear()
+                if show_from_file(show=show,
+                                  file_data=request.FILES['playlist_file']
+                                  ):
+                    messages.success(request, 'Current show edited from file.')
+            elif show.spotify_uri:
+                show.songs.clear()
+                if show_from_spotify_uri(show=show, uri=show.spotify_uri):
+                    messages.success(request, 'Current show edited from \
+                        Spotify.')
             else:
-                file = None
-            
-            if file:
-                if show_from_file(show=show, file_data=file, remove=True):
-                    messages.success(request, 'Show Changes Saved.')
-                else:
-                    messages.success(request,
-                                     'Problem changing songs. Please try again or edit show.')
+                messages.warning(request, 'Problem changing show.')
 
             return redirect('show_detail', slug=show.slug)
-    
+
     # otherwise, just create the form
     else:
         form = form_class(instance=show)
@@ -169,14 +170,25 @@ def create_show(request):
             # now with the proper slug, we can save the new object
             show.save()
 
-            # load the show's newly saved file to get songs
-            file = request.FILES['playlist_file']
-            
-            if show_from_file(show=show, file_data=file):
-                messages.success(request, 'New Show Added.')
+            # load the file or spotify uri to get songs
+            if len(request.FILES) > 0:
+                if show_from_file(show=show,
+                                  file_data=request.FILES['playlist_file']
+                                  ):
+                    messages.success(request, 'New Show Added from File.')
+                else:
+                    messages.success(request, 'Problem adding songs to show. \
+                        Please try again or edit show.')
+            elif show.spotify_uri:
+                if show_from_spotify_uri(show=show, uri=show.spotify_uri):
+                    messages.success(request, 'New Show Added from Spotify.')
+                else:
+                    messages.success(request, 'Problem adding song \
+                        from Spotify.')
             else:
-                messages.success(request, 'Problem adding songs to show. Please try again or edit show.')
-            
+                messages.warning(request, 'Either a file or a spotify uri \
+                    must be included.')
+        
             return redirect('show_detail', slug=show.slug)
 
     # if just a GET, create the form
