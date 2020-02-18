@@ -1,7 +1,8 @@
 import csv
 import uuid
+import os
 
-import spotipy
+from spotipy import SpotifyClientCredentials, Spotify
 
 from lake_bottom_web.models import Song, ShowSongs
 
@@ -55,16 +56,45 @@ def add_show(show, song_dict):
         return False
 
 
-def show_from_spotify_uri(show, uri, remove=False):
-    pass
+def show_from_spotify_uri(show, uri):
+    # make client
+    sp_id = os.getenv('SPOTIFY_ID')
+    sp_secret = os.getenv('SPOTIFY_SECRET')
+    creds_manager = SpotifyClientCredentials(client_id=sp_id,
+                                             client_secret=sp_secret)
+    sp_client = Spotify(client_credentials_manager=creds_manager)
+
+    # get playlist information
+    sp_playlist = sp_client.playlist(uri)
+    
+    # create list of dicts from playlist
+    songs = sp_playlist.get('tracks', {}).get('items')
+
+    show_songs = []
+    for song in songs:
+        track = song.get('track')
+        name = track.get('name')
+        artist = track.get('artists')[0].get('name')
+        album = track.get('album', {}).get('name')
+        year = track.get('album', {}).get('release_date')[:4]
+        genre = ''  # looks like this is not in the api return :(
+
+        show_song = {
+            'Name': name,
+            'Artist': artist,
+            'Album': album,
+            'Year': year,
+            'Genre': genre
+        }
+        show_songs.append(show_song)
+
+    # pass to add_show() which returns to the calling view
+    return add_show(show=show, song_dict=show_songs)
 
 
-def show_from_file(show, file_data, remove=False):
+def show_from_file(show, file_data):
     tmp_list = []
     song_order = 0
-
-    if remove:  # clears all songs on show
-        show.songs.clear()
 
     for chunk in file_data.chunks():
         tmp_list.append(chunk.decode('utf-8'))
