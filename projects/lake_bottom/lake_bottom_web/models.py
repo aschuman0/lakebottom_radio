@@ -26,8 +26,9 @@ class Song(models.Model):
 class Show(models.Model):
     name = models.CharField(max_length=255)
     about = models.TextField()
-    playlist_file = models.FileField(upload_to='/tmp', null=True)
+    playlist_file = models.FileField(upload_to='/tmp', null=True, blank=True)
     playlist_field = models.TextField()
+    spotify_uri = models.CharField(max_length=255, blank=True)
     songs = models.ManyToManyField(
         Song,
         through='ShowSongs'

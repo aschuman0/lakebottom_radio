@@ -6,7 +6,8 @@ from lake_bottom_web.models import Show, Page, Live, Song
 class ShowForm(ModelForm):
     class Meta:
         model = Show
-        fields = ('name', 'about', 'show_type', 'playlist_file', 'published')
+        fields = ('name', 'about', 'show_type', 'spotify_uri',
+                  'playlist_file', 'published')
 
 
 class PageForm(ModelForm):
