@@ -1,12 +1,18 @@
 from django.contrib import admin
 
-from lake_bottom_web.models import Show, Page, Live, Song
+from lake_bottom_web.models import Show, Page, Live, Song, ShowSongs
+
+
+class ShowSongsInline(admin.TabularInline):
+    model = ShowSongs
+    extra = 1
 
 
 # setup automatic slug creation
 class ShowAdmin(admin.ModelAdmin):
     model = Show
-    list_display = ('name', 'about', 'songs')
+    list_display = ('name', 'about')
+    inlines = (ShowSongsInline, )
     prepopulated_fields = {'slug': ('name',)}
 
 
@@ -22,11 +28,11 @@ class LiveAdmin(admin.ModelAdmin):
 
 class SongAdmin(admin.ModelAdmin):
     model = Song
-    list_display = ('title', 'artist, album', 'year', 'genre', 'notes', 'slug')
+    list_display = ('title', 'artist', 'album', 'year', 'genre', 'notes', 'slug')
 
 
 # Register your models here.
-admin.site.register(Show)
-admin.site.register(Page)
-admin.site.register(Live)
-admin.site.register(Song)
+admin.site.register(Show, ShowAdmin)
+admin.site.register(Page, PageAdmin)
+admin.site.register(Live, LiveAdmin)
+admin.site.register(Song, SongAdmin)
