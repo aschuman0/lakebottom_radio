@@ -4,3 +4,4 @@ django-registration-redux==1.6
 whitenoise==3.3.0
 PyMySQL==0.9.3
 mysqlclient==1.4.2.post1
+spotipy==2.9.0
