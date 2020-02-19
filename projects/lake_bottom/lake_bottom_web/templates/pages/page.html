@@ -8,5 +8,5 @@
     {% if user.is_authenticated %}
     <a href="{% url 'edit_page' slug=page.page_name %}">Edit this page</a>
     {% endif %}
-    <p>{{ page.page_body|linebreaks }}</p>
+    <p>{{ page.page_body|linebreaks|urlize }}</p>
 {% endblock %}
