@@ -19,7 +19,11 @@ def index(request):
         shows = Show.objects.all().order_by('date_created').reverse()[:10]
     else:
         # if not logged in show 5 most recent published shows
-        shows = Show.objects.filter(published=True).order_by('date_created').reverse()[:5]
+        shows = Show.objects.filter(
+                                published=True
+                                ).order_by(
+                                'date_created'
+                                ).reverse()[:5]
 
     try:
         stream_info = Live.objects.get(name='main')
@@ -47,7 +51,9 @@ def list_shows(request):
         shows = Show.objects.all().order_by('date_created').reverse()
     else:
         # if not logged in show 5 most recent published shows
-        shows = Show.objects.filter(published=True).order_by('date_created').reverse()
+        shows = Show.objects.filter(
+                            published=True).order_by(
+                            'date_created').reverse()
 
     return render(request, 'shows/show_list.html', {
         'shows': shows,
@@ -188,7 +194,7 @@ def create_show(request):
             else:
                 messages.warning(request, 'Either a file or a spotify uri \
                     must be included.')
-        
+
             return redirect('show_detail', slug=show.slug)
 
     # if just a GET, create the form
@@ -235,7 +241,7 @@ def edit_live(request):
         form = form_class(data=request.POST, instance=live_info)
         if form.is_valid():
             form.save()
-            
+
             return redirect('home')
     else:
         form = form_class(instance=live_info)

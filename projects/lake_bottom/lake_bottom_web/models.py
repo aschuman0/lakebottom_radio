@@ -63,7 +63,7 @@ class ShowSongs(models.Model):
         ordering = ['order', ]
 
     def __str__(self):
-        return  '{} - {} - {}'.format(
+        return '{} - {} - {}'.format(
             self.show.name,
             self.song.title,
             self.song.artist
