@@ -66,7 +66,7 @@ def show_from_spotify_uri(show, uri):
 
     # get playlist information
     sp_playlist = sp_client.playlist(uri)
-    
+
     # create list of dicts from playlist
     songs = sp_playlist.get('tracks', {}).get('items')
 
@@ -76,7 +76,11 @@ def show_from_spotify_uri(show, uri):
         name = track.get('name')
         artist = track.get('artists')[0].get('name')
         album = track.get('album', {}).get('name')
-        year = track.get('album', {}).get('release_date')[:4]
+        sp_year = track.get('album', {}).get('release_date')
+        if sp_year:
+            year = sp_year[:4]
+        else:
+            year = 'None'
         genre = ''  # looks like this is not in the api return :(
 
         show_song = {
