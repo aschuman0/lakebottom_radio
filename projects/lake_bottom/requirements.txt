@@ -1,7 +1,7 @@
-Django
-django-bootstrap-form
-django-registration-redux
-whitenoise
-PyMySQL
-mysqlclient
-spotipy
+Django==4.0.3
+django-bootstrap-form==3.4
+django-registration-redux==2.10
+whitenoise==6.0.0
+PyMySQL==1.0.2
+mysqlclient==2.1.0
+spotipy==2.19.0
