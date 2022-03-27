@@ -8,19 +8,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0013_show_playlist_field'),
+        ("lake_bottom_web", "0013_show_playlist_field"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='song',
-            name='slug',
+            model_name="song",
+            name="slug",
             field=models.SlugField(default=None, unique=True),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='show',
-            name='playlist_file',
-            field=models.FileField(null=True, upload_to='/tmp'),
+            model_name="show",
+            name="playlist_file",
+            field=models.FileField(null=True, upload_to="/tmp"),
         ),
     ]

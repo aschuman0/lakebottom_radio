@@ -8,18 +8,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0024_show_spotify_uri'),
+        ("lake_bottom_web", "0024_show_spotify_uri"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='show',
-            name='playlist_file',
-            field=models.FileField(blank=True, null=True, upload_to='/tmp'),
+            model_name="show",
+            name="playlist_file",
+            field=models.FileField(blank=True, null=True, upload_to="/tmp"),
         ),
         migrations.AlterField(
-            model_name='show',
-            name='spotify_uri',
+            model_name="show",
+            name="spotify_uri",
             field=models.CharField(blank=True, max_length=255),
         ),
     ]

@@ -6,26 +6,24 @@ from django.db import migrations
 
 
 def create_through_relations(apps, schema_editor):
-    Show = apps.get_model('lake_bottom_web', 'Show')
-    ShowSongs = apps.get_model('lake_bottom_web', 'ShowSongs')
+    Show = apps.get_model("lake_bottom_web", "Show")
+    ShowSongs = apps.get_model("lake_bottom_web", "ShowSongs")
 
     for show in Show.objects.all():
         order = 0
         for song in show.songs.all():
-            ShowSongs(
-                show=show,
-                song=song,
-                order=order
-            ).save()
+            ShowSongs(show=show, song=song, order=order).save()
             order += 1
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0020_auto_20200218_1515'),
+        ("lake_bottom_web", "0020_auto_20200218_1515"),
     ]
 
     operations = [
-        migrations.RunPython(create_through_relations, reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(
+            create_through_relations, reverse_code=migrations.RunPython.noop
+        ),
     ]

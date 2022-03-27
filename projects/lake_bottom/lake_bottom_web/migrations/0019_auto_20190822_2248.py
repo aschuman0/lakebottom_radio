@@ -8,18 +8,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0018_auto_20190821_2225'),
+        ("lake_bottom_web", "0018_auto_20190821_2225"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='live',
-            name='heading',
-            field=models.CharField(default='', max_length=255),
+            model_name="live",
+            name="heading",
+            field=models.CharField(default="", max_length=255),
         ),
         migrations.AddField(
-            model_name='live',
-            name='subheading',
-            field=models.CharField(default='', max_length=255),
+            model_name="live",
+            name="subheading",
+            field=models.CharField(default="", max_length=255),
         ),
     ]

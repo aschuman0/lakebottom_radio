@@ -14,76 +14,87 @@ from lake_bottom_web.utils import show_from_file, show_from_spotify_uri
 # Create your views here.
 def index(request):
     # this is the main view
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         # If loggged in show most recent 10 shows
-        shows = Show.objects.all().order_by('date_created').reverse()[:10]
+        shows = Show.objects.all().order_by("date_created").reverse()[:10]
     else:
         # if not logged in show 5 most recent published shows
-        shows = Show.objects.filter(
-                                published=True
-                                ).order_by(
-                                'date_created'
-                                ).reverse()[:5]
+        shows = (
+            Show.objects.filter(published=True).order_by("date_created").reverse()[:5]
+        )
 
     try:
-        stream_info = Live.objects.get(name='main')
+        stream_info = Live.objects.get(name="main")
     except Exception as e:
-        print('error getting live obj: %s' % e)
+        print("error getting live obj: %s" % e)
 
     if stream_info.is_live:
-        return render(request, 'live_index.html', {
-            'shows': shows,
-            'media_url': stream_info.stream_url,
-            'heading': stream_info.heading,
-            'subheading': stream_info.subheading
-        })
+        return render(
+            request,
+            "live_index.html",
+            {
+                "shows": shows,
+                "media_url": stream_info.stream_url,
+                "heading": stream_info.heading,
+                "subheading": stream_info.subheading,
+            },
+        )
 
-    return render(request, 'index.html', {
-        'shows': shows,
-        'heading': stream_info.heading,
-        'subheading': stream_info.subheading
-    })
+    return render(
+        request,
+        "index.html",
+        {
+            "shows": shows,
+            "heading": stream_info.heading,
+            "subheading": stream_info.subheading,
+        },
+    )
 
 
 def list_shows(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         # If loggged in show most recent 10 shows
-        shows = Show.objects.all().order_by('date_created').reverse()
+        shows = Show.objects.all().order_by("date_created").reverse()
     else:
         # if not logged in show 5 most recent published shows
-        shows = Show.objects.filter(
-                            published=True).order_by(
-                            'date_created').reverse()
+        shows = Show.objects.filter(published=True).order_by("date_created").reverse()
 
-    return render(request, 'shows/show_list.html', {
-        'shows': shows,
-    })
+    return render(
+        request,
+        "shows/show_list.html",
+        {
+            "shows": shows,
+        },
+    )
 
 
 def show_detail(request, slug):
     show = Show.objects.get(slug=slug)
-    stream_info = Live.objects.get(name='main')
+    stream_info = Live.objects.get(name="main")
     playlist = show.song_list()
 
     if stream_info.is_live:
-        return render(request, 'shows/live_show.html', {
-            'show': show,
-            'playlist': playlist,
-            'media_url': stream_info.stream_url
-        })
+        return render(
+            request,
+            "shows/live_show.html",
+            {"show": show, "playlist": playlist, "media_url": stream_info.stream_url},
+        )
 
-    return render(request, 'shows/show_detail.html', {
-        'show': show, 'playlist': playlist,
-    })
+    return render(
+        request,
+        "shows/show_detail.html",
+        {
+            "show": show,
+            "playlist": playlist,
+        },
+    )
 
 
 def song_detail(request, slug):
     song = Song.objects.get(slug=slug)
     shows = song.show_set.all()
 
-    return render(request, 'shows/song_detail.html', {
-        'song': song, 'shows': shows
-    })
+    return render(request, "shows/song_detail.html", {"song": song, "shows": shows})
 
 
 def page_detail(request, slug):
@@ -92,7 +103,7 @@ def page_detail(request, slug):
     except Exception as e:
         raise Http404(e.message)
 
-    return render(request, 'pages/page.html', {'page': page})
+    return render(request, "pages/page.html", {"page": page})
 
 
 @login_required
@@ -101,19 +112,17 @@ def edit_song(request, slug):
 
     form_class = SongForm
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = form_class(data=request.POST, instance=song)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Show changes saved.')
+            messages.success(request, "Show changes saved.")
 
-            return redirect('song_detail', slug=song.slug)
+            return redirect("song_detail", slug=song.slug)
     else:
         form = form_class(instance=song)
 
-    return render(request, 'shows/edit_song.html', {
-        'song': song, 'form': form
-    })
+    return render(request, "shows/edit_song.html", {"song": song, "form": form})
 
 
 @login_required
@@ -125,7 +134,7 @@ def edit_show(request, slug):
     form_class = ShowForm
 
     # if we ae coming to this view from a submitted form...
-    if request.method == 'POST':
+    if request.method == "POST":
         # get the data from the submitted for and apply to the form
         form = form_class(data=request.POST, instance=show)
         if form.is_valid():
@@ -135,28 +144,34 @@ def edit_show(request, slug):
             # load the show's newly saved file to get songs
             if len(request.FILES) > 0:
                 show.songs.clear()
-                if show_from_file(show=show,
-                                  file_data=request.FILES['playlist_file']
-                                  ):
-                    messages.success(request, 'Current show edited from file.')
+                if show_from_file(show=show, file_data=request.FILES["playlist_file"]):
+                    messages.success(request, "Current show edited from file.")
             elif show.spotify_uri:
                 show.songs.clear()
                 if show_from_spotify_uri(show=show, uri=show.spotify_uri):
-                    messages.success(request, 'Current show edited from \
-                        Spotify.')
+                    messages.success(
+                        request,
+                        "Current show edited from \
+                        Spotify.",
+                    )
             else:
-                messages.warning(request, 'Problem changing show.')
+                messages.warning(request, "Problem changing show.")
 
-            return redirect('show_detail', slug=show.slug)
+            return redirect("show_detail", slug=show.slug)
 
     # otherwise, just create the form
     else:
         form = form_class(instance=show)
 
     # then render the template
-    return render(request, 'shows/edit_show.html', {
-        'show': show, 'form': form,
-    })
+    return render(
+        request,
+        "shows/edit_show.html",
+        {
+            "show": show,
+            "form": form,
+        },
+    )
 
 
 @login_required
@@ -165,7 +180,7 @@ def create_show(request):
     form_class = ShowForm
 
     # if we are coming from a submitted form, do this
-    if request.method == 'POST':
+    if request.method == "POST":
         form = form_class(request.POST, request.FILES)
         if form.is_valid():
             # create a show instance, but do not yet save
@@ -178,30 +193,37 @@ def create_show(request):
 
             # load the file or spotify uri to get songs
             if len(request.FILES) > 0:
-                if show_from_file(show=show,
-                                  file_data=request.FILES['playlist_file']
-                                  ):
-                    messages.success(request, 'New Show Added from File.')
+                if show_from_file(show=show, file_data=request.FILES["playlist_file"]):
+                    messages.success(request, "New Show Added from File.")
                 else:
-                    messages.success(request, 'Problem adding songs to show. \
-                        Please try again or edit show.')
+                    messages.success(
+                        request,
+                        "Problem adding songs to show. \
+                        Please try again or edit show.",
+                    )
             elif show.spotify_uri:
                 if show_from_spotify_uri(show=show, uri=show.spotify_uri):
-                    messages.success(request, 'New Show Added from Spotify.')
+                    messages.success(request, "New Show Added from Spotify.")
                 else:
-                    messages.success(request, 'Problem adding song \
-                        from Spotify.')
+                    messages.success(
+                        request,
+                        "Problem adding song \
+                        from Spotify.",
+                    )
             else:
-                messages.warning(request, 'Either a file or a spotify uri \
-                    must be included.')
+                messages.warning(
+                    request,
+                    "Either a file or a spotify uri \
+                    must be included.",
+                )
 
-            return redirect('show_detail', slug=show.slug)
+            return redirect("show_detail", slug=show.slug)
 
     # if just a GET, create the form
     else:
         form = form_class()
 
-    return render(request, 'shows/create_show.html', {'form': form})
+    return render(request, "shows/create_show.html", {"form": form})
 
 
 @login_required
@@ -209,43 +231,39 @@ def edit_page(request, slug):
     try:
         page = Page.objects.get(page_name=slug)
     except Exception as e:
-        print('error on edit_page: %s' % e)
+        print("error on edit_page: %s" % e)
         raise Http404()
 
     form_class = PageForm
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = form_class(data=request.POST, instance=page)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Page Chages Saved.')
-            return redirect('page_detail', slug=page.page_name)
+            messages.success(request, "Page Chages Saved.")
+            return redirect("page_detail", slug=page.page_name)
     else:
         form = form_class(instance=page)
 
-    return render(request, 'pages/edit_page.html', {
-        'page': page, 'form': form
-    })
+    return render(request, "pages/edit_page.html", {"page": page, "form": form})
 
 
 @login_required
 def edit_live(request):
     try:
-        live_info = Live.objects.get(name='main')
+        live_info = Live.objects.get(name="main")
     except Exception as e:
-        print('could not load live_info to edit: %s' % e)
+        print("could not load live_info to edit: %s" % e)
 
     form_class = LiveForm
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = form_class(data=request.POST, instance=live_info)
         if form.is_valid():
             form.save()
 
-            return redirect('home')
+            return redirect("home")
     else:
         form = form_class(instance=live_info)
 
-    return render(request, 'edit_live.html', {
-        'form': form
-    })
+    return render(request, "edit_live.html", {"form": form})

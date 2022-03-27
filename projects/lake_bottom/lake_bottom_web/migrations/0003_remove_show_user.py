@@ -8,12 +8,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0002_show_user'),
+        ("lake_bottom_web", "0002_show_user"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='show',
-            name='user',
+            model_name="show",
+            name="user",
         ),
     ]

@@ -8,23 +8,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0017_show_show_type'),
+        ("lake_bottom_web", "0017_show_show_type"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='song',
-            name='genre',
+            model_name="song",
+            name="genre",
             field=models.CharField(default=None, max_length=1027),
         ),
         migrations.AddField(
-            model_name='song',
-            name='notes',
+            model_name="song",
+            name="notes",
             field=models.TextField(default=None),
         ),
         migrations.AlterField(
-            model_name='song',
-            name='slug',
+            model_name="song",
+            name="slug",
             field=models.SlugField(default=None),
         ),
     ]

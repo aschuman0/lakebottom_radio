@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0023_show_songs'),
+        ("lake_bottom_web", "0023_show_songs"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='show',
-            name='spotify_uri',
+            model_name="show",
+            name="spotify_uri",
             field=models.TextField(default=None),
             preserve_default=False,
         ),

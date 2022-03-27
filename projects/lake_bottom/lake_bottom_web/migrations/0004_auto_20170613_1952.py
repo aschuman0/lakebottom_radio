@@ -10,25 +10,27 @@ from django.utils.timezone import utc
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0003_remove_show_user'),
+        ("lake_bottom_web", "0003_remove_show_user"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='show',
-            name='date_created',
-            field=models.DateTimeField(default=datetime.datetime(2017, 6, 13, 19, 51, 41, 918814, tzinfo=utc)),
+            model_name="show",
+            name="date_created",
+            field=models.DateTimeField(
+                default=datetime.datetime(2017, 6, 13, 19, 51, 41, 918814, tzinfo=utc)
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='show',
-            name='playlist_file',
-            field=models.FileField(default=None, upload_to='playlists'),
+            model_name="show",
+            name="playlist_file",
+            field=models.FileField(default=None, upload_to="playlists"),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='show',
-            name='published',
+            model_name="show",
+            name="published",
             field=models.BooleanField(default=True),
             preserve_default=False,
         ),
