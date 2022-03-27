@@ -8,23 +8,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0011_live_stream_url'),
+        ("lake_bottom_web", "0011_live_stream_url"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Song',
+            name="Song",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=1027)),
-                ('artist', models.CharField(max_length=1027)),
-                ('album', models.CharField(max_length=1027)),
-                ('year', models.CharField(max_length=1027)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=1027)),
+                ("artist", models.CharField(max_length=1027)),
+                ("album", models.CharField(max_length=1027)),
+                ("year", models.CharField(max_length=1027)),
             ],
         ),
         migrations.AddField(
-            model_name='show',
-            name='songs',
-            field=models.ManyToManyField(to='lake_bottom_web.Song'),
+            model_name="show",
+            name="songs",
+            field=models.ManyToManyField(to="lake_bottom_web.Song"),
         ),
     ]

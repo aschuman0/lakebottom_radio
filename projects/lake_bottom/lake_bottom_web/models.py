@@ -4,8 +4,8 @@ from django.db import models
 
 
 SHOW_TYPES = [
-    ('SURF', 'Surfbear Sez'),
-    ('BOOGIE', 'Blacktail Boogie'),
+    ("SURF", "Surfbear Sez"),
+    ("BOOGIE", "Blacktail Boogie"),
 ]
 
 
@@ -20,33 +20,28 @@ class Song(models.Model):
     slug = models.SlugField(default=None)
 
     def __str__(self):
-        return '{} - {}'.format(self.title, self.artist)
+        return "{} - {}".format(self.title, self.artist)
 
 
 class Show(models.Model):
     name = models.CharField(max_length=255)
     about = models.TextField()
-    playlist_file = models.FileField(upload_to='/tmp', null=True, blank=True)
+    playlist_file = models.FileField(upload_to="tmp", null=True, blank=True)
     playlist_field = models.TextField()
     spotify_uri = models.CharField(max_length=255, blank=True)
-    songs = models.ManyToManyField(
-        Song,
-        through='ShowSongs'
-    )
+    songs = models.ManyToManyField(Song, through="ShowSongs")
     date_created = models.DateTimeField()
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
-    show_type = models.CharField(choices=SHOW_TYPES,
-                                 max_length=15,
-                                 default='SURF')
+    show_type = models.CharField(choices=SHOW_TYPES, max_length=15, default="SURF")
 
     class Meta:
-        verbose_name = u'Show'
+        verbose_name = "Show"
 
     def song_list(self):
         return [
-            songs.song for songs in
-            ShowSongs.objects.filter(show=self).order_by('order')
+            songs.song
+            for songs in ShowSongs.objects.filter(show=self).order_by("order")
         ]
 
     def __str__(self):
@@ -54,20 +49,18 @@ class Show(models.Model):
 
 
 class ShowSongs(models.Model):
-    song = models.ForeignKey(Song)
-    show = models.ForeignKey(Show)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
     order = models.IntegerField()
 
     class Meta:
         verbose_name = "Songs for Show"
-        ordering = ['order', ]
+        ordering = [
+            "order",
+        ]
 
     def __str__(self):
-        return '{} - {} - {}'.format(
-            self.show.name,
-            self.song.title,
-            self.song.artist
-        )
+        return "{} - {} - {}".format(self.show.name, self.song.title, self.song.artist)
 
 
 class Page(models.Model):
@@ -84,8 +77,8 @@ class Live(models.Model):
     name = models.CharField(max_length=255)
     stream_url = models.CharField(max_length=1027)
     is_live = models.BooleanField(default=False)
-    heading = models.CharField(max_length=255, default='')
-    subheading = models.CharField(max_length=255, default='')
+    heading = models.CharField(max_length=255, default="")
+    subheading = models.CharField(max_length=255, default="")
 
     def __str__(self):
         return self.name

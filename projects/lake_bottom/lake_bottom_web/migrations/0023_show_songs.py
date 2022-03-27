@@ -8,13 +8,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0022_remove_show_songs'),
+        ("lake_bottom_web", "0022_remove_show_songs"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='show',
-            name='songs',
-            field=models.ManyToManyField(through='lake_bottom_web.ShowSongs', to='lake_bottom_web.Song'),
+            model_name="show",
+            name="songs",
+            field=models.ManyToManyField(
+                through="lake_bottom_web.ShowSongs", to="lake_bottom_web.Song"
+            ),
         ),
     ]

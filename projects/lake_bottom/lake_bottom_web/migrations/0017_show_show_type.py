@@ -8,13 +8,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0016_song_slug'),
+        ("lake_bottom_web", "0016_song_slug"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='show',
-            name='show_type',
-            field=models.CharField(choices=[('SURF', 'Surfbear Sez'), ('BOOGIE', 'Blacktail Boogie')], default='SURF', max_length=15),
+            model_name="show",
+            name="show_type",
+            field=models.CharField(
+                choices=[("SURF", "Surfbear Sez"), ("BOOGIE", "Blacktail Boogie")],
+                default="SURF",
+                max_length=15,
+            ),
         ),
     ]

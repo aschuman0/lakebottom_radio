@@ -9,33 +9,45 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lake_bottom_web', '0019_auto_20190822_2248'),
+        ("lake_bottom_web", "0019_auto_20190822_2248"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ShowSongs',
+            name="ShowSongs",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('order', models.IntegerField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("order", models.IntegerField()),
             ],
             options={
-                'verbose_name': 'Songs for Show',
-                'ordering': ['order'],
+                "verbose_name": "Songs for Show",
+                "ordering": ["order"],
             },
         ),
         migrations.AlterModelOptions(
-            name='show',
-            options={'verbose_name': 'Show'},
+            name="show",
+            options={"verbose_name": "Show"},
         ),
         migrations.AddField(
-            model_name='showsongs',
-            name='show',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='lake_bottom_web.Show'),
+            model_name="showsongs",
+            name="show",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="lake_bottom_web.Show"
+            ),
         ),
         migrations.AddField(
-            model_name='showsongs',
-            name='song',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='lake_bottom_web.Song'),
+            model_name="showsongs",
+            name="song",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="lake_bottom_web.Song"
+            ),
         ),
     ]
