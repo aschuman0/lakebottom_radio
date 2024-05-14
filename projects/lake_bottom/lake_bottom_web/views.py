@@ -176,7 +176,6 @@ def edit_show(request, slug):
 
 @login_required
 def create_show(request):
-
     form_class = ShowForm
 
     # if we are coming from a submitted form, do this
