@@ -26,4 +26,13 @@ TODO.md
 secrets.yaml
 .gcloudignore
 
+
 static/
+.vscode/launch.json
+.vscode/settings.json
+projects/lake_bottom/.gcloudignore
+projects/lake_bottom/secrets.yaml
+projects/lake_bottom/.vscode/launch.json
+projects/lake_bottom/.vscode/settings.json
+projects/lake_bottom/frontend/static/main.js
+

@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  re_path(r'^blog/', include('blog.urls'))
 """
 
-from django.urls import include, re_path, path
 from django.contrib import admin
+from django.urls import re_path
+from frontend import views as fe_views
 
 # from django.contrib.auth.views import (
 #     PasswordResetView,
@@ -23,14 +24,12 @@ from django.contrib import admin
 #     PasswordResetCompleteView,
 #     PasswordResetConfirmView,
 # )
-
 from lake_bottom_web import views as api_views  # TODO change for new fe
-from frontend import views as fe_views
 
 urlpatterns = [
-    path("", fe_views.spa_index, name="spa_index"),
     re_path(
-        r"api/$", api_views.index, name="api_base"
+        r"^api/", api_views.index, name="api_base"
     ),  # TODO this should be namespaced with include once drf apis exist
     re_path(r"^admin/", admin.site.urls),
+    re_path(r"^.*$", fe_views.spa_index, name="spa_index"),
 ]
