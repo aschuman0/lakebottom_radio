@@ -25,3 +25,6 @@ TODO.md
 .vscode/
 secrets.yaml
 .gcloudignore
+
+# Dev
+projects/lake_bottom/frontend/static/
