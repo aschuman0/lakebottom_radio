@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-
 SHOW_TYPES = [
     ("SURF", "Surfbear Sez"),
     ("BOOGIE", "Blacktail Boogie"),
