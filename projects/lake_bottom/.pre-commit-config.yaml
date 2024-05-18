@@ -15,3 +15,4 @@ repos:
     rev: v2.1.0
     hooks:
       - id: codespell
+        args: ["--skip", "projects/lake_bottom/frontend/static/*"]
