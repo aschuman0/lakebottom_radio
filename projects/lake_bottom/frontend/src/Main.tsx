@@ -1,8 +1,9 @@
 import * as React from 'react'
+import { Text } from '@chakra-ui/react'
 
 const Main: React.FC = () => {
     return (
-        <div><h1>Hello from React!</h1></div>
+        <Text>Chakra & React</Text>
     )
 }
 

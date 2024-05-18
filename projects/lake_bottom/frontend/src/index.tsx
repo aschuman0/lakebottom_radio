@@ -1,5 +1,7 @@
 import { createRoot } from 'react-dom/client'
-import Main from './Main'
+import { ChakraProvider } from '@chakra-ui/react'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes'
 
 const appDiv = document.getElementById('app')
 if (!appDiv) {
@@ -7,4 +9,8 @@ if (!appDiv) {
 }
 
 const root = createRoot(appDiv)
-root.render(<Main />)
+root.render(
+    <ChakraProvider>
+       <RouterProvider router={router} />
+    </ChakraProvider>
+)
