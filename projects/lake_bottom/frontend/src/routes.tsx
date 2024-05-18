@@ -9,11 +9,11 @@ import ErrorPage from "./components/ErrorPage";
 
 export const router = createBrowserRouter([
     {
-        path: "/",
+        path: "",
         element: <Base />,
         children: [
             {
-                path: "",
+                path: "/",
                 element: <Main />,
             },
             {
