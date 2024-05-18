@@ -26,5 +26,4 @@ TODO.md
 secrets.yaml
 .gcloudignore
 
-# Dev
-projects/lake_bottom/frontend/static/
+static/
