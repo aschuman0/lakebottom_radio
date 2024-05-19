@@ -7,7 +7,6 @@ from spotipy import Spotify, SpotifyClientCredentials
 from lake_bottom_web.models import ShowSongs, Song
 
 # TODO - See what can be removed here after building out create/edit
-w
 
 
 def add_show(show, song_dict):
