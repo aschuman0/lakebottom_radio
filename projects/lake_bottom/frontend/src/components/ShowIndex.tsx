@@ -1,21 +1,17 @@
 import * as React from 'react'
 import { Text, Box } from '@chakra-ui/react'
 
-const SongIndex: React.FC = () => {
+const ShowIndex: React.FC = () => {
   return (
-    <Box
-      w="100%"
-      height="100vh"
-      backgroundColor="violet"
-    >
+    <Box w="100%">
       <Text
         alignSelf="center"
         textColor="InfoText"
       >
-        A Listing of Songs
+        A Listing of shows
       </Text>
     </Box>
   )
 }
 
-export default SongIndex
+export default ShowIndex

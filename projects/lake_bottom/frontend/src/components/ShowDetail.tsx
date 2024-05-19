@@ -2,17 +2,13 @@ import * as React from 'react'
 import { Text, Box } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 
-const SongDetail: React.FC = () => {
+const ShowDetail: React.FC = () => {
   const { id } = useParams()
 
   return (
-    <Box
-      w="100%"
-      height="100vh"
-      backgroundColor="purple"
-    >
+    <Box w="100%">
       {id ? (
-        <Text textColor="whitesmoke">Song Detail for {id}</Text>
+        <Text textColor="InfoText">Show Detail for {id}</Text>
       ) : (
         <Text textStyle="error">no id provided</Text>
       )}
@@ -20,4 +16,4 @@ const SongDetail: React.FC = () => {
   )
 }
 
-export default SongDetail
+export default ShowDetail
