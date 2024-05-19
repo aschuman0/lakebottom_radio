@@ -169,5 +169,6 @@ EMAIL_PORT = 1025
 LOGIN_REDIRECT_URL = "home"
 
 REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
+    # Undo/comment below to restore web ui
+    # "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
 }

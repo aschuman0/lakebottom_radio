@@ -27,7 +27,7 @@ secrets.yaml
 .gcloudignore
 
 
-static/
+static/*
 .vscode/launch.json
 .vscode/settings.json
 projects/lake_bottom/.gcloudignore
