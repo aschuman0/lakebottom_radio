@@ -8,31 +8,31 @@ import SongIndex from "./song/SongIndex";
 import ErrorPage from "./components/ErrorPage";
 
 export const router = createBrowserRouter([
-    {
-        path: "",
-        element: <Base />,
-        children: [
-            {
-                path: "/",
-                element: <Main />,
-            },
-            {
-                path: "show",
-                element: <ShowIndex />,
-            },
-            {
-                path: "show/:id",
-                element: <ShowDetail />
-            },
-            {
-                path: "song",
-                element: <SongIndex />,
-            },
-            {
-                path: "song/:id",
-                element: <SongDetail />
-            },
-        ],
-        errorElement: <ErrorPage />
-    }
-])
+  {
+    path: "",
+    element: <Base />,
+    children: [
+      {
+        path: "/",
+        element: <Main />,
+      },
+      {
+        path: "show",
+        element: <ShowIndex />,
+      },
+      {
+        path: "show/:id",
+        element: <ShowDetail />,
+      },
+      {
+        path: "song",
+        element: <SongIndex />,
+      },
+      {
+        path: "song/:id",
+        element: <SongDetail />,
+      },
+    ],
+    errorElement: <ErrorPage />,
+  },
+]);
