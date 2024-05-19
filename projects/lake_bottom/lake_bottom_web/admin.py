@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from lake_bottom_web.models import Show, Page, Live, Song, ShowSongs
+from lake_bottom_web.models import Live, Page, Show, ShowSongs, Song
 
 
 class ShowSongsInline(admin.TabularInline):
