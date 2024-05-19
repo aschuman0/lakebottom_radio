@@ -10,6 +10,11 @@ import {
   ModalContent,
   ModalCloseButton,
   ModalHeader,
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  PopoverBody,
 } from '@chakra-ui/react'
 import { SettingsIcon, PlusSquareIcon, EditIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
@@ -41,12 +46,20 @@ const Header: React.FC = () => {
             aria-label="Edit Page Text"
             icon={<EditIcon />}
           ></IconButton>
-          <IconButton
-            variant="hollow"
-            onClick={() => void 0}
-            aria-label="Open user and login menu"
-            icon={<SettingsIcon />}
-          ></IconButton>
+          <Popover>
+            <PopoverTrigger>
+              <IconButton
+                variant="hollow"
+                onClick={() => void 0}
+                aria-label="Open user and login menu"
+                icon={<SettingsIcon />}
+              ></IconButton>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverHeader>Settings</PopoverHeader>
+              <PopoverBody>Hello</PopoverBody>
+            </PopoverContent>
+          </Popover>
         </HStack>
       </Box>
       <Modal

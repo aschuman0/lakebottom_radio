@@ -41,7 +41,7 @@ const Base: React.FC = () => {
               Some subhead goes here
             </Text>
             <Box height="10vh"></Box>
-            <Player showPlayer={false} />
+            <Player showPlayer={true} />
           </GridItem>
           <GridItem
             colSpan={4}
