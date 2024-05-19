@@ -1,15 +1,10 @@
 import * as React from 'react'
-import { Text, Box } from '@chakra-ui/react'
+import { Heading, Box } from '@chakra-ui/react'
 
 const ShowIndex: React.FC = () => {
   return (
     <Box w="100%">
-      <Text
-        alignSelf="center"
-        textColor="InfoText"
-      >
-        A Listing of shows
-      </Text>
+      <Heading size="lg">A Listing of Shows</Heading>
     </Box>
   )
 }
