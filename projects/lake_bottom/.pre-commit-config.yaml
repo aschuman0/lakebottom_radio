@@ -1,18 +1,28 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-    -   id: no-commit-to-branch
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: no-commit-to-branch
         args: ["--branch", "master", "--branch", "main"]
--   repo: https://github.com/psf/black
+  - repo: https://github.com/psf/black
     rev: 24.4.2
     hooks:
-    -   id: black
--   repo: https://github.com/codespell-project/codespell
+      - id: black
+  - repo: https://github.com/codespell-project/codespell
     rev: v2.2.6
     hooks:
       - id: codespell
-        args: ["--skip", "projects/lake_bottom/frontend/static/*", "--skip", "*.json"]
+        args:
+          [
+            "--skip",
+            "projects/lake_bottom/frontend/static/*",
+            "--skip",
+            "*.json",
+          ]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0 # Use the sha / tag you want to point at
+    hooks:
+      - id: prettier
