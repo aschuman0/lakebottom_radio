@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     "frontend",
     "lake_bottom_web",
+    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -62,7 +63,7 @@ ROOT_URLCONF = "lake_bottom.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR + "/frontend/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -166,3 +167,7 @@ EMAIL_PORT = 1025
 
 # Login redirect
 LOGIN_REDIRECT_URL = "home"
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
+}

@@ -1,5 +1,6 @@
-from models import Show, Song
 from rest_framework.serializers import HyperlinkedModelSerializer
+
+from lake_bottom_web.models import Show, Song
 
 
 class SongSerializer(HyperlinkedModelSerializer):

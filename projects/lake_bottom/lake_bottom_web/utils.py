@@ -1,10 +1,10 @@
 import csv
-import uuid
 import os
+import uuid
 
-from spotipy import SpotifyClientCredentials, Spotify
+from spotipy import Spotify, SpotifyClientCredentials
 
-from lake_bottom_web.models import Song, ShowSongs
+from lake_bottom_web.models import ShowSongs, Song
 
 
 def add_show(show, song_dict):
