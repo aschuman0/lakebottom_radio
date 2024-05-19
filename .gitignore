@@ -32,7 +32,5 @@ static/*
 .vscode/settings.json
 projects/lake_bottom/.gcloudignore
 projects/lake_bottom/secrets.yaml
-projects/lake_bottom/.vscode/launch.json
-projects/lake_bottom/.vscode/settings.json
-projects/lake_bottom/frontend/static/main.js
-
+projects/lake_bottom/frontend/static
+main.js
