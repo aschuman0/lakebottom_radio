@@ -170,5 +170,5 @@ LOGIN_REDIRECT_URL = "home"
 
 REST_FRAMEWORK = {
     # Undo/comment below to restore web ui
-    # "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
 }
