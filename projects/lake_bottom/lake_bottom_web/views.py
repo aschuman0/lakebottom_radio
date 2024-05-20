@@ -1,7 +1,12 @@
 from rest_framework import viewsets
 
-from lake_bottom_web.models import Page, Show, Song
-from lake_bottom_web.serializers import PageSerializer, ShowSerializer, SongSerializer
+from lake_bottom_web.models import Live, Page, Show, Song
+from lake_bottom_web.serializers import (
+    LiveSerializer,
+    PageSerializer,
+    ShowSerializer,
+    SongSerializer,
+)
 
 
 class SongsView(viewsets.ModelViewSet):
@@ -20,3 +25,8 @@ class PageView(viewsets.ModelViewSet):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
     lookup_field = "page_name"
+
+
+class LiveView(viewsets.ModelViewSet):
+    queryset = Live.objects.all()
+    serializer_class = LiveSerializer

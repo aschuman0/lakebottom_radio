@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from "react";
 import {
   Heading,
   Text,
@@ -8,19 +8,33 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalCloseButton,
   ModalHeader,
   Popover,
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
   PopoverBody,
-} from '@chakra-ui/react'
-import { SettingsIcon, PlusSquareIcon, EditIcon } from '@chakra-ui/icons'
-import { Link } from 'react-router-dom'
+  ModalBody,
+  ModalFooter,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
+import {
+  SettingsIcon,
+  PlusSquareIcon,
+  EditIcon,
+  AddIcon,
+  SunIcon,
+  MoonIcon,
+} from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
-  const [addModalOpen, setAddModalOpen] = React.useState(false)
+  const toast = useToast();
+  const [addModalOpen, setAddModalOpen] = React.useState(false);
+  const [pageModalOpen, setPageModalOpen] = React.useState(false);
+  const [buttonLoading, setButtonLoading] = React.useState(false);
+  const [isDark, setIsDark] = React.useState(false);
   return (
     <>
       <Box
@@ -42,7 +56,9 @@ const Header: React.FC = () => {
           ></IconButton>
           <IconButton
             variant="hollow"
-            onClick={() => void 0}
+            onClick={() => {
+              setPageModalOpen(true);
+            }}
             aria-label="Edit Page Text"
             icon={<EditIcon />}
           ></IconButton>
@@ -60,24 +76,104 @@ const Header: React.FC = () => {
               <PopoverBody>Hello</PopoverBody>
             </PopoverContent>
           </Popover>
+          <IconButton
+            variant="hollow"
+            onClick={() => {
+              toast({
+                description: "Someone changed the theme.",
+                status: "success",
+                duration: 2000,
+                position: "top",
+              });
+              setIsDark(!isDark);
+            }}
+            aria-label="Toggle dark mode"
+            icon={isDark ? <MoonIcon /> : <SunIcon />}
+          ></IconButton>
         </HStack>
       </Box>
       <Modal
-        onClose={() => setAddModalOpen(false)}
+        onClose={() => {
+          setAddModalOpen(false);
+          setButtonLoading(false);
+        }}
         isOpen={addModalOpen}
         size="xl"
       >
         <ModalOverlay />
-        <ModalContent width="80vw">
+        <ModalContent>
           <ModalHeader>Add New Show</ModalHeader>
-          <ModalCloseButton />
-          <Box height="70vh">
-            <Text>Modal area</Text>
-          </Box>
+          <ModalBody>
+            <Box height="70vh">
+              <Text>Modal area</Text>
+            </Box>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="hollow"
+              colorScheme="blackAlpha"
+              onClick={() => {
+                setAddModalOpen(false);
+                setButtonLoading(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              leftIcon={<AddIcon />}
+              aria-label="add new show"
+              colorScheme="green"
+              loadingText="Adding"
+              isLoading={buttonLoading}
+              onClick={() => setButtonLoading(true)}
+            >
+              Add Show
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal
+        onClose={() => {
+          setPageModalOpen(false);
+          setButtonLoading(false);
+        }}
+        isOpen={pageModalOpen}
+        size="xl"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Page Text</ModalHeader>
+          <ModalBody>
+            <Box height="70vh">
+              <Text>Modal Form Area</Text>
+            </Box>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="hollow"
+              colorScheme="blackAlpha"
+              onClick={() => {
+                setPageModalOpen(false);
+                setButtonLoading(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              leftIcon={<EditIcon />}
+              aria-label="edit page text"
+              colorScheme="green"
+              loadingText="Editing"
+              isLoading={buttonLoading}
+              onClick={() => setButtonLoading(true)}
+            >
+              Edit Text
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

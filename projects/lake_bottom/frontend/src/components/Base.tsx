@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
-import { Outlet } from 'react-router-dom'
-import Player from './components/Player'
-import Header from './components/Header'
+import * as React from "react";
+import { Box, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
+import { Outlet } from "react-router-dom";
+import Player from "./Player";
+import Header from "./Header";
 
 const Base: React.FC = () => {
   return (
@@ -11,7 +11,8 @@ const Base: React.FC = () => {
         w="100%"
         height="100vh"
         backgroundColor="azure"
-        backgroundImage={'/static/img/underwater.jpg'}
+        backgroundImage={"/static/img/underwater.jpg"}
+        backgroundSize="cover"
         backgroundAttachment="scroll"
         backgroundPosition="center"
       >
@@ -22,31 +23,17 @@ const Base: React.FC = () => {
           height="90vh"
           gridAutoColumns="auto"
         >
-          <GridItem
-            colSpan={3}
-            alignItems="center"
-            colStart={2}
-          >
-            <Heading
-              size="3xl"
-              textColor="whitesmoke"
-              paddingBlockStart="30vh"
-            >
+          <GridItem colSpan={3} alignItems="center" colStart={2}>
+            <Heading size="3xl" textColor="whitesmoke" paddingBlockStart="30vh">
               Lakebottom Radio
             </Heading>
-            <Text
-              textColor="whitesmoke"
-              paddingBlockStart="2vh"
-            >
+            <Text textColor="whitesmoke" paddingBlockStart="2vh">
               Some subhead goes here
             </Text>
             <Box height="10vh"></Box>
-            <Player showPlayer={true} />
+            <Player showPlayer={false} />
           </GridItem>
-          <GridItem
-            colSpan={4}
-            colStart={6}
-          >
+          <GridItem colSpan={4} colStart={6}>
             <Box
               border="solid 1px whitesmoke"
               borderRadius="10px"
@@ -65,7 +52,7 @@ const Base: React.FC = () => {
         </Grid>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Base
+export default Base;

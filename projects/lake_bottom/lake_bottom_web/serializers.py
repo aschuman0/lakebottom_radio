@@ -3,7 +3,7 @@ from rest_framework.serializers import (
     ReadOnlyField,
 )
 
-from lake_bottom_web.models import Page, Show, ShowSongs, Song
+from lake_bottom_web.models import Live, Page, Show, ShowSongs, Song
 
 
 class SongSerializer(HyperlinkedModelSerializer):
@@ -47,3 +47,9 @@ class PageSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Page
         fields = ("title", "page_body", "last_updated", "page_name")
+
+
+class LiveSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = Live
+        fields = ("name", "heading", "subheading")

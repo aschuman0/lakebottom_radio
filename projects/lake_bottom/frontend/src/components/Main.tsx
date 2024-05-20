@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { Heading, Text, Box, Divider } from '@chakra-ui/react'
+import * as React from "react";
+import { Heading, Text, Box, Divider } from "@chakra-ui/react";
 
 const Main: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Main: React.FC = () => {
       <Divider paddingBlockEnd="10vh" />
       <Heading size="lg">Recent Shows</Heading>
     </Box>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
