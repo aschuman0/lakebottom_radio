@@ -47,7 +47,7 @@ const Header: React.FC = () => {
       >
         <HStack spacing="1vh">
           <Link to="/">Home</Link>
-          <Link to="show">Archive</Link>
+          <Link to="show">Shows</Link>
           <IconButton
             variant="hollow"
             onClick={() => setAddModalOpen(true)}
@@ -80,7 +80,7 @@ const Header: React.FC = () => {
             variant="hollow"
             onClick={() => {
               toast({
-                description: "Someone changed the theme.",
+                title: "Someone changed the theme.",
                 status: "success",
                 duration: 2000,
                 position: "top",
