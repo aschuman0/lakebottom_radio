@@ -20,13 +20,12 @@ if os.getenv("GAE_APPLICATION", None):
 else:
     DEBUG = True
 
-# TODO - sane values for actual domain
 ALLOWED_HOSTS = [
     "www.lakebottomradio.com",
     "lakebottomradio.com",
     "127.0.0.1",
     "0.0.0.0",
-    "lake-bottom-radio.appspot.com",
+    ".appspot.com",  # TODO - remove when deployed successfully
 ]
 
 # Application definition
@@ -47,11 +46,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
