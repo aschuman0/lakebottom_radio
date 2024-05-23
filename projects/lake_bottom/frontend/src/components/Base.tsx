@@ -15,14 +15,12 @@ const Base: React.FC = () => {
         backgroundSize="cover"
         backgroundAttachment="scroll"
         backgroundPosition="center"
-        display={{ md: "flex" }}
       >
         <Grid
           templateColumns="repeat(10, 1fr)"
           gap={0}
           height="90vh"
           gridAutoColumns="auto"
-          mt={{ base: 4, md: 0 }}
         >
           <GridItem colSpan={3} alignItems="center" colStart={2}>
             <Heading size="3xl" textColor="whitesmoke" paddingBlockStart="30vh">
