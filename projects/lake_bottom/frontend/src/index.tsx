@@ -12,5 +12,5 @@ const root = createRoot(appDiv);
 root.render(
   <ChakraProvider>
     <RouterProvider router={router} />
-  </ChakraProvider>
-)
+  </ChakraProvider>,
+);
