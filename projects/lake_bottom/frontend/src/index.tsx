@@ -2,6 +2,9 @@ import { createRoot } from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
+import { Provider } from "react-redux";
+
+import { store } from "./store";
 
 const appDiv = document.getElementById("app");
 if (!appDiv) {
@@ -10,7 +13,9 @@ if (!appDiv) {
 
 const root = createRoot(appDiv);
 root.render(
-  <ChakraProvider>
-    <RouterProvider router={router} />
-  </ChakraProvider>,
+  <Provider store={store}>
+    <ChakraProvider>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </Provider>,
 );

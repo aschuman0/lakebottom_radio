@@ -1,10 +1,13 @@
 import * as React from "react";
-import { Box, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Text, Skeleton } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import Player from "./Player";
 import Header from "./Header";
 
+import { useGetLiveListQuery } from "../services/lakebottomApi";
+
 const Base: React.FC = () => {
+  const { data: liveData, isLoading: liveIsLoading } = useGetLiveListQuery();
   return (
     <>
       <Box
@@ -26,9 +29,11 @@ const Base: React.FC = () => {
             <Heading size="3xl" textColor="whitesmoke" paddingBlockStart="30vh">
               Lakebottom Radio
             </Heading>
-            <Text textColor="whitesmoke" paddingBlockStart="2vh">
-              Some subhead goes here
-            </Text>
+            <Skeleton noOfLines={1} isLoaded={!liveIsLoading}>
+              <Text textColor="whitesmoke" paddingBlockStart="2vh">
+                {liveData ? liveData[0].subheading : ""}
+              </Text>
+            </Skeleton>
             <Box height="10vh"></Box>
             <Player showPlayer={false} />
           </GridItem>
