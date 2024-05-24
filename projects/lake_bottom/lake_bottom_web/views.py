@@ -4,6 +4,7 @@ from lake_bottom_web.models import Live, Page, Show, Song
 from lake_bottom_web.serializers import (
     LiveSerializer,
     PageSerializer,
+    ShowDetailSerializer,
     ShowSerializer,
     SongSerializer,
 )
@@ -18,6 +19,12 @@ class SongsView(viewsets.ModelViewSet):
 class ShowsViews(viewsets.ModelViewSet):
     queryset = Show.objects.all().order_by("date_created")
     serializer_class = ShowSerializer
+    lookup_field = "slug"
+
+
+class ShowsDetailView(viewsets.ModelViewSet):
+    queryset = Show.objects.all().order_by("date_created")
+    serializer_class = ShowDetailSerializer
     lookup_field = "slug"
 
 

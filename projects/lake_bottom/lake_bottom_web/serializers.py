@@ -12,6 +12,12 @@ class SongSerializer(HyperlinkedModelSerializer):
         fields = ["title", "artist", "album", "year", "genre", "notes", "slug"]
 
 
+class ShowSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = Show
+        fields = ["slug", "name", "about", "date_created", "published"]
+
+
 class ShowSongsSerializer(HyperlinkedModelSerializer):
     title = ReadOnlyField(source="song.title")
     artist = ReadOnlyField(source="song.artist")
@@ -35,7 +41,7 @@ class ShowSongsSerializer(HyperlinkedModelSerializer):
         ]
 
 
-class ShowSerializer(HyperlinkedModelSerializer):
+class ShowDetailSerializer(HyperlinkedModelSerializer):
     songs = ShowSongsSerializer(source="showsongs_set", many=True)
 
     class Meta:

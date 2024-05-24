@@ -18,6 +18,9 @@ export interface Show {
   about: string;
   date_created: string;
   published: boolean;
+}
+
+export interface ShowDetail extends Show {
   songs: ShowSong[];
 }
 
