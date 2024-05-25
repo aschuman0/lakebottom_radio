@@ -7,7 +7,6 @@ export interface Song {
   notes: string;
   slug: string;
 }
-
 export interface ShowSong extends Song {
   order: number;
 }

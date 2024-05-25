@@ -26,14 +26,14 @@ const Main: React.FC = () => {
         </Heading>
       </Skeleton>
       <Skeleton isLoaded={!aboutIsLoading && !contactIsLoading}>
-        <Text>{aboutData?.page_body}</Text>
+        <Text whiteSpace="pre-wrap">{aboutData?.page_body}</Text>
         <Text paddingBlockEnd="10vh">{contactData?.page_body}</Text>
       </Skeleton>
       <Skeleton isLoaded={!showIsLoading}>
         <Heading size="lg">Recent Shows</Heading>
         <Box marginInlineStart="1vh" marginBlockStart="2vh">
           {showPreview?.map((show) => {
-            return <ShowListItem show={show} />;
+            return <ShowListItem show={show} key={show.slug} />;
           })}
         </Box>
       </Skeleton>
