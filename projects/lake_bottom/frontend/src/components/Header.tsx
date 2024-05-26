@@ -28,6 +28,7 @@ import {
   MoonIcon,
 } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import LoginForm from "./auth/LoginForm";
 
 const Header: React.FC = () => {
   const toast = useToast();
@@ -62,7 +63,7 @@ const Header: React.FC = () => {
             aria-label="Edit Page Text"
             icon={<EditIcon />}
           ></IconButton>
-          <Popover>
+          <Popover placement="bottom-end">
             <PopoverTrigger>
               <IconButton
                 variant="hollow"
@@ -72,8 +73,9 @@ const Header: React.FC = () => {
               ></IconButton>
             </PopoverTrigger>
             <PopoverContent>
-              <PopoverHeader>Settings</PopoverHeader>
-              <PopoverBody>Hello</PopoverBody>
+              <PopoverBody>
+                <LoginForm onClose={() => void 0} />
+              </PopoverBody>
             </PopoverContent>
           </Popover>
           <IconButton

@@ -5,7 +5,7 @@ import {
   useGetShowListQuery,
   useGetLiveListQuery,
 } from "../services/lakebottomApi";
-import ShowListItem from "./ShowListItem";
+import ShowListItem from "./show/ShowListItem";
 
 const Main: React.FC = () => {
   const { data: aboutData, isLoading: aboutIsLoading } =
