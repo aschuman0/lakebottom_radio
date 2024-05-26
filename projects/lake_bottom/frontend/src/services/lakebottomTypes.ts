@@ -35,3 +35,10 @@ export interface Live {
   heading: string;
   subheading: string;
 }
+
+export interface AccessToken {
+  access: string;
+}
+export interface AccessTokenWithRefresh extends AccessToken {
+  refresh: string;
+}

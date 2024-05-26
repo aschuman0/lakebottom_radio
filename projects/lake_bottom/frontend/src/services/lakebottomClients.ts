@@ -1,5 +1,12 @@
-import axios from "axios";
-import { Show, ShowDetail, Page, Live } from "./lakebottomTypes";
+import { axiosInstance as axios } from "./loginApi";
+import {
+  Show,
+  ShowDetail,
+  Page,
+  Live,
+  AccessToken,
+  AccessTokenWithRefresh,
+} from "./lakebottomTypes";
 
 export async function getShowList(): Promise<Show[]> {
   const response = await axios.get("/api/show/");

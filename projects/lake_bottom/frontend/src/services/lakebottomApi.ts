@@ -1,5 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Show, ShowDetail, Live, Page } from "./lakebottomTypes";
+import {
+  Show,
+  ShowDetail,
+  Live,
+  Page,
+  AccessTokenWithRefresh,
+  AccessToken,
+} from "./lakebottomTypes";
 
 import {
   getLiveList,
