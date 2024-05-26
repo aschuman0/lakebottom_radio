@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Heading, Text, Box, SkeletonText } from "@chakra-ui/react";
-import { Show } from "../services/lakebottomTypes";
+import { Heading, Text, Box } from "@chakra-ui/react";
+import { Show } from "../../services/lakebottomTypes";
 import { Link } from "react-router-dom";
 interface Props {
   show: Show;

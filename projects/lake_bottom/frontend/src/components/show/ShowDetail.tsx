@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, Box, Skeleton, Heading, Divider } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 
-import { useGetShowDetailQuery } from "../services/lakebottomApi";
+import { useGetShowDetailQuery } from "../../services/lakebottomApi";
 
 const ShowDetail: React.FC = () => {
   const { id } = useParams();
