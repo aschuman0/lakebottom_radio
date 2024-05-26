@@ -131,24 +131,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-# STATIC_ROOT = os.path.join(BASE_DIR, "lake_bottom_web/static/")
-STATIC_ROOT = os.path.join(
-    BASE_DIR, "frontend/static/"
-)  # TODO - this will be for React FE
+STATIC_ROOT = os.path.join(BASE_DIR, "frontend/static/")
 STATIC_URL = "/static/"
 
 # Media file settings
@@ -168,7 +158,12 @@ EMAIL_PORT = 1025
 LOGIN_REDIRECT_URL = "home"
 
 REST_FRAMEWORK = {
-    # Undo/comment below to restore web ui
-    # "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),  # TODO Uncomment before deployment
-    "DEFAULT_AUTHENTICATION_CLASSES": "rest_framework_simplejwt.authentication.JWTAuthentication",
+    # Comment below to restore web ui
+    # "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSON_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ),
 }
