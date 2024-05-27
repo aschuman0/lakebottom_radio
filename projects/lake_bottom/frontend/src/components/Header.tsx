@@ -12,9 +12,15 @@ import {
   ModalFooter,
   Button,
   useToast,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  PopoverCloseButton,
+  Divider,
 } from "@chakra-ui/react"
 import {
-  SettingsIcon,
+  HamburgerIcon,
   PlusSquareIcon,
   EditIcon,
   AddIcon,
@@ -23,6 +29,8 @@ import {
 } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
 import { isLoggedIn } from "../services/loginSlice"
+
+import LoginForm from "./auth/LoginForm"
 
 const Header: React.FC = () => {
   const toast = useToast()
@@ -43,53 +51,60 @@ const Header: React.FC = () => {
         <HStack spacing="1vh">
           <Link to="/">Home</Link>
           <Link to="show">Shows</Link>
-          {/* <Popover placement="bottom-end">
+          <Popover placement="bottom-end">
             <PopoverTrigger>
               <IconButton
                 variant="hollow"
                 onClick={() => void 0}
                 aria-label="Open user and login menu"
-                icon={<SettingsIcon />}
+                icon={<HamburgerIcon />}
               ></IconButton>
             </PopoverTrigger>
             <PopoverContent>
+              <PopoverCloseButton />
               <PopoverBody>
+                <Button
+                  variant="hollow"
+                  onClick={() => {
+                    toast({
+                      title: "Someone changed the theme.",
+                      status: "info",
+                      duration: 2000,
+                      position: "top",
+                    })
+                    setIsDark(!isDark)
+                  }}
+                  aria-label="Toggle dark mode"
+                  leftIcon={isDark ? <MoonIcon /> : <SunIcon />}
+                >
+                  {isDark ? "Set Light Mode" : "Set Dark Mode"}
+                </Button>
+                {isLoggedIn() && (
+                  <>
+                    <Button
+                      variant="hollow"
+                      onClick={() => setAddModalOpen(true)}
+                      aria-label="Add New Show"
+                      leftIcon={<PlusSquareIcon />}
+                    >
+                      Add New Show
+                    </Button>
+                    <Button
+                      variant="hollow"
+                      onClick={() => {
+                        setPageModalOpen(true)
+                      }}
+                      aria-label="Edit Page Text"
+                      leftIcon={<EditIcon />}
+                    >
+                      Edit Page Text
+                    </Button>
+                  </>
+                )}
                 <LoginForm onClose={() => void 0} />
               </PopoverBody>
             </PopoverContent>
-          </Popover> */}
-          <IconButton
-            variant="hollow"
-            onClick={() => {
-              toast({
-                title: "Someone changed the theme.",
-                status: "success",
-                duration: 2000,
-                position: "top",
-              })
-              setIsDark(!isDark)
-            }}
-            aria-label="Toggle dark mode"
-            icon={isDark ? <MoonIcon /> : <SunIcon />}
-          ></IconButton>
-          {isLoggedIn() && (
-            <>
-              <IconButton
-                variant="hollow"
-                onClick={() => setAddModalOpen(true)}
-                aria-label="Add New Show"
-                icon={<PlusSquareIcon />}
-              ></IconButton>
-              <IconButton
-                variant="hollow"
-                onClick={() => {
-                  setPageModalOpen(true)
-                }}
-                aria-label="Edit Page Text"
-                icon={<EditIcon />}
-              ></IconButton>
-            </>
-          )}
+          </Popover>
         </HStack>
       </Box>
       <Modal

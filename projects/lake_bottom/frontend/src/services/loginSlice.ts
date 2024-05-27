@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { setAuthTokens, clearAuthTokens } from "axios-jwt"
-import { axiosInstance } from "./loginApi"
+import { clearAuthTokens } from "axios-jwt"
+import { handleLoginAndToken } from "./loginApi"
 export interface LoginState {
   isLoggedIn?: boolean
   userId?: string
@@ -18,24 +18,6 @@ const initialState: LoginState = {
   userId: undefined,
 }
 
-const handleLoginAndToken = async (username: string, password: string) => {
-  const response = await axiosInstance
-    .post("/api/token/", {
-      username: username,
-      password: password,
-    })
-    .then((response) =>
-      setAuthTokens({
-        accessToken: response.data.access,
-        refreshToken: response.data.refresh,
-      }),
-    )
-    .catch(
-      (err) => console.log(err),
-      // TODO - Toast here?
-    )
-}
-
 export const loginSlice = createSlice({
   name: "login",
   initialState,
@@ -47,7 +29,6 @@ export const loginSlice = createSlice({
       handleLoginAndToken(action.payload.username, action.payload.password)
       state.isLoggedIn = isLoggedIn()
       state.userId = action.payload.username
-      // navigate('/')
     },
     logOut: (state) => {
       clearAuthTokens()
@@ -55,7 +36,6 @@ export const loginSlice = createSlice({
         .finally(() => {
           state.isLoggedIn = isLoggedIn()
           state.userId = undefined
-          // navigate('/')
         })
     },
   },

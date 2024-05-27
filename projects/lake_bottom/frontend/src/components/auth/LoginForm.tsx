@@ -3,6 +3,7 @@ import * as React from "react"
 
 import { useTypedDispatch, useTypedSelector } from "../../store"
 import { logIn, logOut } from "../../services/loginSlice"
+import { CloseIcon } from "@chakra-ui/icons"
 
 interface Props {
   onClose: () => void
@@ -28,13 +29,14 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
   }
   console.log(`component | ${isLoggedIn}`)
   return (
-    <Box alignItems="right">
+    <Box>
       <FormControl isInvalid={formIsInvalid()}>
         {isLoggedIn ? (
           <Button
-            alignSelf="right"
-            colorScheme="green"
+            variant="hollow"
+            aria-label="Log out"
             onClick={() => handleLogout()}
+            leftIcon={<CloseIcon />}
           >
             Log Out
           </Button>
@@ -54,7 +56,7 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
             />
             <Button
               alignSelf="right"
-              colorScheme="green"
+              colorScheme="grey"
               variant="outline"
               onClick={() => handleLogin()}
             >

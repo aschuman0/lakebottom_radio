@@ -3,6 +3,7 @@ import {
   TokenRefreshRequest,
   applyAuthTokenInterceptor,
   getBrowserLocalStorage,
+  setAuthTokens,
 } from "axios-jwt"
 import axios from "axios"
 
@@ -18,3 +19,24 @@ const requestRefresh: TokenRefreshRequest = async (
 
 const getStorage = getBrowserLocalStorage
 applyAuthTokenInterceptor(axiosInstance, { requestRefresh, getStorage })
+
+export const handleLoginAndToken = async (
+  username: string,
+  password: string,
+) => {
+  const response = await axiosInstance
+    .post("/api/token/", {
+      username: username,
+      password: password,
+    })
+    .then((response) =>
+      setAuthTokens({
+        accessToken: response.data.access,
+        refreshToken: response.data.refresh,
+      }),
+    )
+    .catch(
+      (err) => console.log(err),
+      // TODO - Toast here?
+    )
+}
