@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-} from "@chakra-ui/react"
+import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react"
 import * as React from "react"
 
 import { useTypedDispatch, useTypedSelector } from "../../store"

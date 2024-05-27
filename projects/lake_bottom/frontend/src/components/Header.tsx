@@ -1,6 +1,5 @@
-import * as React from "react";
+import * as React from "react"
 import {
-  Heading,
   Text,
   Box,
   IconButton,
@@ -9,16 +8,11 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  Popover,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  PopoverBody,
   ModalBody,
   ModalFooter,
   Button,
   useToast,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"
 import {
   SettingsIcon,
   PlusSquareIcon,
@@ -26,16 +20,16 @@ import {
   AddIcon,
   SunIcon,
   MoonIcon,
-} from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
-import LoginForm from "./auth/LoginForm";
+} from "@chakra-ui/icons"
+import { Link } from "react-router-dom"
+import { isLoggedIn } from "../services/loginSlice"
 
 const Header: React.FC = () => {
-  const toast = useToast();
-  const [addModalOpen, setAddModalOpen] = React.useState(false);
-  const [pageModalOpen, setPageModalOpen] = React.useState(false);
-  const [buttonLoading, setButtonLoading] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(false);
+  const toast = useToast()
+  const [addModalOpen, setAddModalOpen] = React.useState(false)
+  const [pageModalOpen, setPageModalOpen] = React.useState(false)
+  const [buttonLoading, setButtonLoading] = React.useState(false)
+  const [isDark, setIsDark] = React.useState(false)
   return (
     <>
       <Box
@@ -49,21 +43,7 @@ const Header: React.FC = () => {
         <HStack spacing="1vh">
           <Link to="/">Home</Link>
           <Link to="show">Shows</Link>
-          <IconButton
-            variant="hollow"
-            onClick={() => setAddModalOpen(true)}
-            aria-label="Add New Show"
-            icon={<PlusSquareIcon />}
-          ></IconButton>
-          <IconButton
-            variant="hollow"
-            onClick={() => {
-              setPageModalOpen(true);
-            }}
-            aria-label="Edit Page Text"
-            icon={<EditIcon />}
-          ></IconButton>
-          <Popover placement="bottom-end">
+          {/* <Popover placement="bottom-end">
             <PopoverTrigger>
               <IconButton
                 variant="hollow"
@@ -77,7 +57,7 @@ const Header: React.FC = () => {
                 <LoginForm onClose={() => void 0} />
               </PopoverBody>
             </PopoverContent>
-          </Popover>
+          </Popover> */}
           <IconButton
             variant="hollow"
             onClick={() => {
@@ -86,18 +66,36 @@ const Header: React.FC = () => {
                 status: "success",
                 duration: 2000,
                 position: "top",
-              });
-              setIsDark(!isDark);
+              })
+              setIsDark(!isDark)
             }}
             aria-label="Toggle dark mode"
             icon={isDark ? <MoonIcon /> : <SunIcon />}
           ></IconButton>
+          {isLoggedIn() && (
+            <>
+              <IconButton
+                variant="hollow"
+                onClick={() => setAddModalOpen(true)}
+                aria-label="Add New Show"
+                icon={<PlusSquareIcon />}
+              ></IconButton>
+              <IconButton
+                variant="hollow"
+                onClick={() => {
+                  setPageModalOpen(true)
+                }}
+                aria-label="Edit Page Text"
+                icon={<EditIcon />}
+              ></IconButton>
+            </>
+          )}
         </HStack>
       </Box>
       <Modal
         onClose={() => {
-          setAddModalOpen(false);
-          setButtonLoading(false);
+          setAddModalOpen(false)
+          setButtonLoading(false)
         }}
         isOpen={addModalOpen}
         size="xl"
@@ -115,8 +113,8 @@ const Header: React.FC = () => {
               variant="hollow"
               colorScheme="blackAlpha"
               onClick={() => {
-                setAddModalOpen(false);
-                setButtonLoading(false);
+                setAddModalOpen(false)
+                setButtonLoading(false)
               }}
             >
               Cancel
@@ -136,8 +134,8 @@ const Header: React.FC = () => {
       </Modal>
       <Modal
         onClose={() => {
-          setPageModalOpen(false);
-          setButtonLoading(false);
+          setPageModalOpen(false)
+          setButtonLoading(false)
         }}
         isOpen={pageModalOpen}
         size="xl"
@@ -155,8 +153,8 @@ const Header: React.FC = () => {
               variant="hollow"
               colorScheme="blackAlpha"
               onClick={() => {
-                setPageModalOpen(false);
-                setButtonLoading(false);
+                setPageModalOpen(false)
+                setButtonLoading(false)
               }}
             >
               Cancel
@@ -175,7 +173,7 @@ const Header: React.FC = () => {
         </ModalContent>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

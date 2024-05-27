@@ -1,12 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  Show,
-  ShowDetail,
-  Live,
-  Page,
-  AccessTokenWithRefresh,
-  AccessToken,
-} from "./lakebottomTypes";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { Show, ShowDetail, Live, Page } from "./lakebottomTypes"
 
 import {
   getLiveList,
@@ -14,7 +7,7 @@ import {
   getPageList,
   getShowDetail,
   getShowList,
-} from "./lakebottomClients";
+} from "./lakebottomClients"
 
 export const lakebottomApi = createApi({
   reducerPath: "lakebottomApi",
@@ -24,10 +17,10 @@ export const lakebottomApi = createApi({
     getShowList: build.query<Show[], void>({
       queryFn: async () => {
         try {
-          const data = await getShowList();
-          return { data };
+          const data = await getShowList()
+          return { data }
         } catch (err) {
-          throw err;
+          throw err
         }
       },
       providesTags: ["show"],
@@ -35,10 +28,10 @@ export const lakebottomApi = createApi({
     getShowDetail: build.query<ShowDetail, string>({
       queryFn: async (id: string) => {
         try {
-          const data = await getShowDetail(id);
-          return { data };
+          const data = await getShowDetail(id)
+          return { data }
         } catch (err) {
-          throw err;
+          throw err
         }
       },
       providesTags: ["show"],
@@ -46,10 +39,10 @@ export const lakebottomApi = createApi({
     getPageList: build.query<Page[], void>({
       queryFn: async () => {
         try {
-          const data = await getPageList();
-          return { data };
+          const data = await getPageList()
+          return { data }
         } catch (err) {
-          throw err;
+          throw err
         }
       },
       providesTags: ["pageContent"],
@@ -57,10 +50,10 @@ export const lakebottomApi = createApi({
     getPageWithId: build.query<Page, string>({
       queryFn: async (id: string) => {
         try {
-          const data = await getPageById(id);
-          return { data };
+          const data = await getPageById(id)
+          return { data }
         } catch (err) {
-          throw err;
+          throw err
         }
       },
       providesTags: ["pageContent"],
@@ -68,16 +61,16 @@ export const lakebottomApi = createApi({
     getLiveList: build.query<Live[], void>({
       queryFn: async () => {
         try {
-          const data = await getLiveList();
-          return { data };
+          const data = await getLiveList()
+          return { data }
         } catch (err) {
-          throw err;
+          throw err
         }
       },
       providesTags: ["pageContent"],
     }),
   }),
-});
+})
 
 export const {
   useGetShowListQuery,
@@ -85,4 +78,4 @@ export const {
   useGetLiveListQuery,
   useGetShowDetailQuery,
   useGetPageWithIdQuery,
-} = lakebottomApi;
+} = lakebottomApi

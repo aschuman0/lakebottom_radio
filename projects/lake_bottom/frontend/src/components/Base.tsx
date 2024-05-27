@@ -1,13 +1,28 @@
-import * as React from "react";
-import { Box, Grid, GridItem, Heading, Text, Skeleton } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
-import Player from "./Player";
-import Header from "./Header";
+import * as React from "react"
+import {
+  Box,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+  Skeleton,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverBody,
+  IconButton,
+} from "@chakra-ui/react"
+import { SettingsIcon } from "@chakra-ui/icons"
+import { Outlet } from "react-router-dom"
+import Player from "./Player"
+import Header from "./Header"
 
-import { useGetLiveListQuery } from "../services/lakebottomApi";
+import LoginForm from "./auth/LoginForm"
+
+import { useGetLiveListQuery } from "../services/lakebottomApi"
 
 const Base: React.FC = () => {
-  const { data: liveData, isLoading: liveIsLoading } = useGetLiveListQuery();
+  const { data: liveData, isLoading: liveIsLoading } = useGetLiveListQuery()
   return (
     <>
       <Box
@@ -54,9 +69,26 @@ const Base: React.FC = () => {
             </Box>
           </GridItem>
         </Grid>
+        <Box display="flex">
+          <Popover>
+            <PopoverTrigger>
+              <IconButton
+                variant="hollow"
+                onClick={() => void 0}
+                aria-label="Open user and login menu"
+                icon={<SettingsIcon color="whitesmoke" />}
+              ></IconButton>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverBody>
+                <LoginForm onClose={() => void 0} />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </Box>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default Base;
+export default Base

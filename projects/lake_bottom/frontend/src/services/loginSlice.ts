@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import {
-  isLoggedIn as jwtLoggedIn,
-  setAuthTokens,
-  clearAuthTokens,
-  getAccessToken,
-  getRefreshToken,
-} from "axios-jwt"
+import { setAuthTokens, clearAuthTokens } from "axios-jwt"
 import { axiosInstance } from "./loginApi"
 export interface LoginState {
   isLoggedIn?: boolean
@@ -24,17 +18,22 @@ const initialState: LoginState = {
   userId: undefined,
 }
 
-console.log(initialState)
-
 const handleLoginAndToken = async (username: string, password: string) => {
-  const response = await axiosInstance.post("/api/token/", {
-    username: username,
-    password: password,
-  })
-  setAuthTokens({
-    accessToken: response.data.access,
-    refreshToken: response.data.refresh,
-  })
+  const response = await axiosInstance
+    .post("/api/token/", {
+      username: username,
+      password: password,
+    })
+    .then((response) =>
+      setAuthTokens({
+        accessToken: response.data.access,
+        refreshToken: response.data.refresh,
+      }),
+    )
+    .catch(
+      (err) => console.log(err),
+      // TODO - Toast here?
+    )
 }
 
 export const loginSlice = createSlice({
@@ -48,6 +47,7 @@ export const loginSlice = createSlice({
       handleLoginAndToken(action.payload.username, action.payload.password)
       state.isLoggedIn = isLoggedIn()
       state.userId = action.payload.username
+      // navigate('/')
     },
     logOut: (state) => {
       clearAuthTokens()
@@ -55,6 +55,7 @@ export const loginSlice = createSlice({
         .finally(() => {
           state.isLoggedIn = isLoggedIn()
           state.userId = undefined
+          // navigate('/')
         })
     },
   },
