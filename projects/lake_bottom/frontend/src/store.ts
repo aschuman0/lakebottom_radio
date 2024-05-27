@@ -1,7 +1,7 @@
-import { lakebottomApi } from "./services/lakebottomApi";
-import { loginSlice } from "./services/loginSlice";
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { lakebottomApi } from "./services/lakebottomApi"
+import { loginSlice } from "./services/loginSlice"
+import { configureStore } from "@reduxjs/toolkit"
+import { useDispatch, useSelector } from "react-redux"
 
 export const store = configureStore({
   reducer: {
@@ -10,9 +10,9 @@ export const store = configureStore({
   },
   middleware: (getDefaultMidddleware) =>
     getDefaultMidddleware().concat(lakebottomApi.middleware),
-});
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-
-export type Dispatch = typeof store.dispatch;
-export const useTypedDispatch = useDispatch.withTypes<Dispatch>();
+export type RootState = ReturnType<typeof store.getState>
+export const useTypedSelector = useSelector.withTypes<RootState>()
+export type Dispatch = typeof store.dispatch
+export const useTypedDispatch = useDispatch.withTypes<Dispatch>()
