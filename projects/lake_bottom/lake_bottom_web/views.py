@@ -43,3 +43,4 @@ class LiveView(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Live.objects.all()
     serializer_class = LiveSerializer
+    lookup_field = "name"

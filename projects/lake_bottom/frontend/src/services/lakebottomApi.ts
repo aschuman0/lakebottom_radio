@@ -7,6 +7,8 @@ import {
   getPageList,
   getShowDetail,
   getShowList,
+  putLiveList,
+  putPageList,
 } from "./lakebottomClients"
 
 export const lakebottomApi = createApi({
@@ -69,6 +71,28 @@ export const lakebottomApi = createApi({
       },
       providesTags: ["pageContent"],
     }),
+    putPageList: build.mutation<void, Page>({
+      queryFn: async (page) => {
+        try {
+          const data = await putPageList(page)
+          return { data }
+        } catch (err) {
+          throw err
+        }
+      },
+      invalidatesTags: ["pageContent"],
+    }),
+    putLiveList: build.mutation<void, Live>({
+      queryFn: async (live) => {
+        try {
+          const data = await putLiveList(live)
+          return { data }
+        } catch (err) {
+          throw err
+        }
+      },
+      invalidatesTags: ["pageContent"],
+    }),
   }),
 })
 
@@ -78,4 +102,6 @@ export const {
   useGetLiveListQuery,
   useGetShowDetailQuery,
   useGetPageWithIdQuery,
+  usePutPageListMutation,
+  usePutLiveListMutation,
 } = lakebottomApi

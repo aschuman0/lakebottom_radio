@@ -31,6 +31,7 @@ import { Link } from "react-router-dom"
 import { isLoggedIn } from "../services/loginSlice"
 
 import LoginForm from "./auth/LoginForm"
+import PageEditModal from "./page/PageEditModal"
 
 const Header: React.FC = () => {
   const toast = useToast()
@@ -156,36 +157,7 @@ const Header: React.FC = () => {
         size="xl"
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Edit Page Text</ModalHeader>
-          <ModalBody>
-            <Box height="70vh">
-              <Text>Modal Form Area</Text>
-            </Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              variant="hollow"
-              colorScheme="blackAlpha"
-              onClick={() => {
-                setPageModalOpen(false)
-                setButtonLoading(false)
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              leftIcon={<EditIcon />}
-              aria-label="edit page text"
-              colorScheme="green"
-              loadingText="Editing"
-              isLoading={buttonLoading}
-              onClick={() => setButtonLoading(true)}
-            >
-              Edit Text
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+        <PageEditModal isOpen={pageModalOpen} setIsOpen={setPageModalOpen} />
       </Modal>
     </>
   )

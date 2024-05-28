@@ -27,7 +27,6 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
     dispatch(logOut())
     setIsLoggedIn(false)
   }
-  console.log(`component | ${isLoggedIn}`)
   return (
     <Box>
       <FormControl isInvalid={formIsInvalid()}>

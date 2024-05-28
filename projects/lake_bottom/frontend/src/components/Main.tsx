@@ -1,44 +1,48 @@
-import * as React from "react";
-import { Heading, Text, Box, Skeleton } from "@chakra-ui/react";
+import * as React from "react"
+import { Heading, Text, Box, Skeleton } from "@chakra-ui/react"
 import {
   useGetPageWithIdQuery,
   useGetShowListQuery,
   useGetLiveListQuery,
-} from "../services/lakebottomApi";
-import ShowListItem from "./show/ShowListItem";
+} from "../services/lakebottomApi"
+import ShowListItem from "./show/ShowListItem"
 
 const Main: React.FC = () => {
   const { data: aboutData, isLoading: aboutIsLoading } =
-    useGetPageWithIdQuery("schedule");
+    useGetPageWithIdQuery("schedule")
   const { data: contactData, isLoading: contactIsLoading } =
-    useGetPageWithIdQuery("contact");
-  const { data: showData, isLoading: showIsLoading } = useGetShowListQuery();
-  const { data: liveData, isLoading: liveIsLoading } = useGetLiveListQuery();
+    useGetPageWithIdQuery("contact")
+  const { data: showData, isLoading: showIsLoading } = useGetShowListQuery()
+  const { data: liveData, isLoading: liveIsLoading } = useGetLiveListQuery()
 
-  const live = liveData ? liveData[0] : undefined;
-  const showPreview = showData ? showData.slice(0, 5) : undefined;
+  const live = liveData ? liveData[0] : undefined
+  const showPreview = showData ? showData.slice(0, 5) : undefined
 
   return (
     <Box w="100%">
       <Skeleton isLoaded={!liveIsLoading}>
-        <Heading size="lg">
+        <Heading size="lg" paddingBlock="1vh">
           {live ? live.heading : "Welcome to The Lakebottom"}
         </Heading>
       </Skeleton>
       <Skeleton isLoaded={!aboutIsLoading && !contactIsLoading}>
-        <Text whiteSpace="pre-wrap">{aboutData?.page_body}</Text>
-        <Text paddingBlockEnd="10vh">{contactData?.page_body}</Text>
+        <Text paddingBlock="1vh" whiteSpace="pre-wrap">
+          {aboutData?.page_body}
+        </Text>
+        <Text whiteSpace="pre-wrap" paddingBlock="1vh">
+          {contactData?.page_body}
+        </Text>
       </Skeleton>
       <Skeleton isLoaded={!showIsLoading}>
         <Heading size="lg">Recent Shows</Heading>
         <Box marginInlineStart="1vh" marginBlockStart="2vh">
           {showPreview?.map((show) => {
-            return <ShowListItem show={show} key={show.slug} />;
+            return <ShowListItem show={show} key={show.slug} />
           })}
         </Box>
       </Skeleton>
     </Box>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main

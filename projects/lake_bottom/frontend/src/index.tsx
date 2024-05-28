@@ -1,21 +1,25 @@
-import { createRoot } from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./routes";
-import { Provider } from "react-redux";
+import { createRoot } from "react-dom/client"
+import { ChakraProvider } from "@chakra-ui/react"
+import { RouterProvider } from "react-router-dom"
+import { router } from "./routes"
+import { Provider } from "react-redux"
 
-import { store } from "./store";
+import { store } from "./store"
 
-const appDiv = document.getElementById("app");
+const appDiv = document.getElementById("app")
 if (!appDiv) {
-  throw new Error("app div not found.");
+  throw new Error("app div not found.")
 }
 
-const root = createRoot(appDiv);
+const root = createRoot(appDiv)
 root.render(
   <Provider store={store}>
-    <ChakraProvider>
+    <ChakraProvider
+      toastOptions={{
+        defaultOptions: { position: "top-left", variant: "subtle" },
+      }}
+    >
       <RouterProvider router={router} />
     </ChakraProvider>
   </Provider>,
-);
+)

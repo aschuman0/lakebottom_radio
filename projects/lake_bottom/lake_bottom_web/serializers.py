@@ -58,4 +58,4 @@ class PageSerializer(HyperlinkedModelSerializer):
 class LiveSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Live
-        fields = ("name", "heading", "subheading")
+        fields = ("name", "heading", "subheading", "is_live")
