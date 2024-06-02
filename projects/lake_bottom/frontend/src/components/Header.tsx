@@ -72,7 +72,6 @@ const Header: React.FC = () => {
                       title: "Someone changed the theme.",
                       status: "info",
                       duration: 2000,
-                      position: "top",
                     })
                     setIsDark(!isDark)
                   }}

@@ -12,19 +12,15 @@ import { axiosInstance } from "../../services/loginApi"
 import { useTypedDispatch, useTypedSelector } from "../../store"
 import { logIn, logOut } from "../../services/loginSlice"
 import { CloseIcon } from "@chakra-ui/icons"
+import { AxiosError } from "axios"
 interface Props {
   onClose: () => void
-}
-
-export const logoutAction = async () => {
-  clearAuthTokens()
-  dispatch(logOut())
 }
 
 const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
   const dispatch = useTypedDispatch()
   const loggedIn = useTypedSelector((state) => state.login.isLoggedIn)
-  const tosat = useToast()
+  const toast = useToast()
   const [username, setUsername] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [isLoggingIn, setIsLoggingIn] = React.useState(false)
@@ -47,11 +43,21 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
         }).then()
         dispatch(logIn())
         onClose()
+        toast({
+          title: "Log In Successful",
+          status: "success",
+          duration: 2000,
+        })
       })
-      .catch(
-        (err) => console.log(err),
-        // TODO - Failed login case. check status code
-      )
+      .catch((err: AxiosError) => {
+        console.log(err)
+        toast({
+          title: `Could Not Log In: ${err.response?.statusText}`,
+          status: "error",
+          duration: 2000,
+        })
+        onClose()
+      })
     setIsLoggingIn(false)
   }
   const handleLogout = () => {

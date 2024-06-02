@@ -1,4 +1,3 @@
-// TODO - REMOVE MODULE IF UNUSED
 import { createSlice } from "@reduxjs/toolkit"
 
 export interface LoginState {
