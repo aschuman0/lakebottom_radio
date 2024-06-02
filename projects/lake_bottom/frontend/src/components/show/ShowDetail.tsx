@@ -25,7 +25,6 @@ const ShowDetail: React.FC = () => {
   const { data, isLoading } = useGetShowDetailQuery(id)
   const isLoggedIn = useTypedSelector((state) => state.login.isLoggedIn)
   const [editModalOpen, setEditModalOpen] = React.useState(false)
-  const [buttonLoading, setButtonLoading] = React.useState(false)
 
   return (
     <>
@@ -46,7 +45,9 @@ const ShowDetail: React.FC = () => {
                   ></IconButton>
                 )}
               </HStack>
-              <Text marginBlockEnd="1vh">{data.about}</Text>
+              <Text marginBlockEnd="1vh" whiteSpace="pre-wrap">
+                {data.about}
+              </Text>
               <Divider marginBlockEnd="2vh" />
               <Heading size="large">Playlist:</Heading>
               {data.songs.map((song) => {
