@@ -1,39 +1,83 @@
-import * as React from "react";
-import { Text, Box, Skeleton, Heading, Divider } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import * as React from "react"
+import { EditIcon } from "@chakra-ui/icons"
+import {
+  Text,
+  Box,
+  Skeleton,
+  Heading,
+  Divider,
+  HStack,
+  IconButton,
+  Modal,
+  ModalOverlay,
+} from "@chakra-ui/react"
+import { useParams } from "react-router-dom"
 
-import { useGetShowDetailQuery } from "../../services/lakebottomApi";
+import { useTypedSelector } from "../../store"
+import { useGetShowDetailQuery } from "../../services/lakebottomApi"
+import ShowEditModal from "./ShowEditModal"
 
 const ShowDetail: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams()
   if (!id) {
-    return <Heading size="lg">No ID Provided</Heading>;
+    return <Heading size="lg">No ID Provided</Heading>
   }
-  const { data, isLoading } = useGetShowDetailQuery(id);
+  const { data, isLoading } = useGetShowDetailQuery(id)
+  const isLoggedIn = useTypedSelector((state) => state.login.isLoggedIn)
+  const [editModalOpen, setEditModalOpen] = React.useState(false)
+  const [buttonLoading, setButtonLoading] = React.useState(false)
 
   return (
-    <Box w="100%">
-      <Skeleton isLoaded={!isLoading}>
+    <>
+      <Box w="100%">
+        <Skeleton isLoaded={!isLoading}>
+          {data && (
+            <>
+              <HStack>
+                <Heading size="lg" marginBlockEnd="1vh">
+                  {data.name}
+                </Heading>
+                {isLoggedIn && (
+                  <IconButton
+                    variant="hollow"
+                    icon={<EditIcon />}
+                    onClick={() => setEditModalOpen(true)}
+                    aria-label="edit this show details"
+                  ></IconButton>
+                )}
+              </HStack>
+              <Text marginBlockEnd="1vh">{data.about}</Text>
+              <Divider marginBlockEnd="2vh" />
+              <Heading size="large">Playlist:</Heading>
+              {data.songs.map((song) => {
+                return (
+                  <Box key={song.slug}>
+                    <Text>{`${song.artist} - ${song.title} from ${song.album}`}</Text>
+                  </Box>
+                )
+              })}
+            </>
+          )}
+        </Skeleton>
+      </Box>
+      <Modal
+        onClose={() => {
+          setEditModalOpen(false)
+        }}
+        isOpen={editModalOpen}
+        size="xl"
+      >
+        <ModalOverlay />
         {data && (
-          <>
-            <Heading size="lg" marginBlockEnd="1vh">
-              {data.name}
-            </Heading>
-            <Text marginBlockEnd="1vh">{data.about}</Text>
-            <Divider marginBlockEnd="2vh" />
-            <Heading size="large">Playlist:</Heading>
-            {data.songs.map((song) => {
-              return (
-                <Box>
-                  <Text>{`${song.artist} - ${song.title} from ${song.album}`}</Text>
-                </Box>
-              );
-            })}
-          </>
+          <ShowEditModal
+            isOpen={editModalOpen}
+            setIsOpen={setEditModalOpen}
+            showData={data}
+          />
         )}
-      </Skeleton>
-    </Box>
-  );
-};
+      </Modal>
+    </>
+  )
+}
 
-export default ShowDetail;
+export default ShowDetail

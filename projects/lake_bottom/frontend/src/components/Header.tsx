@@ -71,6 +71,7 @@ const Header: React.FC = () => {
                     toast({
                       title: "Someone changed the theme.",
                       status: "info",
+                      variant: "subtle",
                       duration: 2000,
                     })
                     setIsDark(!isDark)

@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Heading, Box, Skeleton } from "@chakra-ui/react"
 import ShowListItem from "./ShowListItem"
-import { Show } from "../../services/lakebottomTypes"
 import { useGetShowListQuery } from "../../services/lakebottomApi"
 
 const ShowIndex: React.FC = () => {
