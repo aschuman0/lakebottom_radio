@@ -1,10 +1,8 @@
+// TODO - REMOVE MODULE IF UNUSED
 import { createSlice } from "@reduxjs/toolkit"
-import type { PayloadAction } from "@reduxjs/toolkit"
-import { clearAuthTokens } from "axios-jwt"
-import { handleLoginAndToken } from "./loginApi"
+
 export interface LoginState {
   isLoggedIn?: boolean
-  userId?: string
 }
 
 export const isLoggedIn = (): boolean => {
@@ -15,28 +13,17 @@ export const isLoggedIn = (): boolean => {
 
 const initialState: LoginState = {
   isLoggedIn: isLoggedIn(),
-  userId: undefined,
 }
 
 export const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    logIn: (
-      state,
-      action: PayloadAction<{ username: string; password: string }>,
-    ) => {
-      handleLoginAndToken(action.payload.username, action.payload.password)
+    logIn: (state) => {
       state.isLoggedIn = isLoggedIn()
-      state.userId = action.payload.username
     },
     logOut: (state) => {
-      clearAuthTokens()
-        .then()
-        .finally(() => {
-          state.isLoggedIn = isLoggedIn()
-          state.userId = undefined
-        })
+      state.isLoggedIn = isLoggedIn()
     },
   },
 })

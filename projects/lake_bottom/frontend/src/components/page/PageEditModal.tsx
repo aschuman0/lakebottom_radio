@@ -62,7 +62,7 @@ const PageEditModal: React.FC<Props> = (props) => {
       .then(() =>
         toast({
           title: "Edit Successful",
-          description: "Live Information Saved",
+          description: "Header Information Saved",
           status: "success",
           position: "top-left",
         }),
@@ -70,7 +70,7 @@ const PageEditModal: React.FC<Props> = (props) => {
       .catch(() => {
         toast({
           title: "Error",
-          description: "Error Saving Live Information",
+          description: "Error Saving Header Information",
           status: "error",
           isClosable: true,
           position: "top-left",

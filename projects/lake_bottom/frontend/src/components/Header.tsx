@@ -17,7 +17,6 @@ import {
   PopoverContent,
   PopoverBody,
   PopoverCloseButton,
-  Divider,
 } from "@chakra-ui/react"
 import {
   HamburgerIcon,
@@ -28,13 +27,15 @@ import {
   MoonIcon,
 } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
-import { isLoggedIn } from "../services/loginSlice"
 
 import LoginForm from "./auth/LoginForm"
 import PageEditModal from "./page/PageEditModal"
 
+import { useTypedSelector } from "../store"
+
 const Header: React.FC = () => {
   const toast = useToast()
+  const loggedIn = useTypedSelector((state) => state.login.isLoggedIn)
   const [addModalOpen, setAddModalOpen] = React.useState(false)
   const [pageModalOpen, setPageModalOpen] = React.useState(false)
   const [buttonLoading, setButtonLoading] = React.useState(false)
@@ -80,7 +81,7 @@ const Header: React.FC = () => {
                 >
                   {isDark ? "Set Light Mode" : "Set Dark Mode"}
                 </Button>
-                {isLoggedIn() && (
+                {loggedIn && (
                   <>
                     <Button
                       variant="hollow"
