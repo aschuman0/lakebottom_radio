@@ -8,10 +8,12 @@ import {
   Text,
   Textarea,
   Input,
+  useToast,
 } from "@chakra-ui/react"
 import { EditIcon } from "@chakra-ui/icons"
 import * as React from "react"
 import { ShowDetail } from "../../services/lakebottomTypes"
+import { usePutShowMutation } from "../../services/lakebottomApi"
 
 interface Props {
   isOpen: boolean
@@ -23,8 +25,24 @@ const ShowEditModal: React.FC<Props> = (props) => {
   const [buttonLoading, setButtonLoading] = React.useState(false)
   const [title, setTitle] = React.useState(props.showData.name)
   const [about, setAbout] = React.useState(props.showData.about)
+  const [updateShow] = usePutShowMutation()
+  const toast = useToast()
   const handleEdit = () => {
     setButtonLoading(true)
+    updateShow({
+      ...props.showData,
+      about: about,
+      name: title,
+    })
+      .unwrap()
+      .then(() => {
+        setButtonLoading(false)
+        props.setIsOpen(false)
+        toast({
+          title: "Show Edited Successfully",
+          status: "success",
+        })
+      })
   }
 
   return (
@@ -44,7 +62,7 @@ const ShowEditModal: React.FC<Props> = (props) => {
         </Box>
         <Box marginBlockStart="10px">
           <Text fontSize="sm" as="b">
-            Subheading
+            About
           </Text>
           <Textarea
             height="35px"
@@ -69,7 +87,7 @@ const ShowEditModal: React.FC<Props> = (props) => {
         </Button>
         <Button
           leftIcon={<EditIcon />}
-          aria-label="submit page text edits"
+          aria-label="submit show text edits"
           colorScheme="green"
           loadingText="Editing"
           isLoading={buttonLoading}

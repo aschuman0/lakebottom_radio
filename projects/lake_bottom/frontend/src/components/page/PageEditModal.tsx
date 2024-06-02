@@ -64,7 +64,6 @@ const PageEditModal: React.FC<Props> = (props) => {
           title: "Edit Successful",
           description: "Header Information Saved",
           status: "success",
-          position: "top-left",
         }),
       )
       .catch(() => {
@@ -73,7 +72,6 @@ const PageEditModal: React.FC<Props> = (props) => {
           description: "Error Saving Header Information",
           status: "error",
           isClosable: true,
-          position: "top-left",
         })
       })
     updatePage({
@@ -88,7 +86,6 @@ const PageEditModal: React.FC<Props> = (props) => {
           title: "Edit Successful",
           description: "Contact Information Saved",
           status: "success",
-          position: "top-left",
         })
       })
       .catch(() => {
@@ -97,7 +94,6 @@ const PageEditModal: React.FC<Props> = (props) => {
           description: "Error Saving Contact Information",
           status: "error",
           isClosable: true,
-          position: "top-left",
         })
       })
     updatePage({
@@ -112,7 +108,6 @@ const PageEditModal: React.FC<Props> = (props) => {
           title: "Edit Successful",
           description: "Schedule Information Saved",
           status: "success",
-          position: "top-left",
         })
       })
       .catch(() => {
@@ -121,7 +116,6 @@ const PageEditModal: React.FC<Props> = (props) => {
           description: "Error Saving Schedule Information",
           status: "error",
           isClosable: true,
-          position: "top-left",
         })
       })
       .finally(() => props.setIsOpen(false))

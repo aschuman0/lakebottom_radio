@@ -9,6 +9,7 @@ import {
   getShowList,
   putLiveList,
   putPageList,
+  putShow,
 } from "./lakebottomClients"
 
 export const lakebottomApi = createApi({
@@ -93,6 +94,17 @@ export const lakebottomApi = createApi({
       },
       invalidatesTags: ["pageContent"],
     }),
+    putShow: build.mutation<void, Show>({
+      queryFn: async (show) => {
+        try {
+          const data = await putShow(show)
+          return { data }
+        } catch (err) {
+          throw err
+        }
+      },
+      invalidatesTags: ["show"],
+    }),
   }),
 })
 
@@ -104,4 +116,5 @@ export const {
   useGetPageWithIdQuery,
   usePutPageListMutation,
   usePutLiveListMutation,
+  usePutShowMutation,
 } = lakebottomApi

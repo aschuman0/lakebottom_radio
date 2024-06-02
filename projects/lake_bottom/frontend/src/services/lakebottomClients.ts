@@ -35,3 +35,8 @@ export async function putLiveList(live: Live): Promise<void> {
   const response = await axios.put(`/api/live/${live.name}/`, { ...live })
   return response.data
 }
+
+export async function putShow(show: Show): Promise<void> {
+  const response = await axios.put(`/api/show/${show.slug}/`, { ...show })
+  return response.data
+}
