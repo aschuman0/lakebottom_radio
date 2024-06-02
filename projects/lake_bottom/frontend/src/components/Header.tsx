@@ -1,15 +1,10 @@
 import * as React from "react"
 import {
-  Text,
   Box,
   IconButton,
   HStack,
   Modal,
   ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
   useToast,
   Popover,
@@ -22,7 +17,6 @@ import {
   HamburgerIcon,
   PlusSquareIcon,
   EditIcon,
-  AddIcon,
   SunIcon,
   MoonIcon,
 } from "@chakra-ui/icons"
@@ -32,13 +26,14 @@ import LoginForm from "./auth/LoginForm"
 import PageEditModal from "./page/PageEditModal"
 
 import { useTypedSelector } from "../store"
+import ShowCreateModal from "./show/ShowCreateModal"
 
 const Header: React.FC = () => {
   const toast = useToast()
   const loggedIn = useTypedSelector((state) => state.login.isLoggedIn)
   const [addModalOpen, setAddModalOpen] = React.useState(false)
   const [pageModalOpen, setPageModalOpen] = React.useState(false)
-  const [buttonLoading, setButtonLoading] = React.useState(false)
+  const [, setButtonLoading] = React.useState(false)
   const [isDark, setIsDark] = React.useState(false)
   return (
     <>
@@ -118,36 +113,7 @@ const Header: React.FC = () => {
         size="xl"
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add New Show</ModalHeader>
-          <ModalBody>
-            <Box height="70vh">
-              <Text>Modal area</Text>
-            </Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              variant="hollow"
-              colorScheme="blackAlpha"
-              onClick={() => {
-                setAddModalOpen(false)
-                setButtonLoading(false)
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              leftIcon={<AddIcon />}
-              aria-label="add new show"
-              colorScheme="green"
-              loadingText="Adding"
-              isLoading={buttonLoading}
-              onClick={() => setButtonLoading(true)}
-            >
-              Add Show
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+        <ShowCreateModal isOpen={addModalOpen} setIsOpen={setAddModalOpen} />
       </Modal>
       <Modal
         onClose={() => {
