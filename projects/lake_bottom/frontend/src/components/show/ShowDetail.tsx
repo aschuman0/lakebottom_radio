@@ -10,6 +10,7 @@ import {
   IconButton,
   Modal,
   ModalOverlay,
+  Badge,
 } from "@chakra-ui/react"
 import { useParams } from "react-router-dom"
 
@@ -32,17 +33,25 @@ const ShowDetail: React.FC = () => {
         <Skeleton isLoaded={!isLoading}>
           {data && (
             <>
-              <HStack>
+              <HStack alignItems="center">
                 <Heading size="lg" marginBlockEnd="1vh">
                   {data.name}
                 </Heading>
                 {isLoggedIn && (
-                  <IconButton
-                    variant="hollow"
-                    icon={<EditIcon />}
-                    onClick={() => setEditModalOpen(true)}
-                    aria-label="edit this show details"
-                  ></IconButton>
+                  <>
+                    <Badge
+                      variant="solid"
+                      colorScheme={data.published ? "blue" : "gray"}
+                    >
+                      {data.published ? "Published" : "Not Published"}
+                    </Badge>
+                    <IconButton
+                      variant="hollow"
+                      icon={<EditIcon />}
+                      onClick={() => setEditModalOpen(true)}
+                      aria-label="edit this show details"
+                    ></IconButton>
+                  </>
                 )}
               </HStack>
               <Text marginBlockEnd="1vh" whiteSpace="pre-wrap">

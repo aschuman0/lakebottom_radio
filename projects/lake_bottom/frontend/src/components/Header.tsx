@@ -12,14 +12,10 @@ import {
   PopoverContent,
   PopoverBody,
   PopoverCloseButton,
+  Icon,
 } from "@chakra-ui/react"
-import {
-  HamburgerIcon,
-  PlusSquareIcon,
-  EditIcon,
-  SunIcon,
-  MoonIcon,
-} from "@chakra-ui/icons"
+import { PlusSquareIcon, EditIcon, SunIcon, MoonIcon } from "@chakra-ui/icons"
+import { FiMoreVertical } from "react-icons/fi"
 import { Link } from "react-router-dom"
 
 import LoginForm from "./auth/LoginForm"
@@ -54,7 +50,7 @@ const Header: React.FC = () => {
                 variant="hollow"
                 onClick={() => void 0}
                 aria-label="Open user and login menu"
-                icon={<HamburgerIcon />}
+                icon={<Icon as={FiMoreVertical} boxSize="1.5em" />}
               ></IconButton>
             </PopoverTrigger>
             <PopoverContent>

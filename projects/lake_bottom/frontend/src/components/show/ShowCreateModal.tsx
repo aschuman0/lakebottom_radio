@@ -9,6 +9,8 @@ import {
   Button,
   Input,
   Textarea,
+  Checkbox,
+  Badge,
 } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
 
@@ -22,7 +24,8 @@ const ShowCreateModal: React.FC<Props> = (props) => {
   const [title, setTitle] = React.useState<string>()
   const [about, setAbout] = React.useState<string>()
   const [showDate, setShowDate] = React.useState<string>()
-  const [file, setFile] = React.useState<string>()
+  const [file, setFile] = React.useState<any | null>()
+  const [published, setPublished] = React.useState(false)
 
   const handleCreate = () => {
     setButtonLoading(true)
@@ -84,8 +87,17 @@ const ShowCreateModal: React.FC<Props> = (props) => {
               type="file"
               aria-label="upload itunes playlist file"
               value={file}
-              onChange={(e) => setFile(e.target.value)}
+              onChange={(e) => setFile(e.target.files)}
             />
+          </Box>
+          <Box marginBlockStart="10px">
+            <Checkbox
+              isChecked={published}
+              onChange={() => setPublished(!published)}
+              spacing="1rem"
+            >
+              Show Is Live
+            </Checkbox>
           </Box>
         </Box>
       </ModalBody>

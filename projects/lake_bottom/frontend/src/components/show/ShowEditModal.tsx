@@ -8,6 +8,7 @@ import {
   Text,
   Textarea,
   Input,
+  Checkbox,
   useToast,
 } from "@chakra-ui/react"
 import { EditIcon } from "@chakra-ui/icons"
@@ -25,6 +26,7 @@ const ShowEditModal: React.FC<Props> = (props) => {
   const [buttonLoading, setButtonLoading] = React.useState(false)
   const [title, setTitle] = React.useState(props.showData.name)
   const [about, setAbout] = React.useState(props.showData.about)
+  const [published, setPublished] = React.useState(props.showData.published)
   const [updateShow] = usePutShowMutation()
   const toast = useToast()
   const handleEdit = () => {
@@ -33,6 +35,7 @@ const ShowEditModal: React.FC<Props> = (props) => {
       ...props.showData,
       about: about,
       name: title,
+      published: published,
     })
       .unwrap()
       .then(() => {
@@ -72,6 +75,12 @@ const ShowEditModal: React.FC<Props> = (props) => {
             onChange={(e) => setAbout(e.target.value)}
           />
         </Box>
+        <Checkbox
+          isChecked={published}
+          onChange={() => setPublished(!published)}
+        >
+          Is Published?
+        </Checkbox>
       </ModalBody>
       <ModalFooter>
         <Button
