@@ -1,5 +1,5 @@
 import { axiosInstance as axios } from "./loginApi"
-import { Show, ShowDetail, Page, Live } from "./lakebottomTypes"
+import { Show, ShowDetail, ShowCreate, Page, Live } from "./lakebottomTypes"
 
 export async function getShowList(): Promise<Show[]> {
   const response = await axios.get("/api/show/")
@@ -38,5 +38,12 @@ export async function putLiveList(live: Live): Promise<void> {
 
 export async function putShow(show: Show): Promise<void> {
   const response = await axios.put(`/api/show/${show.slug}/`, { ...show })
+  return response.data
+}
+
+export async function postShow(show: FormData): Promise<void> {
+  const response = await axios.post("/api/show/", show, {
+    headers: { "Content-Type": "multipart/form-data" },
+  })
   return response.data
 }

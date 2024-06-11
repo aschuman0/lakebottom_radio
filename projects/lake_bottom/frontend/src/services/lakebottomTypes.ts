@@ -19,6 +19,14 @@ export interface Show {
   published: boolean
 }
 
+export interface ShowCreate {
+  title: string
+  about: string
+  showDate: string
+  published: boolean
+  file: File
+}
+
 export interface ShowDetail extends Show {
   songs: ShowSong[]
 }

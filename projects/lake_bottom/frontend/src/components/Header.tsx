@@ -6,7 +6,6 @@ import {
   Modal,
   ModalOverlay,
   Button,
-  useToast,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -25,7 +24,6 @@ import { useTypedSelector } from "../store"
 import ShowCreateModal from "./show/ShowCreateModal"
 
 const Header: React.FC = () => {
-  const toast = useToast()
   const loggedIn = useTypedSelector((state) => state.login.isLoggedIn)
   const [addModalOpen, setAddModalOpen] = React.useState(false)
   const [pageModalOpen, setPageModalOpen] = React.useState(false)
@@ -48,7 +46,7 @@ const Header: React.FC = () => {
             <PopoverTrigger>
               <IconButton
                 variant="hollow"
-                onClick={() => void 0}
+                // onClick={() => void 0}
                 aria-label="Open user and login menu"
                 icon={<Icon as={FiMoreVertical} boxSize="1.5em" />}
               ></IconButton>
@@ -56,7 +54,7 @@ const Header: React.FC = () => {
             <PopoverContent>
               <PopoverCloseButton />
               <PopoverBody>
-                <Button
+                {/* <Button
                   variant="hollow"
                   onClick={() => {
                     toast({
@@ -71,7 +69,7 @@ const Header: React.FC = () => {
                   leftIcon={isDark ? <MoonIcon /> : <SunIcon />}
                 >
                   {isDark ? "Set Light Mode" : "Set Dark Mode"}
-                </Button>
+                </Button> */}
                 {loggedIn && (
                   <>
                     <Button

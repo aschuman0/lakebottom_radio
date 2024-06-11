@@ -29,7 +29,7 @@ class Show(models.Model):
     playlist_field = models.TextField()
     spotify_uri = models.CharField(max_length=255, blank=True)
     songs = models.ManyToManyField(Song, through="ShowSongs")
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
     show_type = models.CharField(choices=SHOW_TYPES, max_length=15, default="SURF")

@@ -10,9 +10,10 @@ import {
   Input,
   Textarea,
   Checkbox,
-  Badge,
+  useToast,
 } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
+import { usePostShowMutation } from "../../services/lakebottomApi"
 
 interface Props {
   isOpen: boolean
@@ -21,23 +22,45 @@ interface Props {
 
 const ShowCreateModal: React.FC<Props> = (props) => {
   const [buttonLoading, setButtonLoading] = React.useState(false)
-  const [title, setTitle] = React.useState<string>()
-  const [about, setAbout] = React.useState<string>()
-  const [showDate, setShowDate] = React.useState<string>()
-  const [file, setFile] = React.useState<any | null>()
-  const [published, setPublished] = React.useState(false)
+  const [title, setTitle] = React.useState<string>("")
+  const [about, setAbout] = React.useState<string>("")
+  const [showDate, setShowDate] = React.useState<string>("")
+  const [file, setFile] = React.useState<File | null>(null)
+  const [published, setPublished] = React.useState(true)
+  const [createShow] = usePostShowMutation()
+  const toast = useToast()
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0])
+    }
+  }
 
   const handleCreate = () => {
     setButtonLoading(true)
-    const showPayload = {
-      title: title,
-      about: about,
-      showDate: showDate,
-      file: file,
+    if (!file) {
+      return
     }
-    console.log(showPayload)
-    setButtonLoading(false)
-    // props.setIsOpen(false)
+
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("title", title)
+    formData.append("about", about)
+    formData.append("published", published ? "True" : "False")
+    formData.append("show_date", showDate)
+
+    createShow(formData)
+      .unwrap()
+      .then(() => {
+        toast({
+          description: "Show Created",
+          status: "success",
+        })
+      })
+      .finally(() => {
+        setButtonLoading(false)
+        props.setIsOpen(false)
+      })
   }
 
   return (
@@ -46,9 +69,7 @@ const ShowCreateModal: React.FC<Props> = (props) => {
       <ModalBody>
         <Box height="70vh">
           <Box marginBlockStart="10px">
-            <Text fontSize="sm" as="b">
-              Title
-            </Text>
+            <Text fontSize="sm">Title</Text>
             <Input
               aria-label="title text area"
               placeholder="Show Title"
@@ -57,9 +78,7 @@ const ShowCreateModal: React.FC<Props> = (props) => {
             />
           </Box>
           <Box marginBlockStart="10px">
-            <Text fontSize="sm" as="b">
-              About
-            </Text>
+            <Text fontSize="sm">About</Text>
             <Textarea
               height="35px"
               aria-label="about show text area"
@@ -86,8 +105,7 @@ const ShowCreateModal: React.FC<Props> = (props) => {
             <Input
               type="file"
               aria-label="upload itunes playlist file"
-              value={file}
-              onChange={(e) => setFile(e.target.files)}
+              onChange={handleFileChange}
             />
           </Box>
           <Box marginBlockStart="10px">
@@ -96,7 +114,7 @@ const ShowCreateModal: React.FC<Props> = (props) => {
               onChange={() => setPublished(!published)}
               spacing="1rem"
             >
-              Show Is Live
+              Show Is Published
             </Checkbox>
           </Box>
         </Box>
@@ -118,7 +136,7 @@ const ShowCreateModal: React.FC<Props> = (props) => {
           colorScheme="green"
           loadingText="Adding"
           isLoading={buttonLoading}
-          onClick={() => handleCreate()}
+          onClick={handleCreate}
         >
           Add Show
         </Button>

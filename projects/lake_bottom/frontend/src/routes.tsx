@@ -1,9 +1,9 @@
-import { createBrowserRouter } from "react-router-dom";
-import Main from "./components/Main";
-import Base from "./components/Base";
-import ShowIndex from "./components/show/ShowIndex";
-import ShowDetail from "./components/show/ShowDetail";
-import ErrorPage from "./components/ErrorPage";
+import { createBrowserRouter } from "react-router-dom"
+import Main from "./components/Main"
+import Base from "./components/Base"
+import ShowIndex from "./components/show/ShowIndex"
+import ShowDetail from "./components/show/ShowDetail"
+import ErrorPage from "./components/ErrorPage"
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +23,6 @@ export const router = createBrowserRouter([
         element: <ShowDetail />,
       },
     ],
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
   },
-]);
+])

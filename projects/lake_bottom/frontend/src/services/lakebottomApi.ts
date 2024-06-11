@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { Show, ShowDetail, Live, Page } from "./lakebottomTypes"
+import { Show, ShowDetail, ShowCreate, Live, Page } from "./lakebottomTypes"
 
 import {
   getLiveList,
@@ -7,6 +7,7 @@ import {
   getPageList,
   getShowDetail,
   getShowList,
+  postShow,
   putLiveList,
   putPageList,
   putShow,
@@ -105,6 +106,17 @@ export const lakebottomApi = createApi({
       },
       invalidatesTags: ["show"],
     }),
+    postShow: build.mutation<void, FormData>({
+      queryFn: async (show) => {
+        try {
+          const data = await postShow(show)
+          return { data }
+        } catch (err) {
+          throw err
+        }
+      },
+      invalidatesTags: ["show"],
+    }),
   }),
 })
 
@@ -117,4 +129,5 @@ export const {
   usePutPageListMutation,
   usePutLiveListMutation,
   usePutShowMutation,
+  usePostShowMutation,
 } = lakebottomApi

@@ -27,8 +27,10 @@ const ShowEditModal: React.FC<Props> = (props) => {
   const [title, setTitle] = React.useState(props.showData.name)
   const [about, setAbout] = React.useState(props.showData.about)
   const [published, setPublished] = React.useState(props.showData.published)
+
   const [updateShow] = usePutShowMutation()
   const toast = useToast()
+
   const handleEdit = () => {
     setButtonLoading(true)
     updateShow({
