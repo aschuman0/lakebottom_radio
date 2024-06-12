@@ -34,7 +34,7 @@ const Base: React.FC = () => {
             </Text>
           </Skeleton>
           <Box height="10vh"></Box>
-          <Player showPlayer={false} />
+          <Player showPlayer={true} />
         </GridItem>
         <GridItem colSpan={4} colStart={6}>
           <Box
