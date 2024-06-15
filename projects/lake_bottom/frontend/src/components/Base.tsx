@@ -30,7 +30,7 @@ const Base: React.FC = () => {
         height="90vh"
         gridAutoColumns="auto"
       >
-        <GridItem colSpan={3} alignItems="center" colStart={2}>
+        <GridItem colSpan={2} alignItems="center" colStart={2}>
           <Heading size="3xl" textColor="whitesmoke" paddingBlockStart="30vh">
             Lakebottom Radio
           </Heading>
@@ -40,9 +40,10 @@ const Base: React.FC = () => {
             </Text>
           </Skeleton>
           <Box height="10vh"></Box>
-          <Player showPlayer={streamData?.streamstatus === 1 ? true : false} />
+          <Player showPlayer={true} />
+          {/* <Player showPlayer={streamData?.streamstatus === 1 ? true : false} /> */}
         </GridItem>
-        <GridItem colSpan={4} colStart={6}>
+        <GridItem colSpan={5} colStart={5}>
           <Box
             border="solid 1px whitesmoke"
             borderRadius="10px"
@@ -53,6 +54,7 @@ const Base: React.FC = () => {
             paddingBlockStart="2vh"
             backgroundColor="white"
             boxShadow="0 30px 40px rgba(0,0,0,.1)"
+            overflow="revert"
           >
             <Header />
             <Outlet />
