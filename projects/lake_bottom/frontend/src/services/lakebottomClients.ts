@@ -9,6 +9,9 @@ import {
   LiveShoutcastInfo,
 } from "./lakebottomTypes"
 
+const corsProxyUrl = 'https://cors-proxy-dot-lake-bottom-radio.ue.r.appspot.com'
+const shoutcastServerUrl = 'http://35.227.60.131:8000'
+
 export async function getShowList(): Promise<Show[]> {
   const response = await axiosWithAuth.get("/api/show/")
   return response.data
@@ -63,10 +66,15 @@ export async function postShow(show: FormData): Promise<void> {
 }
 
 export async function getStreamInfo(): Promise<LiveShoutcastInfo> {
-  const response = await axios.get("http://35.227.60.131:8000/stats?json=1", {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  })
+  const response = await axios.get(
+    `${corsProxyUrl}/${shoutcastServerUrl}/stats?json=1`,
+    {
+      headers: {
+        'Origin': 'lake-bottom-client',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
+  )
   return response.data
 }
+
