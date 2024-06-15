@@ -3,11 +3,17 @@ import { Box, Grid, GridItem, Heading, Text, Skeleton } from "@chakra-ui/react"
 import { Outlet } from "react-router-dom"
 import Player from "./Player"
 import Header from "./Header"
+import { useGetStreamInfoQuery } from "../services/lakebottomApi"
 
 import { useGetLiveListQuery } from "../services/lakebottomApi"
 
 const Base: React.FC = () => {
   const { data: liveData, isLoading: liveIsLoading } = useGetLiveListQuery()
+  const { data: streamData } = useGetStreamInfoQuery(void 0, {
+    pollingInterval: 5000,
+    skipPollingIfUnfocused: true,
+  })
+  console.log(streamData)
   return (
     <Box
       w="100%"
@@ -34,7 +40,7 @@ const Base: React.FC = () => {
             </Text>
           </Skeleton>
           <Box height="10vh"></Box>
-          <Player showPlayer={true} />
+          <Player showPlayer={streamData?.streamstatus === 1 ? true : false} />
         </GridItem>
         <GridItem colSpan={4} colStart={6}>
           <Box
