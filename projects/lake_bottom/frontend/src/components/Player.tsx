@@ -1,23 +1,35 @@
 import * as React from "react"
-import AudioPlayer, { RHAP_UI } from "react-h5-audio-player"
-import { Box, Center, Icon, Text, Badge } from "@chakra-ui/react"
+import AudioPlayer from "react-h5-audio-player"
+import { Box, Center, Icon, Text, Badge, Skeleton } from "@chakra-ui/react"
 import { FiPlay, FiSquare, FiVolume2, FiVolumeX } from "react-icons/fi"
 import { useGetStreamInfoQuery } from "../services/lakebottomApi"
 
 import "react-h5-audio-player/src/styles.scss"
 
 interface Props {
-  showPlayer: boolean
+  showPlayer: boolean | "auto"
 }
 const audioUrl = "http://35.227.60.131:8000/1;"
 
 const Player: React.FC<Props> = (props) => {
-  const { data, isLoading } = useGetStreamInfoQuery()
-  return props.showPlayer ? (
+  const { data, isLoading, refetch } = useGetStreamInfoQuery(void 0, {
+    pollingInterval: 5000,
+    skipPollingIfUnfocused: true,
+  })
+
+  const [streamAvailable, setShowAvailable] = React.useState(false)
+
+  React.useEffect(() => {
+    if (data && data.streamstatus) {
+      setShowAvailable(data.streamstatus === "1" ? true : false)
+    }
+  }, [data, data?.streamstatus])
+
+  return (
     <Box
       borderRadius="10px"
       width="100%"
-      height="150px"
+      minHeight="150px"
       backgroundColor="white"
       border="solid 1px grey"
       boxShadow="0 30px 40px rgba(0,0,0,.5)"
@@ -42,11 +54,13 @@ const Player: React.FC<Props> = (props) => {
           showJumpControls={false}
           customAdditionalControls={[]}
           customProgressBarSection={[
-            <Text marginInlineStart="50px" marginInlineEnd="20px">
-              {data?.songtitle ? data.songtitle : ""}
-            </Text>,
+            <Skeleton isLoaded={!isLoading}>
+              <Text marginInlineStart="50px" marginInlineEnd="20px">
+                {data?.songtitle ? data.songtitle : ""}
+              </Text>
+            </Skeleton>,
           ]}
-          customVolumeControls={[RHAP_UI.VOLUME]}
+          customVolumeControls={[]}
           customIcons={{
             play: <Icon as={FiPlay} paddingInlineEnd="10px" />,
             pause: <Icon as={FiSquare} paddingInlineEnd="10px" />,
@@ -54,11 +68,10 @@ const Player: React.FC<Props> = (props) => {
             volumeMute: <Icon as={FiVolumeX} />,
           }}
           layout="horizontal-reverse"
+          onPlay={refetch}
         />
       </Box>
     </Box>
-  ) : (
-    <></>
   )
 }
 
