@@ -51,3 +51,8 @@ export interface AccessToken {
 export interface AccessTokenWithRefresh extends AccessToken {
   refresh: string
 }
+
+export interface LiveShoutcastInfo {
+  streamstatus: string
+  songtitle: string
+}

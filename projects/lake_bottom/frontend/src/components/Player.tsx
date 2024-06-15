@@ -1,9 +1,10 @@
 import * as React from "react"
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player"
-import { Box, Center, Heading, Icon, Text, Badge } from "@chakra-ui/react"
-import "react-h5-audio-player/src/styles.scss"
-
+import { Box, Center, Icon, Text, Badge } from "@chakra-ui/react"
 import { FiPlay, FiSquare, FiVolume2, FiVolumeX } from "react-icons/fi"
+import { useGetStreamInfoQuery } from "../services/lakebottomApi"
+
+import "react-h5-audio-player/src/styles.scss"
 
 interface Props {
   showPlayer: boolean
@@ -11,6 +12,7 @@ interface Props {
 const audioUrl = "http://35.227.60.131:8000/1;"
 
 const Player: React.FC<Props> = (props) => {
+  const { data, isLoading } = useGetStreamInfoQuery()
   return props.showPlayer ? (
     <Box
       borderRadius="10px"
@@ -23,19 +25,25 @@ const Player: React.FC<Props> = (props) => {
       paddingBlock="1vh"
     >
       <Center>
-        <Badge variant="solid" colorScheme="red" marginBlock="5px" size="large">
-          LIVE - On Air Now
+        <Badge
+          variant="solid"
+          colorScheme="teal"
+          marginBlock="5px"
+          size="large"
+          borderRadius="5px"
+        >
+          LIVE • On Air
         </Badge>
       </Center>
       <Box marginBlockStart="20px">
         <AudioPlayer
           src={audioUrl}
+          preload="none"
           showJumpControls={false}
           customAdditionalControls={[]}
           customProgressBarSection={[
             <Text marginInlineStart="50px" marginInlineEnd="20px">
-              Title - Artist - Album - Title - Artist - Album - Title - Artist -
-              Album - Title - Artist - Album
+              {data?.songtitle ? data.songtitle : ""}
             </Text>,
           ]}
           customVolumeControls={[RHAP_UI.VOLUME]}
