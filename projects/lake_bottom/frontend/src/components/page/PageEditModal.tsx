@@ -156,7 +156,7 @@ const PageEditModal: React.FC<Props> = (props) => {
             <Textarea
               height="35px"
               aria-label="schedule text area"
-              placeholder="About"
+              placeholder="Schedules"
               value={scheduleText}
               onChange={(e) => setScheduleText(e.target.value)}
             />

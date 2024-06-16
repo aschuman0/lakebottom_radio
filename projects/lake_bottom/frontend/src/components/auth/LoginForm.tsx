@@ -5,14 +5,15 @@ import {
   FormLabel,
   Input,
   useToast,
+  Icon,
 } from "@chakra-ui/react"
 import * as React from "react"
 import { setAuthTokens, clearAuthTokens } from "axios-jwt"
 import { axiosInstance } from "../../services/loginApi"
 import { useTypedDispatch, useTypedSelector } from "../../store"
 import { logIn, logOut } from "../../services/loginSlice"
-import { CloseIcon } from "@chakra-ui/icons"
 import { AxiosError } from "axios"
+import { FiUserX } from "react-icons/fi"
 interface Props {
   onClose: () => void
 }
@@ -66,15 +67,16 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
       onClose()
     })
   }
+
   return (
     <Box>
-      <FormControl isInvalid={formIsInvalid()}>
+      <FormControl isInvalid={formIsInvalid()} justifyItems="right | end">
         {loggedIn ? (
           <Button
             variant="hollow"
             aria-label="Log out"
             onClick={() => handleLogout()}
-            leftIcon={<CloseIcon />}
+            leftIcon={<Icon as={FiUserX} />}
           >
             Log Out
           </Button>
@@ -92,15 +94,18 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
               type="password"
               mb="5px"
             />
-            <Button
-              colorScheme="green"
-              aria-label="Log In"
-              loadingText="Logging In..."
-              isLoading={isLoggingIn}
-              onClick={() => handleLogin()}
-            >
-              Log In
-            </Button>
+            <Box width="100%" marginBlock="1vh">
+              <Button
+                colorScheme="teal"
+                aria-label="Log In"
+                loadingText="Logging In..."
+                isLoading={isLoggingIn}
+                onClick={() => handleLogin()}
+                float="right"
+              >
+                Log In
+              </Button>
+            </Box>
           </>
         )}
       </FormControl>

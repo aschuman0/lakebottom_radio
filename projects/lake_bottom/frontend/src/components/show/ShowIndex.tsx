@@ -1,20 +1,29 @@
 import * as React from "react"
-import { Heading, Box, Skeleton } from "@chakra-ui/react"
-import ShowListItem from "./ShowListItem"
+import { Heading, Box, Spinner, Center } from "@chakra-ui/react"
 import { useGetShowListQuery } from "../../services/lakebottomApi"
+import ShowTable from "./ShowTable"
 
 const ShowIndex: React.FC = () => {
-  const { data, isLoading } = useGetShowListQuery()
-  return (
+  const { data, isLoading, isFetching } = useGetShowListQuery()
+  return isFetching || isLoading ? (
+    <Box w="100%">
+      <Center>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="teal"
+          size="lg"
+          marginInlineEnd="10px"
+        />
+        <Heading size="md">Loading Shows...</Heading>
+      </Center>
+    </Box>
+  ) : (
     <Box w="100%">
       <Heading size="lg">A Listing of Shows</Heading>
       <Box marginInlineStart="1vh" marginBlockStart="2vh">
-        <Skeleton isLoaded={!isLoading}>
-          {data &&
-            data.map((show) => {
-              return <ShowListItem show={show} key={show.slug} />
-            })}
-        </Skeleton>
+        {data && <ShowTable shows={data} />}
       </Box>
     </Box>
   )

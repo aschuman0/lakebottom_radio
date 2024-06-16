@@ -17,6 +17,7 @@
     "axios": "^1.7.2",
     "axios-jwt": "^4.0.2",
     "framer-motion": "^11.1.9",
+    "luxon": "^3.4.4",
     "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -51,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "css-loader": "^7.1.2",
     "sass": "^1.77.5",
     "sass-loader": "^14.2.1",

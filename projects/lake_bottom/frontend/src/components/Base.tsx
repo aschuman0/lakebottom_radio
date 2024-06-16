@@ -22,11 +22,11 @@ const Base: React.FC = () => {
     pollingInterval: 5000,
     skipPollingIfUnfocused: true,
   })
-  const isLargeBreakpoint = useBreakpointValue({ base: false, lg: true })
+  const isLargeBreakpoint = useBreakpointValue({ base: false, xl: true })
   console.log(streamData)
   return (
     <Box
-      w="100%"
+      w="100vw"
       height="100vh"
       backgroundColor="black"
       backgroundImage={"/static/img/aurora.jpg"}
@@ -35,8 +35,8 @@ const Base: React.FC = () => {
       backgroundPosition="center"
     >
       <Grid
-        templateColumns={{ lg: "3fr 7fr", base: "1fr" }}
-        templateRows={{ lg: "1fr 1fr", base: "150px, 1fr" }}
+        templateColumns={{ xl: "3fr 7fr", base: "1fr" }}
+        templateRows={{ xl: "1fr 1fr", base: "150px, 1fr" }}
         gap="10px"
         height="100%"
         width="100%"
@@ -49,16 +49,16 @@ const Base: React.FC = () => {
           <Grid templateColumns={"1fr 1fr"}>
             <GridItem>
               <Heading
-                size={{ lg: "3xl", base: "2xl" }}
+                size={{ xl: "3xl", base: "2xl" }}
                 textColor="whitesmoke"
-                paddingBlockStart={{ lg: "30vh", base: "0vh" }}
+                paddingBlockStart={{ xl: "30vh", base: "0vh" }}
               >
                 Lakebottom Radio
               </Heading>
               <Skeleton noOfLines={1} isLoaded={!liveIsLoading}>
                 <Text
                   textColor="whitesmoke"
-                  paddingBlockStart={{ lg: "2vh", base: "0vh" }}
+                  paddingBlockStart={{ xl: "2vh", base: "0vh" }}
                 >
                   {liveData ? liveData[0].subheading : ""}
                 </Text>
@@ -67,12 +67,13 @@ const Base: React.FC = () => {
             <GridItem>{!isLargeBreakpoint && <Header />}</GridItem>
           </Grid>
           <Box
-            marginBlockStart={{ lg: "5vh", base: "2vh" }}
+            marginBlockStart={{ xl: "5vh", base: "2vh" }}
             height="fit-content"
             alignContent="start"
           >
             <Player
-              showPlayer={streamData?.streamstatus === 1 ? true : false}
+              // showPlayer={streamData?.streamstatus === 1 ? true : false}
+              showPlayer={true}
             />
           </Box>
         </GridItem>
@@ -80,10 +81,10 @@ const Base: React.FC = () => {
           <Box
             border="solid 1px white"
             borderRadius="10px"
-            height={{ lg: "90vh", base: "auto" }}
-            marginBlockStart={{ lg: "3vh", base: "0vh" }}
+            height={{ xl: "90vh", base: "auto" }}
+            marginBlockStart={{ xl: "3vh", base: "0vh" }}
             paddingBlock="2vh"
-            marginInlineStart={{ lg: "10vh", base: "0vh" }}
+            marginInlineStart={{ xl: "10vh", base: "0vh" }}
             paddingInline="3vw"
             backgroundColor="white"
             boxShadow="0 30px 40px rgba(0,0,0,.1)"

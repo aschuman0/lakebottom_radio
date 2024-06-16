@@ -11,23 +11,40 @@ import {
   Modal,
   ModalOverlay,
   Badge,
+  Spinner,
+  Center,
 } from "@chakra-ui/react"
 import { useParams } from "react-router-dom"
 
 import { useTypedSelector } from "../../store"
 import { useGetShowDetailQuery } from "../../services/lakebottomApi"
 import ShowEditModal from "./ShowEditModal"
+import SongsTable from "./SongsTable"
 
 const ShowDetail: React.FC = () => {
   const { id } = useParams()
   if (!id) {
     return <Heading size="lg">No ID Provided</Heading>
   }
-  const { data, isLoading } = useGetShowDetailQuery(id)
+  const { data, isLoading, isFetching } = useGetShowDetailQuery(id)
   const isLoggedIn = useTypedSelector((state) => state.login.isLoggedIn)
   const [editModalOpen, setEditModalOpen] = React.useState(false)
 
-  return (
+  return isLoading || isFetching ? (
+    <Box w="100%">
+      <Center>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="teal"
+          size="lg"
+          marginInlineEnd="10px"
+        />
+        <Heading size="md">Loading Show...</Heading>
+      </Center>
+    </Box>
+  ) : (
     <>
       <Box w="100%">
         <Skeleton isLoaded={!isLoading}>
@@ -59,13 +76,7 @@ const ShowDetail: React.FC = () => {
               </Text>
               <Divider marginBlockEnd="2vh" />
               <Heading size="large">Playlist:</Heading>
-              {data.songs.map((song) => {
-                return (
-                  <Box key={song.slug}>
-                    <Text>{`${song.artist} - ${song.title} from ${song.album}`}</Text>
-                  </Box>
-                )
-              })}
+              <SongsTable songs={data.songs} />
             </>
           )}
         </Skeleton>

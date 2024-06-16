@@ -31,7 +31,7 @@ const Player: React.FC<Props> = (props) => {
       <Center>
         <Badge
           variant="solid"
-          colorScheme="teal"
+          colorScheme="yellow"
           marginBlock="5px"
           size="large"
           borderRadius="5px"

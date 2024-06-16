@@ -15,8 +15,8 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react"
-import { PlusSquareIcon, EditIcon, SunIcon, MoonIcon } from "@chakra-ui/icons"
-import { FiMoreVertical } from "react-icons/fi"
+import { PlusSquareIcon, EditIcon } from "@chakra-ui/icons"
+import { FiMoreVertical, FiEdit, FiPlusSquare } from "react-icons/fi"
 import { Link } from "react-router-dom"
 
 import LoginForm from "./auth/LoginForm"
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   const [addModalOpen, setAddModalOpen] = React.useState(false)
   const [pageModalOpen, setPageModalOpen] = React.useState(false)
   const [, setButtonLoading] = React.useState(false)
-  const isLargeBreakpoint = useBreakpointValue({ base: false, lg: true })
+  const isLargeBreakpoint = useBreakpointValue({ base: false, xl: true })
   return (
     <>
       <Box
@@ -48,7 +48,11 @@ const Header: React.FC = () => {
             </Text>
           </Link>
           <Link to="show">
-            <Text as="b" color={!isLargeBreakpoint ? "white" : "black"}>
+            <Text
+              as="b"
+              color={!isLargeBreakpoint ? "white" : "black"}
+              marginInlineStart={{ lg: "15px", base: "1vw" }}
+            >
               Shows
             </Text>
           </Link>
@@ -76,7 +80,7 @@ const Header: React.FC = () => {
                       variant="hollow"
                       onClick={() => setAddModalOpen(true)}
                       aria-label="Add New Show"
-                      leftIcon={<PlusSquareIcon />}
+                      leftIcon={<Icon as={FiPlusSquare} />}
                     >
                       Add New Show
                     </Button>
@@ -86,7 +90,7 @@ const Header: React.FC = () => {
                         setPageModalOpen(true)
                       }}
                       aria-label="Edit Page Text"
-                      leftIcon={<EditIcon />}
+                      leftIcon={<Icon as={FiEdit} />}
                     >
                       Edit Page Text
                     </Button>
