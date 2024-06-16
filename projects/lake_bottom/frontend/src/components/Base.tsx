@@ -71,8 +71,9 @@ const Base: React.FC = () => {
             height="fit-content"
             alignContent="start"
           >
-            <Player showPlayer={true} />
-            {/* <Player showPlayer={streamData?.streamstatus === 1 ? true : false} /> */}
+            <Player
+              showPlayer={streamData?.streamstatus === 1 ? true : false}
+            />
           </Box>
         </GridItem>
         <GridItem>
