@@ -1,5 +1,14 @@
 import * as React from "react"
-import { Box, Grid, GridItem, Heading, Text, Skeleton } from "@chakra-ui/react"
+import {
+  Box,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+  Skeleton,
+  useBreakpointValue,
+  Stack,
+} from "@chakra-ui/react"
 import { Outlet } from "react-router-dom"
 import Player from "./Player"
 import Header from "./Header"
@@ -13,50 +22,73 @@ const Base: React.FC = () => {
     pollingInterval: 5000,
     skipPollingIfUnfocused: true,
   })
+  const isLargeBreakpoint = useBreakpointValue({ base: false, lg: true })
   console.log(streamData)
   return (
     <Box
       w="100%"
       height="100vh"
-      backgroundColor="azure"
+      backgroundColor="black"
       backgroundImage={"/static/img/aurora.jpg"}
       backgroundSize="cover"
       backgroundAttachment="scroll"
       backgroundPosition="center"
     >
       <Grid
-        templateColumns="repeat(10, 1fr)"
-        gap={0}
-        height="90vh"
-        gridAutoColumns="auto"
+        templateColumns={{ lg: "3fr 7fr", base: "1fr" }}
+        templateRows={{ lg: "1fr 1fr", base: "150px, 1fr" }}
+        gap="10px"
+        height="100%"
+        width="100%"
+        paddingBlock="2vh"
+        paddingInline="3vw"
+        alignContent="flex-start"
+        overflow="scroll"
       >
-        <GridItem colSpan={2} alignItems="center" colStart={2}>
-          <Heading size="3xl" textColor="whitesmoke" paddingBlockStart="30vh">
-            Lakebottom Radio
-          </Heading>
-          <Skeleton noOfLines={1} isLoaded={!liveIsLoading}>
-            <Text textColor="whitesmoke" paddingBlockStart="2vh">
-              {liveData ? liveData[0].subheading : ""}
-            </Text>
-          </Skeleton>
-          <Box height="10vh"></Box>
-          <Player showPlayer={true} />
-          {/* <Player showPlayer={streamData?.streamstatus === 1 ? true : false} /> */}
-        </GridItem>
-        <GridItem colSpan={5} colStart={5}>
+        <GridItem height="fit-content">
+          <Grid templateColumns={"1fr 1fr"}>
+            <GridItem>
+              <Heading
+                size={{ lg: "3xl", base: "2xl" }}
+                textColor="whitesmoke"
+                paddingBlockStart={{ lg: "30vh", base: "0vh" }}
+              >
+                Lakebottom Radio
+              </Heading>
+              <Skeleton noOfLines={1} isLoaded={!liveIsLoading}>
+                <Text
+                  textColor="whitesmoke"
+                  paddingBlockStart={{ lg: "2vh", base: "0vh" }}
+                >
+                  {liveData ? liveData[0].subheading : ""}
+                </Text>
+              </Skeleton>
+            </GridItem>
+            <GridItem>{!isLargeBreakpoint && <Header />}</GridItem>
+          </Grid>
           <Box
-            border="solid 1px whitesmoke"
+            marginBlockStart={{ lg: "5vh", base: "2vh" }}
+            height="fit-content"
+            alignContent="start"
+          >
+            <Player showPlayer={true} />
+            {/* <Player showPlayer={streamData?.streamstatus === 1 ? true : false} /> */}
+          </Box>
+        </GridItem>
+        <GridItem>
+          <Box
+            border="solid 1px white"
             borderRadius="10px"
-            width="100%"
-            height="100%"
-            marginBlockStart="3vh"
-            paddingInline="3vh"
-            paddingBlockStart="2vh"
+            height={{ lg: "90vh", base: "auto" }}
+            marginBlockStart={{ lg: "3vh", base: "0vh" }}
+            paddingBlock="2vh"
+            marginInlineStart={{ lg: "10vh", base: "0vh" }}
+            paddingInline="3vw"
             backgroundColor="white"
             boxShadow="0 30px 40px rgba(0,0,0,.1)"
-            overflow="revert"
+            overflow="scroll"
           >
-            <Header />
+            {isLargeBreakpoint && <Header />}
             <Outlet />
           </Box>
         </GridItem>

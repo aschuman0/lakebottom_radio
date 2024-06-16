@@ -12,6 +12,8 @@ import {
   PopoverBody,
   PopoverCloseButton,
   Icon,
+  Text,
+  useBreakpointValue,
 } from "@chakra-ui/react"
 import { PlusSquareIcon, EditIcon, SunIcon, MoonIcon } from "@chakra-ui/icons"
 import { FiMoreVertical } from "react-icons/fi"
@@ -28,7 +30,7 @@ const Header: React.FC = () => {
   const [addModalOpen, setAddModalOpen] = React.useState(false)
   const [pageModalOpen, setPageModalOpen] = React.useState(false)
   const [, setButtonLoading] = React.useState(false)
-  const [isDark, setIsDark] = React.useState(false)
+  const isLargeBreakpoint = useBreakpointValue({ base: false, lg: true })
   return (
     <>
       <Box
@@ -40,36 +42,34 @@ const Header: React.FC = () => {
         marginInlineEnd="50px"
       >
         <HStack spacing="1vh">
-          <Link to="/">Home</Link>
-          <Link to="show">Shows</Link>
+          <Link to="/">
+            <Text as="b" color={!isLargeBreakpoint ? "white" : "black"}>
+              Home
+            </Text>
+          </Link>
+          <Link to="show">
+            <Text as="b" color={!isLargeBreakpoint ? "white" : "black"}>
+              Shows
+            </Text>
+          </Link>
           <Popover placement="bottom-end">
             <PopoverTrigger>
               <IconButton
                 variant="hollow"
                 // onClick={() => void 0}
                 aria-label="Open user and login menu"
-                icon={<Icon as={FiMoreVertical} boxSize="1.5em" />}
+                icon={
+                  <Icon
+                    as={FiMoreVertical}
+                    boxSize="1.5em"
+                    color={!isLargeBreakpoint ? "white" : "black"}
+                  />
+                }
               ></IconButton>
             </PopoverTrigger>
             <PopoverContent>
               <PopoverCloseButton />
               <PopoverBody>
-                {/* <Button
-                  variant="hollow"
-                  onClick={() => {
-                    toast({
-                      title: "Someone changed the theme.",
-                      status: "info",
-                      variant: "subtle",
-                      duration: 2000,
-                    })
-                    setIsDark(!isDark)
-                  }}
-                  aria-label="Toggle dark mode"
-                  leftIcon={isDark ? <MoonIcon /> : <SunIcon />}
-                >
-                  {isDark ? "Set Light Mode" : "Set Dark Mode"}
-                </Button> */}
                 {loggedIn && (
                   <>
                     <Button
