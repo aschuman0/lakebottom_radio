@@ -72,8 +72,7 @@ const Base: React.FC = () => {
             alignContent="start"
           >
             <Player
-              // showPlayer={streamData?.streamstatus === 1 ? true : false}
-              showPlayer={true}
+              showPlayer={streamData?.streamstatus === 1 ? true : false}
             />
           </Box>
         </GridItem>
