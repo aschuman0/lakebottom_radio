@@ -33,4 +33,5 @@ static/*
 projects/lake_bottom/.gcloudignore
 projects/lake_bottom/secrets.yaml
 projects/lake_bottom/frontend/static
+node_modules/
 main.js

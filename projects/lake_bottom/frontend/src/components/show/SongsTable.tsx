@@ -7,8 +7,9 @@ import {
   Td,
   TableContainer,
   Text,
+  Th,
 } from "@chakra-ui/react"
-import { ShowSong, Song } from "../../services/lakebottomTypes"
+import { ShowSong } from "../../services/lakebottomTypes"
 
 export interface Props {
   songs: ShowSong[]
@@ -30,10 +31,12 @@ const SongsTable: React.FC<Props> = (props) => {
         size={{ base: "sm", md: "md" }}
       >
         <Thead>
-          <Td>Title</Td>
-          <Td>Artist</Td>
-          <Td>Album</Td>
-          <Td>Year</Td>
+          <Tr>
+            <Th>Title</Th>
+            <Th>Artist</Th>
+            <Th>Album</Th>
+            <Th>Year</Th>
+          </Tr>
         </Thead>
         <Tbody>
           {props.songs.map((song) => {

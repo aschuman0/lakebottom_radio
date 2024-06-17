@@ -1,7 +1,12 @@
-Django==4.0.3
+Django==4.2.13
+django-bootstrap-form==3.4
+django-cors-headers==4.3.1
+django-registration-redux==2.10
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
 django-bootstrap-form==3.4
 django-registration-redux==2.10
 whitenoise==6.0.0
 PyMySQL==1.0.2
 mysqlclient==2.1.0
-spotipy==2.19.0
+click==8.0.4

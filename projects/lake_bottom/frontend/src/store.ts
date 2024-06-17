@@ -7,7 +7,7 @@ import { setupListeners } from "@reduxjs/toolkit/query"
 export const store = configureStore({
   reducer: {
     [lakebottomApi.reducerPath]: lakebottomApi.reducer,
-    login: loginSlice.reducer,
+    [loginSlice.reducerPath]: loginSlice.reducer,
   },
   middleware: (getDefaultMidddleware) =>
     getDefaultMidddleware().concat(lakebottomApi.middleware),

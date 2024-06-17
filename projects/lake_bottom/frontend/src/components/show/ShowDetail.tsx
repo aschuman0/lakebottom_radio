@@ -75,7 +75,6 @@ const ShowDetail: React.FC = () => {
                 {data.about}
               </Text>
               <Divider marginBlockEnd="2vh" />
-              <Heading size="large">Playlist:</Heading>
               <SongsTable songs={data.songs} />
             </>
           )}

@@ -1,4 +1,5 @@
 runtime: python39
+service: beta
 
 handlers:
   - url: /static

@@ -6,6 +6,7 @@ import {
   Tbody,
   Tr,
   Td,
+  Th,
   TableContainer,
   Text,
 } from "@chakra-ui/react"
@@ -35,9 +36,11 @@ const ShowTable: React.FC<Props> = (props) => {
     >
       <Table variant="simple" colorScheme="gray" size="md">
         <Thead>
-          <Td>Name</Td>
-          <Td>About</Td>
-          <Td>Show Date</Td>
+          <Tr>
+            <Th>Name</Th>
+            <Th>About</Th>
+            <Th>Show Date</Th>
+          </Tr>
         </Thead>
         <Tbody>
           {props.shows.map((show) => {
@@ -45,7 +48,7 @@ const ShowTable: React.FC<Props> = (props) => {
               <Tr key={show.slug}>
                 <Td>
                   <Link to={`/show/${show.slug}/`}>
-                    <Text as="b" size="large">
+                    <Text as="b" size="large" wordBreak="break-all">
                       {show.name}
                     </Text>
                   </Link>

@@ -7,7 +7,6 @@ import {
   Text,
   Skeleton,
   useBreakpointValue,
-  Stack,
 } from "@chakra-ui/react"
 import { Outlet } from "react-router-dom"
 import Player from "./Player"
@@ -23,7 +22,6 @@ const Base: React.FC = () => {
     skipPollingIfUnfocused: true,
   })
   const isLargeBreakpoint = useBreakpointValue({ base: false, xl: true })
-  console.log(streamData)
   return (
     <Box
       w="100vw"
@@ -45,9 +43,9 @@ const Base: React.FC = () => {
         alignContent="flex-start"
         overflow="scroll"
       >
-        <GridItem height="fit-content">
-          <Grid templateColumns={"1fr 1fr"}>
-            <GridItem>
+        <GridItem height="100%">
+          <Grid templateColumns={{ xl: "1fr", base: "6fr 4fr" }}>
+            <GridItem width="100%">
               <Heading
                 size={{ xl: "3xl", base: "2xl" }}
                 textColor="whitesmoke"
