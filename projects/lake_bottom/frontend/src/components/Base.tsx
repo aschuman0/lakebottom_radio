@@ -38,13 +38,13 @@ const Base: React.FC = () => {
         gap="10px"
         height="100%"
         width="100%"
-        paddingBlock="2vh"
-        paddingInline="3vw"
+        paddingBlock={{ sm: "2vh", base: 0 }}
+        paddingInline={{ sm: "3vw", base: 0 }}
         alignContent="flex-start"
         overflow="scroll"
       >
         <GridItem height="100%">
-          <Grid templateColumns={{ xl: "1fr", base: "6fr 4fr" }}>
+          <Grid templateColumns={{ xl: "1fr", sm: "6fr 4fr", base: "1fr" }}>
             <GridItem width="100%">
               <Heading
                 size={{ xl: "3xl", base: "2xl" }}
@@ -62,7 +62,9 @@ const Base: React.FC = () => {
                 </Text>
               </Skeleton>
             </GridItem>
-            <GridItem>{!isLargeBreakpoint && <Header />}</GridItem>
+            <GridItem float={{ base: "left", md: "right" }}>
+              {!isLargeBreakpoint && <Header />}
+            </GridItem>
           </Grid>
           <Box
             marginBlockStart={{ xl: "5vh", base: "2vh" }}

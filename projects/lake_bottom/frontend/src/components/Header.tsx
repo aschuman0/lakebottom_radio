@@ -96,7 +96,7 @@ const Header: React.FC = () => {
                     </Button>
                   </>
                 )}
-                <LoginForm onClose={() => void 0} />
+                <LoginForm />
               </PopoverBody>
             </PopoverContent>
           </Popover>

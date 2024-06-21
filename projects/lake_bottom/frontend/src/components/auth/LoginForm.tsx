@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  useToast,
-  Icon,
-} from "@chakra-ui/react"
+import { Box, Button, FormLabel, Input, useToast, Icon } from "@chakra-ui/react"
 import * as React from "react"
 import { setAuthTokens, clearAuthTokens } from "axios-jwt"
 import { axiosInstance } from "../../services/loginApi"
@@ -14,11 +6,8 @@ import { useTypedDispatch, useTypedSelector } from "../../store"
 import { logIn, logOut } from "../../services/loginSlice"
 import { AxiosError } from "axios"
 import { FiUserX } from "react-icons/fi"
-interface Props {
-  onClose: () => void
-}
 
-const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
+const LoginForm: React.FC = (): JSX.Element => {
   const dispatch = useTypedDispatch()
   const loggedIn = useTypedSelector((state) => state.login.isLoggedIn)
   const toast = useToast()
@@ -26,13 +15,10 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
   const [password, setPassword] = React.useState("")
   const [isLoggingIn, setIsLoggingIn] = React.useState(false)
 
-  const formIsInvalid = (): boolean => {
-    return false
-  }
-
   const handleLogin = () => {
     setIsLoggingIn(true)
-    const response = axiosInstance
+
+    axiosInstance
       .post("/api/token/", {
         username: username,
         password: password,
@@ -41,13 +27,13 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
         setAuthTokens({
           accessToken: response.data.access,
           refreshToken: response.data.refresh,
-        }).then()
-        dispatch(logIn())
-        onClose()
-        toast({
-          title: "Log In Successful",
-          status: "success",
-          duration: 2000,
+        }).then(() => {
+          dispatch(logIn())
+          toast({
+            title: "Log In Successful",
+            status: "success",
+            duration: 2000,
+          })
         })
       })
       .catch((err: AxiosError) => {
@@ -57,58 +43,54 @@ const LoginForm: React.FC<Props> = ({ onClose }): JSX.Element => {
           status: "error",
           duration: 2000,
         })
-        onClose()
       })
-    setIsLoggingIn(false)
+      .finally(() => setIsLoggingIn(false))
   }
   const handleLogout = () => {
     clearAuthTokens().then(() => {
       dispatch(logOut())
-      onClose()
     })
   }
 
   return (
-    <Box>
-      <FormControl isInvalid={formIsInvalid()} justifyItems="right | end">
-        {loggedIn ? (
-          <Button
-            variant="hollow"
-            aria-label="Log out"
-            onClick={() => handleLogout()}
-            leftIcon={<Icon as={FiUserX} />}
-          >
-            Log Out
-          </Button>
-        ) : (
-          <>
-            <FormLabel>Log in to Lakebottom Radio</FormLabel>
-            <Input
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-              mb="5px"
-            />
-            <Input
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              mb="5px"
-            />
-            <Box width="100%" marginBlock="1vh">
-              <Button
-                colorScheme="teal"
-                aria-label="Log In"
-                loadingText="Logging In..."
-                isLoading={isLoggingIn}
-                onClick={() => handleLogin()}
-                float="right"
-              >
-                Log In
-              </Button>
-            </Box>
-          </>
-        )}
-      </FormControl>
+    <Box justifyItems="right | end">
+      {loggedIn ? (
+        <Button
+          variant="hollow"
+          aria-label="Log out"
+          onClick={() => handleLogout()}
+          leftIcon={<Icon as={FiUserX} />}
+        >
+          Log Out
+        </Button>
+      ) : (
+        <>
+          <FormLabel>Log in to Lakebottom Radio</FormLabel>
+          <Input
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+            mb="5px"
+          />
+          <Input
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            mb="5px"
+          />
+          <Box width="100%" marginBlock="1vh">
+            <Button
+              colorScheme="teal"
+              aria-label="Log In"
+              loadingText="Logging In..."
+              isLoading={isLoggingIn}
+              onClick={() => handleLogin()}
+              float="right"
+            >
+              Log In
+            </Button>
+          </Box>
+        </>
+      )}
     </Box>
   )
 }

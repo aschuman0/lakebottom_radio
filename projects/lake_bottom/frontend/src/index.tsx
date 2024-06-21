@@ -16,7 +16,7 @@ root.render(
   <Provider store={store}>
     <ChakraProvider
       toastOptions={{
-        defaultOptions: { position: "top", variant: "top-accent" },
+        defaultOptions: { position: "top", isClosable: true },
       }}
     >
       <RouterProvider router={router} />
