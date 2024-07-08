@@ -9,6 +9,8 @@ import {
   Th,
   TableContainer,
   Text,
+  Badge,
+  Spacer,
 } from "@chakra-ui/react"
 import { Show } from "../../services/lakebottomTypes"
 import { DateTime } from "luxon"
@@ -39,7 +41,8 @@ const ShowTable: React.FC<Props> = (props) => {
           <Tr>
             <Th>Name</Th>
             <Th>About</Th>
-            <Th>Show Date</Th>
+            <Th>Date</Th>
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -62,6 +65,13 @@ const ShowTable: React.FC<Props> = (props) => {
                   {show.about}
                 </Td>
                 <Td>{formatDate(show.date_created)}</Td>
+                {!show.published && (
+                  <Td>
+                    <Badge size="xs" marginBlockEnd="5px">
+                      Unpublished
+                    </Badge>
+                  </Td>
+                )}
               </Tr>
             )
           })}
