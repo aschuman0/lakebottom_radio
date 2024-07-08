@@ -27,9 +27,19 @@ class SongsView(viewsets.ModelViewSet):
 
 
 class ShowsViews(viewsets.ModelViewSet):
-    queryset = Show.objects.all().order_by("date_created")
+    queryset = Show.published_objects.all().order_by("date_created")
     serializer_class = ShowSerializer
     lookup_field = "slug"
+
+    def list(self, request: Request) -> Response:
+        qs = Show.published_objects.all()
+
+        if request.user.is_authenticated:  # show unpublished to logged in
+            qs = Show.objects.all()
+
+        serializer = ShowSerializer(qs, many=True)
+
+        return Response(serializer.data, 200)
 
     @permission_classes([IsAuthenticated])
     def create(self, request: Request) -> Response:

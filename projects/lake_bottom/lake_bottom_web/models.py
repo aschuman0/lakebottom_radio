@@ -22,6 +22,11 @@ class Song(models.Model):
         return "{} - {}".format(self.title, self.artist)
 
 
+class PublishedShowManager(models.Manager):
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset().filter(published=True)
+
+
 class Show(models.Model):
     name = models.CharField(max_length=255)
     about = models.TextField()
@@ -33,6 +38,9 @@ class Show(models.Model):
     published = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)
     show_type = models.CharField(choices=SHOW_TYPES, max_length=15, default="SURF")
+
+    objects = models.Manager()
+    published_objects = PublishedShowManager()
 
     class Meta:
         verbose_name = "Show"
