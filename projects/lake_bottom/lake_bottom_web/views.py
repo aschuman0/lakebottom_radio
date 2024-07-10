@@ -4,7 +4,7 @@ import uuid
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import transaction
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -27,7 +27,7 @@ class SongsView(viewsets.ModelViewSet):
 
 
 class ShowsViews(viewsets.ModelViewSet):
-    queryset = Show.published_objects.all().order_by("date_created")
+    queryset = Show.objects.all().order_by("date_created")
     serializer_class = ShowSerializer
     lookup_field = "slug"
 
@@ -109,6 +109,21 @@ class ShowsDetailView(viewsets.ModelViewSet):
     queryset = Show.objects.all().order_by("date_created")
     serializer_class = ShowDetailSerializer
     lookup_field = "slug"
+
+    def retrieve(self, request: Request, slug: str) -> Response:
+        qs = Show.published_objects.filter(slug=slug)
+
+        if request.user.is_authenticated:
+            qs = Show.objects.filter(slug=slug)
+
+        serializer = ShowDetailSerializer(qs, many=True)
+
+        if not qs:
+            return Response(
+                {"error": f"Show {slug} not found"}, status.HTTP_404_NOT_FOUND
+            )
+
+        return Response(serializer.data[0], 200)
 
 
 class PageView(viewsets.ModelViewSet):
